@@ -1,4 +1,5 @@
-<?	include("../include.php");
+<?php
+include('../include.php');
 
 if ($_POST) {
 	//clean up values
@@ -112,8 +113,8 @@ drawTop();
 ?>
 
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Import Contacts", 2);?>
-	<form method="post" action="<?=$request["path_query"]?>">
+	<?php echo drawHeaderRow("Import Contacts", 2);?>
+	<form method="post" action="<?php echo $request["path_query"]?>">
 	<tr>
 		<td class="gray">Import</td>
 		<td>
@@ -128,7 +129,7 @@ drawTop();
 	<tr class="group">
 		<td colspan="2">Tags</td>
 	</tr>
-	<?
+	<?php
 	$tags = db_query("select 
 					f.tagTypeID,
 					f.name,
@@ -140,16 +141,16 @@ drawTop();
 				order by f.precedence");
 	while ($t = db_fetch($tags)) {?>
 	<tr>
-		<td bgcolor="#<?if($t["isRequired"]){?>FFDDDD<?}else{?>F6F6F6<?}?>" width="18%"><?=$t["name"]?></td>
+		<td bgcolor="#<?php if($t["isRequired"]){?>FFDDDD<?php }else{?>F6F6F6<?php }?>" width="18%"><?php echo $t["name"]?></td>
 		<td class="input" width="82%">
-			<? if ($t["fieldTypeID"] == 4) {
+			<?php if ($t["fieldTypeID"] == 4) {
 				if (isset($_GET["id"])) $v = db_grab("SELECT i2t.tagID FROM intranet_instances_to_tags i2t JOIN intranet_tags t ON i2t.tagID = t.id WHERE i2t.instanceID = {$i["id"]} and t.typeID = {$t["tagTypeID"]} AND t.isActive = 1");
 				echo form_select("tag_single_" . $t["tagTypeID"], "SELECT id, tag FROM intranet_tags WHERE typeID = {$t["tagTypeID"]} AND isActive = 1 ORDER BY precedence", @$v["tagID"], false, "field", false, !$t["isRequired"]);
 			} elseif ($t["fieldTypeID"] == 5) {?>
 				<table cellpadding="0" cellspacing="0" border="0" width="100%">
 				<tr valign="top">
 					<td width="40%"><table cellpadding="0" cellspacing="0" border="0">
-				<?
+				<?php
 				if (isset($_GET["id"])) {
 				$values = db_query("SELECT 
 										t.id, 
@@ -172,27 +173,27 @@ drawTop();
 				$oneFound = false;
 				while ($v = db_fetch($values)) {?>
 					<tr>
-						<td><input type="checkbox" name="tag_multiple_<?=$v["id"]?>"<? if ($v["selected"]) {?> checked<?}?>></td>
-						<td class="input"><?=$v["tag"]?></td>
+						<td><input type="checkbox" name="tag_multiple_<?php echo $v["id"]?>"<?php if ($v["selected"]) {?> checked<?php }?>></td>
+						<td class="input"><?php echo $v["tag"]?></td>
 					</tr>
-					<? if (isset($v["selected"]) && $v["selected"]) $oneFound = true;
+					<?php if (isset($v["selected"]) && $v["selected"]) $oneFound = true;
 				}?>
 				</table>
 					</td>
-					<td class="input" width="60%"><font color="#D8282D"><? if ($t["isRequired"] && !$oneFound) {?>&nbsp;&#187; new required value!<?}?></td>
+					<td class="input" width="60%"><font color="#D8282D"><?php if ($t["isRequired"] && !$oneFound) {?>&nbsp;&#187; new required value!<?php }?></td>
 				</tr>
 			</table>
 
-			<?}?>
+			<?php }?>
 		</td>
 	</tr>
-	<?}?>
+	<?php }?>
 	<tr>
 		<td colspan="2" align="center" bgcolor="#F6F6F6">
-			<?=draw_form_submit("  run import  ");?>
+			<?php echo draw_form_submit("  run import  ");?>
 		</td>
 	</tr>
 	</form>
 </table>
 
-<? drawBottom();?>
+<?php drawBottom();?>

@@ -1,4 +1,5 @@
-<?	include("../include.php");
+<?php
+include('../include.php');
 
 	//bail if no 
 	if (!isset($_GET["id"])) url_change("funders.php");
@@ -42,44 +43,44 @@ $r = db_grab("SELECT
 
 
 <table cellspacing="1" class="left">
-	<?=drawHeaderRow("View Activity", 2);?>
+	<?php echo drawHeaderRow("View Activity", 2);?>
 	<tr>
 		<td class="gray">Award</td>
-		<td><b><a href="award_view.php?id=<?=$r["awardID"]?>"><?=$r["awardTitle"]?></a></b> (awarded by <b><a href="funder_view.php?id=<?=$r["funderID"]?>"><?=$r["name"]?></a></b>)</td>
+		<td><b><a href="award_view.php?id=<?php echo $r["awardID"]?>"><?php echo $r["awardTitle"]?></a></b> (awarded by <b><a href="funder_view.php?id=<?php echo $r["funderID"]?>"><?php echo $r["name"]?></a></b>)</td>
 	</tr>
 	<tr>
 		<td class="gray">Activity</td>
-		<td><b><?=$r["activityTitle"]?></b></td>
+		<td><b><?php echo $r["activityTitle"]?></b></td>
 	</tr>
 	<tr>
 		<td class="gray">Date</td>
-		<td><?=format_date($r["activityDate"])?></td>
+		<td><?php echo format_date($r["activityDate"])?></td>
 	</tr>
 	<tr>
 		<td class="gray">Staff Responsible</td>
-		<td><a href="/staff/view.php?id=<?=$r["activityAssignedTo"]?>"><?=$r["assignedTo"]?></a></td>
+		<td><a href="/staff/view.php?id=<?php echo $r["activityAssignedTo"]?>"><?php echo $r["assignedTo"]?></a></td>
 	</tr>
 	<tr>
 		<td class="gray">Posted</td>
-		<td><?=format_date($r["activityPostedOn"])?> by <a href="/staff/view.php?id=<?=$r["activityPostedBy"]?>"><?=$r["postedBy"]?></a></td>
+		<td><?php echo format_date($r["activityPostedOn"])?> by <a href="/staff/view.php?id=<?php echo $r["activityPostedBy"]?>"><?php echo $r["postedBy"]?></a></td>
 	</tr>
 	<tr>
 		<td class="gray">Status</td>
 		<td>
-			<select class="field" onChange="javascript:location.href='<?=$_josh["request"]["path_query"]?>&toggleStatus=' + this.value;">
-				<option value="0" <?if(!$r["isComplete"]){?> selected<?}?>>Incomplete</option>
-				<option value="1" <?if( $r["isComplete"]){?> selected<?}?>>Complete</option>
+			<select class="field" onChange="javascript:location.href='<?php echo $_josh["request"]["path_query"]?>&toggleStatus=' + this.value;">
+				<option value="0" <?php if(!$r["isComplete"]){?> selected<?php }?>>Incomplete</option>
+				<option value="1" <?php if( $r["isComplete"]){?> selected<?php }?>>Complete</option>
 			</select>
 		</td>
 	</tr>
 	<tr>
 		<td class="gray" valign="top" height="80">Notes:</td>
-		<td valign="top"><?=nl2br($r["activityText"])?></td>
+		<td valign="top"><?php echo nl2br($r["activityText"])?></td>
 	</tr>
-	<? if ($isAdmin && !$printing) {?>
+	<?php if ($isAdmin && !$printing) {?>
 	<tr class="gray">
-		<td colspan="2" align="center"><?=draw_form_button("edit activity note","activity_edit.php?id=" . $_GET["id"])?></td>
+		<td colspan="2" align="center"><?php echo draw_form_button("edit activity note","activity_edit.php?id=" . $_GET["id"])?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

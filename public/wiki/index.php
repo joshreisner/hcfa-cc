@@ -11,7 +11,7 @@ drawTop();
 
 ?>
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	echo drawHeaderRow("Main Page", 4);
 	$topics = db_query("SELECT 
 		w.id,
@@ -36,11 +36,11 @@ drawTop();
 	while ($t = db_fetch($topics)) {?>
 	<tr height="36">
 		<td></td>
-		<td><a href="topic.php?id=<?=$t["id"]?>"><?=$t["title"]?></a></td>
-		<td><?=$t["first"]?> <?=$t["last"]?></td>
-		<td align="right"><?=format_date($t["createdOn"])?></td>
+		<td><a href="topic.php?id=<?php echo $t["id"]?>"><?php echo $t["title"]?></a></td>
+		<td><?php echo $t["first"]?> <?php echo $t["last"]?></td>
+		<td align="right"><?php echo format_date($t["createdOn"])?></td>
 	</tr>
-	<? }
+	<?php }
 	} else {
 		echo drawEmptyResult("No Wiki Topics have been entered into the system yet.<br>Perhaps you would like to <a href='#bottom'>add one</a>?", 4);
 	}?>
@@ -48,7 +48,7 @@ drawTop();
 
 <a name="bottom"></a>
 
-<? if ($isAdmin && !$printing) {
+<?php if ($isAdmin && !$printing) {
 	$form = new intranet_form;
 	if ($isAdmin) $form->addUser("createdBy",  "Posted By" , $user["id"], false, true);
 	$form->addRow("itext",  "Title" , "title", "", "", true, 255);

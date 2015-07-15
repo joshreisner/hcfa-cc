@@ -1,4 +1,4 @@
-<?  include("../include.php");
+<?php  include("../include.php");
 
 if (url_action("delete")) {
 	db_query("UPDATE board_members SET 
@@ -36,7 +36,7 @@ drawTop();
 ?>
 
 <table class="left" cellspacing="1">
-	<? if ($isAdmin) {
+	<?php if ($isAdmin) {
 		$colspan = 3;
 		echo drawHeaderRow("Board Members", $colspan, "new", "#bottom");
 	} else {
@@ -46,9 +46,9 @@ drawTop();
 	<tr>
 		<th align="left" width="60%">Name</th>
 		<th align="left" width="40%">Position on Board</th>
-		 <? if ($isAdmin) echo "<th width='16'></th>"; ?>
+		 <?php if ($isAdmin) echo "<th width='16'></th>"; ?>
 	</tr>
-	<?
+	<?php
 	$result = db_query("SELECT
 					m.id,
 					m.firstname,
@@ -67,16 +67,16 @@ drawTop();
 		}
 	 ?>
 	    <tr>
-	        <td><a href="member.php?id=<?=$r["id"]?>"><?=$r["lastname"]?>, <?=$r["firstname"]?></a></td>
-	        <td><nobr><?=$r["positionOnBoard"]?></nobr></td>
-			<?=deleteColumn("Are you sure you want to delete this board member?", $r["id"])?>
+	        <td><a href="member.php?id=<?php echo $r["id"]?>"><?php echo $r["lastname"]?>, <?php echo $r["firstname"]?></a></td>
+	        <td><nobr><?php echo $r["positionOnBoard"]?></nobr></td>
+			<?php echo deleteColumn("Are you sure you want to delete this board member?", $r["id"])?>
 	    </tr>
-	<? }?>
+	<?php }?>
 </table>
 
 <a name="bottom"></a><br>
 
-<? if ($isAdmin) {
+<?php if ($isAdmin) {
 	$form = new intranet_form;
 	$form->addRow("itext",  "First Name" , "firstname", "", "", true, 255);
 	$form->addRow("itext",  "Last Name" , "lastname", "", "", true, 255);

@@ -1,9 +1,9 @@
-<?  include("../include.php");
+<?php  include("../include.php");
 	drawTop();
 	
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Reports", 2)?>
+	<?php echo drawHeaderRow("Reports", 2)?>
 	<tr>
 		<th align="left" width="82%">Report Name</th>
 		<th align="right" width="18%" align="right">Date Created</th>
@@ -34,4 +34,4 @@
 		<td align="right"><nobr>May 20, 2003</nobr></td>
 	</tr>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

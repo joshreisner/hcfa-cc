@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 if (isset($_GET["deleteID"])) {
@@ -16,7 +16,7 @@ drawNavigation();
 
 ?>
 <table class="left" cellspacing="1">
-	<? if ($isAdmin) {
+	<?php if ($isAdmin) {
 		echo drawHeaderRow("Consultants", 6, "add new staff member", "add_edit.php");
 	} else {
 		echo drawHeaderRow("Consultants", 5);
@@ -27,11 +27,11 @@ drawNavigation();
 		<th align="left">Title</th>
 		<th align="left">Location</th>
 		<th align="left">Phone</th>
-	<? if ($isAdmin) {?>
+	<?php if ($isAdmin) {?>
 		<th></th>
-	<? } ?>
+	<?php } ?>
 	</tr>
-	<?
+	<?php
 		
 	$result = db_query("SELECT 
 							u.userID, 
@@ -55,22 +55,22 @@ drawNavigation();
 						ORDER BY u.lastname, ISNULL(u.nickname, u.firstname)");
 	while ($r = db_fetch($result)) {?>
 	<tr height="38">
-		<? if ($r["imageID"]) {
+		<?php if ($r["imageID"]) {
 			verifyImage($r["imageID"]);
 			$factor      = (31 / $r["height"]);
 			$r["width"]  = $r["width"]  * $factor;
 			$r["height"] = $r["height"] * $factor;
 			?>
-		<td width="47" align="center"><a href="/staff/view.php?id=<?=$r["userID"]?>"><img src="/data/staff/<?=$r["imageID"]?>.jpg" width="<?=$r["width"]?>" height="<?=$r["height"]?>" border="0"></a></td>
-		<? } else {?>
+		<td width="47" align="center"><a href="/staff/view.php?id=<?php echo $r["userID"]?>"><img src="/data/staff/<?php echo $r["imageID"]?>.jpg" width="<?php echo $r["width"]?>" height="<?php echo $r["height"]?>" border="0"></a></td>
+		<?php } else {?>
 		<td>&nbsp;</td>
-		<? }?>
-		<td><nobr><a href="view.php?id=<?=$r["userID"]?>"><?=$r["lastname"]?>, <?=$r["firstname"]?></a></nobr></td>
-		<td><?=$r["title"]?></td>
-		<td><?=$r["office"]?></td>
-		<td align="right"><nobr><?=format_phone($r["phone"])?></nobr></td>
-		<?=deleteColumn("Delete this staff member?", $r["userID"])?>
+		<?php }?>
+		<td><nobr><a href="view.php?id=<?php echo $r["userID"]?>"><?php echo $r["lastname"]?>, <?php echo $r["firstname"]?></a></nobr></td>
+		<td><?php echo $r["title"]?></td>
+		<td><?php echo $r["office"]?></td>
+		<td align="right"><nobr><?php echo format_phone($r["phone"])?></nobr></td>
+		<?php echo deleteColumn("Delete this staff member?", $r["userID"])?>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

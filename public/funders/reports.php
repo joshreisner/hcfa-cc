@@ -1,11 +1,11 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 drawTop();
 
 
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Reports", 4)?>
+	<?php echo drawHeaderRow("Reports", 4)?>
 	<tr>
 		<th align="left" width="40%">Funder / Award</th>
 		<th align="right">Start / End Date</th>
@@ -13,7 +13,7 @@ drawTop();
 		<th align="left" width="20%">Activity</th>
 		<th align="right">Due Date</th>
 	</tr>
-	<?
+	<?php
 	//not sure why, but activityAssignedTo is returning empty on first row (sara johnston)
 	//commenting out, bc don't think it's worth fixing right now
 	$result = db_query("SELECT
@@ -33,13 +33,13 @@ drawTop();
 		ORDER BY f.name, a.awardTitle");
 	while ($r = db_fetch($result)) {?>
 	<tr>
-		<td><a href="funder_view.php?id=<?=$r["funderID"]?>"><?=$r["name"]?></a> / <br>
-			<a href="award_view.php?id=<?=$r["awardID"]?>"><?=$r["awardTitle"]?></a></td>
-		<td align="right"><?=format_date($r["awardStartDate"]);?><br><?=format_date($r["awardEndDate"]);?></td>
-		<!--<td><a href="/staff/view.php?id=<?=$r["activityAssignedTo"]?>"><?=$r["activityAssignedName"]?></a></td>-->
-		<td><?=$r["activityTitle"]?></td>
-		<td align="right"><?=format_date($r["activityDate"], false, "", "");?></td>
+		<td><a href="funder_view.php?id=<?php echo $r["funderID"]?>"><?php echo $r["name"]?></a> / <br>
+			<a href="award_view.php?id=<?php echo $r["awardID"]?>"><?php echo $r["awardTitle"]?></a></td>
+		<td align="right"><?php echo format_date($r["awardStartDate"]);?><br><?php echo format_date($r["awardEndDate"]);?></td>
+		<!--<td><a href="/staff/view.php?id=<?php echo $r["activityAssignedTo"]?>"><?php echo $r["activityAssignedName"]?></a></td>-->
+		<td><?php echo $r["activityTitle"]?></td>
+		<td align="right"><?php echo format_date($r["activityDate"], false, "", "");?></td>
 	</tr>
-	<?}?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

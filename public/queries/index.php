@@ -1,4 +1,4 @@
-<?  include("../include.php");
+<?php  include("../include.php");
 
 if (url_action("delete")) {
 	db_query("DELETE FROM queries WHERE id = " . $_GET["id"]);
@@ -8,7 +8,7 @@ if (url_action("delete")) {
 drawTop();
 ?>	
 <table class="left" cellspacing="1">
-	<? if ($isAdmin) {
+	<?php if ($isAdmin) {
 		echo drawHeaderRow("Reports", 6, "new", "query_edit.php");
 	} else {
 		echo drawHeaderRow("Reports", 5);
@@ -19,9 +19,9 @@ drawTop();
 		<th width="60">DLs</th>
 		<th width="80">C/R</th>
 		<th align="right">Updated</th>
-		<? if ($isAdmin) {?><th width="16"></th><? }?>
+		<?php if ($isAdmin) {?><th width="16"></th><?php }?>
 	</tr>
-	<? 
+	<?php 
 	if ($_josh["db"]["language"] == "mssql") {
 		$result = db_query("SELECT 
 				q.id,
@@ -49,13 +49,13 @@ drawTop();
 	}
 	while ($r = db_fetch($result)) {?>
 	<tr height="46">
-		<td><a href="download.php?id=<?=$r["id"]?>"><img src="<?=$locale?>images/doctypes/xls.png" width="16" height="16" border="0"></a></td>
-		<td><a href="download.php?id=<?=$r["id"]?>"><b><?=$r["name"]?></b></a><? if($isAdmin){?>&nbsp;&nbsp;/&nbsp;<a href="query_edit.php?id=<?=$r["id"]?>">edit</a><?}?><br><?=$r["description"]?></td>
-		<td align="center"><?=number_format($r["downloads"])?></td>
-		<td align="center"><nobr><?=number_format($r["num_columns"])?> / <?=number_format($r["num_rows"])?></nobr></td>
-		<td align="right"><nobr><?=format_date($r["updatedOn"])?></nobr></td>
-		<?=deleteColumn("Delete this database query?", $r["id"])?>
+		<td><a href="download.php?id=<?php echo $r["id"]?>"><img src="<?php echo $locale?>images/doctypes/xls.png" width="16" height="16" border="0"></a></td>
+		<td><a href="download.php?id=<?php echo $r["id"]?>"><b><?php echo $r["name"]?></b></a><?php if($isAdmin){?>&nbsp;&nbsp;/&nbsp;<a href="query_edit.php?id=<?php echo $r["id"]?>">edit</a><?php }?><br><?php echo $r["description"]?></td>
+		<td align="center"><?php echo number_format($r["downloads"])?></td>
+		<td align="center"><nobr><?php echo number_format($r["num_columns"])?> / <?php echo number_format($r["num_rows"])?></nobr></td>
+		<td align="right"><nobr><?php echo format_date($r["updatedOn"])?></nobr></td>
+		<?php echo deleteColumn("Delete this database query?", $r["id"])?>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom() ?>
+<?php drawBottom() ?>

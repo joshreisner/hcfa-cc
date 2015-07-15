@@ -1,4 +1,4 @@
-<?
+<?php
 include("include.php");
 
 if (isset($_GET["deleteID"])) {
@@ -22,14 +22,14 @@ drawTop();
 ?>
 <table class="navigation staff" cellspacing="1">
 	<tr class="staff-hilite">
-		<? foreach ($orgs as $key=>$value) {?>
-		<td width="14.28%"<? if ($_GET["id"] == $key) {?> class="selected"<? }?>><? if ($_GET["id"] != $key) {?><a href="organizations.php?id=<?=$key?>"><?} else {?><b><?}?><?=$value?></b></a></td>
-		<? }?>
+		<?php foreach ($orgs as $key=>$value) {?>
+		<td width="14.28%"<?php if ($_GET["id"] == $key) {?> class="selected"<?php }?>><?php if ($_GET["id"] != $key) {?><a href="organizations.php?id=<?php echo $key?>"><?php } else {?><b><?php }?><?php echo $value?></b></a></td>
+		<?php }?>
 	</tr>
 </table>
 
-<?
+<?php
 $where = ($_GET["id"] == 0) ? " IS NULL " : " = " . $_GET["id"];
 echo drawStaffList("u.isactive = 1 AND u.corporationID " . $where);
 
-drawBottom();?>
+drawBottom();

@@ -1,4 +1,4 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 drawTop();
 echo drawTableStart();
@@ -13,10 +13,10 @@ $errors = db_query("SELECT
 	ORDER BY e.createdOn DESC");
 while ($e = db_fetch($errors)) {?>
 	<tr>
-		<td><?=$e["name"]?></td>
-		<td><?=$e["first"]?> <?=$e["last"]?></td>
-		<td clas="r"><?=$e["createdOn"]?></td>
+		<td><?php echo $e["name"]?></td>
+		<td><?php echo $e["first"]?> <?php echo $e["last"]?></td>
+		<td clas="r"><?php echo $e["createdOn"]?></td>
 	</tr>
-<? }
+<?php }
 echo drawTableEnd();
 drawBottom();?>

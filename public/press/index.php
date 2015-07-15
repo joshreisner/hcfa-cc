@@ -1,4 +1,4 @@
-<?  include("../include.php");
+<?php  include("../include.php");
 
 if (url_action("delete")) {
 	db_query("UPDATE intranet_press_releases SET 
@@ -46,25 +46,25 @@ if (url_id()) {
 		WHERE id = " . $_GET["id"]);
 	?>
 	<table class="left" cellspacing="1">
-		<? if ($isAdmin) {
+		<?php if ($isAdmin) {
 			echo drawHeaderRow("Press Release", 1, "edit", "edit/?id=" . $_GET["id"]);
 		} else {
 			echo drawHeaderRow("Press Release", 1);
 		}?>
 		<tr>
 			<td style="padding:20px;" class="text">
-				<h1><?=$r["headline"]?></h1>
-				<b><?=$r["detail"]?></b><br>
-				<i><?=format_date($r["releaseDate"], "n/a", "M d, Y", false)?> ~ <?=$r["location"]?></i><br>
+				<h1><?php echo $r["headline"]?></h1>
+				<b><?php echo $r["detail"]?></b><br>
+				<i><?php echo format_date($r["releaseDate"], "n/a", "M d, Y", false)?> ~ <?php echo $r["location"]?></i><br>
 				<br>
-				<?=$r["text"]?>
+				<?php echo $r["text"]?>
 			</td>
 		</tr>
 	</table>
-<? } else {?>
+<?php } else {?>
 	
 	<table class="left" cellspacing="1">
-		<? if ($isAdmin) {
+		<?php if ($isAdmin) {
 			echo drawHeaderRow("Press Releases", 4, "new", "#bottom");
 		} else {
 			echo drawHeaderRow("Press Releases", 3);
@@ -73,9 +73,9 @@ if (url_id()) {
 			<th align="left" width="62%">Headline</th>
 			<th align="left" width="18%">Organization</th>
 			<th align="right">Date</th>
-			 <? if ($isAdmin) echo "<th></th>"; ?>
+			 <?php if ($isAdmin) echo "<th></th>"; ?>
 		</tr>
-		<?
+		<?php
 		$result = db_query("SELECT
 						p.id,
 						p.headline,
@@ -88,17 +88,17 @@ if (url_id()) {
 	
 		while ($r = db_fetch($result)) { ?>
 		    <tr height="40">
-		        <td><a href="./?id=<?=$r["id"]?>"><?=$r["headline"]?></a></td>
-		        <td><nobr><?=$r["corporationName"]?></nobr></td>
-		        <td align="right"><nobr><?=format_date($r["releaseDate"], "n/a", "M d, Y", false)?></nobr></td>
-				<?=deleteColumn("Delete this press release?", $r["id"])?>
+		        <td><a href="./?id=<?php echo $r["id"]?>"><?php echo $r["headline"]?></a></td>
+		        <td><nobr><?php echo $r["corporationName"]?></nobr></td>
+		        <td align="right"><nobr><?php echo format_date($r["releaseDate"], "n/a", "M d, Y", false)?></nobr></td>
+				<?php echo deleteColumn("Delete this press release?", $r["id"])?>
 		    </tr>
-		<? }?>
+		<?php }?>
 	</table>
 	
 	<a name="bottom"></a>
 	
-	<? if ($isAdmin && !$printing) {
+	<?php if ($isAdmin && !$printing) {
 		$form = new intranet_form;
 		if ($isAdmin) $form->addUser("createdBy",  "Posted By" , $user["id"], false, "EEDDCC");
 		$form->addRow("itext",  "Headline" , "headline", "", "", true, 255);

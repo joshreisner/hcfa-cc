@@ -1,4 +1,4 @@
-<?
+<?php
 include("include.php");
 
 if ($posting) {
@@ -137,7 +137,7 @@ if (!isset($_GET["month"])) $_GET["month"] = $month;
 if (!isset($_GET["year"])) $_GET["year"]   = $year;
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow($_josh["months"][$_GET["month"]-1] . ", " . $_GET["year"], 7, "new", "#bottom");?>
+	<?php echo drawHeaderRow($_josh["months"][$_GET["month"]-1] . ", " . $_GET["year"], 7, "new", "#bottom");?>
 	<tr>
 		<th>Sunday</th>
 		<th>Monday</th>
@@ -147,10 +147,10 @@ if (!isset($_GET["year"])) $_GET["year"]   = $year;
 		<th>Friday</th>
 		<th>Saturday</th>
 	</tr>
-<?
+<?php
 // === OUTER LOOP: WEEKS ====================================================
 		for ($week = 1, $thisday = 1; ($thisday < $lastday); $week++) {
-			?><tr class="calendar"><?
+			?><tr class="calendar"><?php
 
 // === INNER LOOP: DAYS======================================================
 				for ($day = 1; $day <= 7; $day++) {
@@ -160,18 +160,18 @@ if (!isset($_GET["year"])) $_GET["year"]   = $year;
 						if (($_GET["year"] == $_josh["year"]) && ($_GET['month'] == $_josh["month"]) && ($thisday == $_josh["today"])) $bgcolor = "#fffceo";
 						if (isset($holidays[$thisday])) $bgcolor = "#ffe9e9";
 						?>
-		<td bgcolor="<?=$bgcolor?>" width="14%" height="80" valign="top">
-			<div style="float:right;"><?=$thisday?></div>
+		<td bgcolor="<?php echo $bgcolor?>" width="14%" height="80" valign="top">
+			<div style="float:right;"><?php echo $thisday?></div>
 			<br>
-			<? 	if (isset($holidays[$thisday])) echo $holidays[$thisday] . "<br>";
+			<?php 	if (isset($holidays[$thisday])) echo $holidays[$thisday] . "<br>";
 
 				if (isset($events[$thisday])) {
 					while (list($eventID, $eventArr) = each($events[$thisday])) { 
 						$title = $eventArr["title"];
 						$color = $eventArr["color"];
 						?>
-					<a href="event.php?id=<?=$eventID?>" <?if ($color) {?>class="block" style="background-color:<?=$color?>;"<?}?>><?=$title?></a><br><br>
-					<? }
+					<a href="event.php?id=<?php echo $eventID?>" <?php if ($color) {?>class="block" style="background-color:<?php echo $color?>;"<?php }?>><?php echo $title?></a><br><br>
+					<?php }
 				}
 				
 			//timesheets due?
@@ -179,27 +179,27 @@ if (!isset($_GET["year"])) $_GET["year"]   = $year;
 				$timesheet = round((date("U", mktime(0,0,0,$_GET["month"],$thisday,$_GET["year"])) - 1042434000) / 1209600, 1);
 				if ($timesheet == round($timesheet)) {?>
 					<a href="/documents/history.php?id=108" class="calendaractivity"><b>Timesheets Are Due</b></a>
-				<? }
+				<?php }
 			}?>
 
 		</td>
-						<?
+						<?php
 					} else {
 						?>
 		<td width="14%" height="60" valign="top" align="right" bgcolor="#f3f3f3">&nbsp;</td>
-						<?
+						<?php
 					}
 				}
-			?></tr><?
+			?></tr><?php
 		}?>
 		<tr style="background-color:#f3f3f3">
-			<td>&lt; <a href="/cal/?month=<?=$prevmonth?>&year=<?=$prevyear?>"><?=$_josh["months"][$prevmonth-1]?></a></td>
+			<td>&lt; <a href="/cal/?month=<?php echo $prevmonth?>&year=<?php echo $prevyear?>"><?php echo $_josh["months"][$prevmonth-1]?></a></td>
 			<td colspan="5"></td>
-			<td align="right"><a href="/cal/?month=<?=$nextmonth?>&year=<?=$nextyear?>"><?=$_josh["months"][$nextmonth-1]?></a> &gt;</td>
+			<td align="right"><a href="/cal/?month=<?php echo $nextmonth?>&year=<?php echo $nextyear?>"><?php echo $_josh["months"][$nextmonth-1]?></a> &gt;</td>
 		</tr>
 </table>
 <a name="bottom"></a>
-<?
+<?php
 if (!$printing) {
 	$form = new intranet_form;
 	if ($isAdmin) {

@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 drawTop();
 
@@ -76,6 +76,6 @@ mail($to, $subject, $message, $headers);
 
 email sent
 
-<?
+<?php
 drawBottom();
 ?>

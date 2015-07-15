@@ -1,4 +1,5 @@
-<?	include("../include.php");
+<?php
+include('../include.php');
 
 if (url_action("delete")) {
 	db_query("UPDATE intranet_objects SET
@@ -66,16 +67,16 @@ if (!$i["id"]) {
 	<script language="javascript">
 		<!--
 		function confirmDelete(id) {
-			if (confirm("Are you sure you want to delete this contact?")) location.href='<?=url_action_add("delete")?>';
+			if (confirm("Are you sure you want to delete this contact?")) location.href='<?php echo url_action_add("delete")?>';
 		}
 		
 		function confirmExpunge(id) {
-			if (confirm("Are you sure you want to expunge this contact?")) location.href='<?=url_action_add("expunge")?>';
+			if (confirm("Are you sure you want to expunge this contact?")) location.href='<?php echo url_action_add("expunge")?>';
 		}
 		//-->
 	</script>
 	<table class="left" cellspacing="1">
-		<?
+		<?php
 		if ($isAdmin && $i["isActive"]) {
 			echo drawHeaderRow("View Contact", 3, "edit", "contact_edit.php?id=" . $_GET["id"], "delete", "javascript:confirmDelete({$_GET["id"]});");
 		} elseif ($isAdmin && !$i["isActive"]) {
@@ -87,54 +88,54 @@ if (!$i["id"]) {
 		}?>
 		<tr>
 			<td class="left">Name</td>
-			<td width="82%" colspan="2" class="input"><font size="+1"><b><? if(!$i["isActive"]) {?><strike><font color="#666666"><?}?><? if($i["salutation"]) {?><?=$i["salutation"]?> <?}?><?=$i["first"]?> <? if($i["nickname"]) {?>(<?=$i["nickname"]?>)<?}?> <?=$i["last"]?><? if($i["suffix"]) {?>, <?=$i["suffix"]?><?}?><? if(!$i["isActive"]) {?></strike></font><? }?></b></font></td>
+			<td width="82%" colspan="2" class="input"><font size="+1"><b><?php if(!$i["isActive"]) {?><strike><font color="#666666"><?php }?><?php if($i["salutation"]) {?><?php echo $i["salutation"]?> <?php }?><?php echo $i["first"]?> <?php if($i["nickname"]) {?>(<?php echo $i["nickname"]?>)<?php }?> <?php echo $i["last"]?><?php if($i["suffix"]) {?>, <?php echo $i["suffix"]?><?php }?><?php if(!$i["isActive"]) {?></strike></font><?php }?></b></font></td>
 		</tr>
-		<? if ($i["org"]) {?>
+		<?php if ($i["org"]) {?>
 		<tr>
 			<td class="left">Company</td>
-			<td colspan="2" class="input" width="82%"><?=$i["org"]?></td>
+			<td colspan="2" class="input" width="82%"><?php echo $i["org"]?></td>
 		</tr>
-		<? }
+		<?php }
 		if ($i["title"]) {?>
 		<tr>
 			<td class="left">Job Title</td>
-			<td colspan="2" class="input" width="82%"><?=$i["title"]?></td>
+			<td colspan="2" class="input" width="82%"><?php echo $i["title"]?></td>
 		</tr>
-		<? }?>
+		<?php }?>
 		<tr valign="top">
 			<td class="left">Address</td>
-			<td colspan="2" class="input" width="82%"><?=$i["address1"]?><br><? if($i["address2"]) {?><?=$i["address2"]?><br><?}?><?=$i["city"]?>, <?=$i["state"]?> <?=$i["zip"]?></td>
+			<td colspan="2" class="input" width="82%"><?php echo $i["address1"]?><br><?php if($i["address2"]) {?><?php echo $i["address2"]?><br><?php }?><?php echo $i["city"]?>, <?php echo $i["state"]?> <?php echo $i["zip"]?></td>
 		</tr>
-		<? if ($i["phone"]) {?>
+		<?php if ($i["phone"]) {?>
 		<tr>
 			<td class="left">Phone</td>
-			<td colspan="2" class="input" width="82%"><?=$i["phone"]?></td>
+			<td colspan="2" class="input" width="82%"><?php echo $i["phone"]?></td>
 		</tr>
-		<? }
+		<?php }
 		if ($i["fax"]) {?>
 		<tr>
 			<td class="left">Fax</td>
-			<td colspan="2" class="input" width="82%"><?=$i["fax"]?></td>
+			<td colspan="2" class="input" width="82%"><?php echo $i["fax"]?></td>
 		</tr>
-		<? }
+		<?php }
 		if ($i["cell"]) {?>
 		<tr>
 			<td class="left">Cell</td>
-			<td colspan="2" class="input" width="82%"><?=$i["cell"]?></td>
+			<td colspan="2" class="input" width="82%"><?php echo $i["cell"]?></td>
 		</tr>
-		<? }
+		<?php }
 		if ($i["email"]) {?>
 		<tr>
 			<td class="left">E-mail Address</td>
-			<td colspan="2" class="input" width="82%"><a href="mailto:<?=$i["email"]?>"><?=$i["email"]?></a></td>
+			<td colspan="2" class="input" width="82%"><a href="mailto:<?php echo $i["email"]?>"><?php echo $i["email"]?></a></td>
 		</tr>
-		<? }
+		<?php }
 		if (strlen(trim($i["notes"]))) {?>
 		<tr valign="top">
 			<td class="left">Notes</td>
-			<td colspan="2" class="input" width="82%"><?=nl2br($i["notes"])?></td>
+			<td colspan="2" class="input" width="82%"><?php echo nl2br($i["notes"])?></td>
 		</tr>
-		<? }
+		<?php }
 		$found = false;
 		$output = '<tr class="group"><td colspan="3">Tags</td></tr>';
 		$tags = db_query("SELECT 
@@ -165,7 +166,7 @@ if (!$i["id"]) {
 			<th width="60%" align="left">What</th>
 			<th width="22%" align="right">When</th>
 		</tr>
-		<?
+		<?php
 		$instances = db_query("SELECT
 					i.id,
 					o.instanceFirstID,

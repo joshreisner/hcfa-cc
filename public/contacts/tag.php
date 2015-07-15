@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 if (!$isAdmin) url_change("tags.php");
@@ -58,11 +58,11 @@ drawTop();
 	}
 	
 	function deactivateTagType(id) {
-		if (confirm("Are you sure you want to deactivate this tag type?")) location.href = "tag.php?id=<?=$_GET["id"]?>&deactivateTagType=" + id;
+		if (confirm("Are you sure you want to deactivate this tag type?")) location.href = "tag.php?id=<?php echo $_GET["id"]?>&deactivateTagType=" + id;
 	}
 	
 	function deactivateTag(id) {
-		if (confirm("Are you sure you want to deactivate this tag?")) location.href = "tag.php?id=<?=$_GET["id"]?>&deactivateTag=" + id;
+		if (confirm("Are you sure you want to deactivate this tag?")) location.href = "tag.php?id=<?php echo $_GET["id"]?>&deactivateTag=" + id;
 	}
 	
 	function generateExcel() {
@@ -88,7 +88,7 @@ drawTop();
 </script>
 
 <table width="100%" cellpadding="3" cellspacing="1" border="0" bgcolor="#EEEEEE">
-	<?
+	<?php
 	$t = db_grab("SELECT name FROM intranet_tags_types WHERE id = " . $_GET["id"]);
 	echo drawHeaderRow("<a href='tags.php' class='white'>Tags</a> &gt; " . $t["name"], 3, "alphabetize", "tag.php?alphabetize=true&id=" . $_GET["id"])
 	?>
@@ -98,7 +98,7 @@ drawTop();
 		<td width="20%" align="right"># Contacts</td>
 		<td width="16"></td>
 	</tr>
-		<?
+		<?php
 		$values = db_query("SELECT
 							t.id, 
 							t.tag, 
@@ -111,11 +111,11 @@ drawTop();
 						ORDER BY t.precedence");
 		while ($v = db_fetch($values)) {?>
 	<tr class="helptext" bgcolor="#FFFFFF">
-		<td width="80%"><a href="value.php?id=<?=$v["id"]?>"><?=$v["tag"]?></a></td>
-		<td align="right"><?=number_format($v["contactcount"])?></td>
-		<td width="16"><a href="javascript:deactivateTag(<?=$v["id"]?>);"><img src="/images/icons/delete.gif" width="16" height="16" border="0"></a></td>
+		<td width="80%"><a href="value.php?id=<?php echo $v["id"]?>"><?php echo $v["tag"]?></a></td>
+		<td align="right"><?php echo number_format($v["contactcount"])?></td>
+		<td width="16"><a href="javascript:deactivateTag(<?php echo $v["id"]?>);"><img src="/images/icons/delete.gif" width="16" height="16" border="0"></a></td>
 	</tr>
-	<?}?>
+	<?php }?>
 	</form>
 </table>
 <br>
@@ -123,14 +123,14 @@ drawTop();
 	<tr>
 		<td class="bold" bgcolor="#F6F6F6" colspan="2">Add New Tag</td>
 	</tr>
-	<form method="post" action="<?=$request["path_query"]?>" onsubmit="return validate(this);">
+	<form method="post" action="<?php echo $request["path_query"]?>" onsubmit="return validate(this);">
 	<tr class="helptext" bgcolor="#FFFFFF">
 		<td bgcolor="#F6F6F6">Name:</td>
-		<td><?=draw_form_text("tag")?></td>
+		<td><?php echo draw_form_text("tag")?></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center" bgcolor="#F6F6F6"><?=draw_form_submit("Add Tag")?></td>
+		<td colspan="2" align="center" bgcolor="#F6F6F6"><?php echo draw_form_submit("Add Tag")?></td>
 	</tr>
 	</form>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

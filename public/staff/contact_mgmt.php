@@ -1,4 +1,4 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 drawTop();
 drawNavigation();
@@ -15,20 +15,20 @@ $result = db_query("SELECT
 					ORDER BY u.lastname, ISNULL(u.nickname, u.firstname)");
 ?>
 <table class="left">
-	<?=drawHeaderRow("Management Contact Numbers", 4);?>
+	<?php echo drawHeaderRow("Management Contact Numbers", 4);?>
 	<tr bgcolor="#F6F6F6" class="small">
 		<th align="left">Name</th>
 		<th align="left">Title</th>
 		<th align="left">Home #</th>
 		<th align="left">Cell #</th>
 	</tr>
-	<? while ($r = db_fetch($result)) {?>
+	<?php while ($r = db_fetch($result)) {?>
 	<tr>
-		<td><a href="view.php?id=<?=$r["userID"]?>"><?=$r["first"]?> <?=$r["last"]?></a></td>
-		<td><?=$r["title"]?></td>
-		<td width="95"><?=format_phone($r["homephone"])?></td>
-		<td width="95"><?=format_phone($r["homecell"])?></td>
+		<td><a href="view.php?id=<?php echo $r["userID"]?>"><?php echo $r["first"]?> <?php echo $r["last"]?></a></td>
+		<td><?php echo $r["title"]?></td>
+		<td width="95"><?php echo format_phone($r["homephone"])?></td>
+		<td width="95"><?php echo format_phone($r["homecell"])?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

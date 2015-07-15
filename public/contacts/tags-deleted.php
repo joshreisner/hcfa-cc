@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 drawTop();
@@ -30,14 +30,14 @@ drawTop();
 </script>
 
 <table class="left">
-	<?=drawHeaderRow("Tags", 3, "hide deleted", "tags.php", "generate excel", "javascript:generateExcel();")?>
+	<?php echo drawHeaderRow("Tags", 3, "hide deleted", "tags.php", "generate excel", "javascript:generateExcel();")?>
 	<form name="taglist">
 	<tr bgcolor="#F6F6F6" class="small">
 		<th width="16"></th>
 		<th width="80%">Tag Name</th>
 		<th width="20%" align="right"># Contacts</th>
 	</tr>
-	<?
+	<?php
 	$types = db_query("SELECT
 							t.id, 
 							t.name
@@ -45,9 +45,9 @@ drawTop();
 						ORDER BY t.name");
 	while ($t = db_fetch($types)) {?>
 	<tr class="helptext" bgcolor="#FFFFFF" height="40" valign="bottom">
-		<td colspan="3"><?if($isAdmin) {?><a href="tag.php?id=<?=$t["id"]?>"><?}?><b><?=$t["name"]?></b></a></td>
+		<td colspan="3"><?php if($isAdmin) {?><a href="tag.php?id=<?php echo $t["id"]?>"><?php }?><b><?php echo $t["name"]?></b></a></td>
 	</tr>
-		<?
+		<?php
 		$values = db_query("SELECT
 							t.id, 
 							t.tag, 
@@ -60,13 +60,13 @@ drawTop();
 						WHERE t.typeID = {$t["id"]}
 						ORDER BY t.precedence");
 		while ($v = db_fetch($values)) {?>
-	<tr class="helptext<?if (!$v["isActive"]) {?>-deleted<?}?>" bgcolor="#FFFFFF">
-		<td width="16"><?=draw_form_checkbox("tag_" . $v["id"])?></td>
-		<td width="80%"><a href="value.php?id=<?=$v["id"]?>"><?=$v["tag"]?></a></td>
-		<td align="right"><?=number_format($v["contactcount"])?></td>
+	<tr class="helptext<?php if (!$v["isActive"]) {?>-deleted<?php }?>" bgcolor="#FFFFFF">
+		<td width="16"><?php echo draw_form_checkbox("tag_" . $v["id"])?></td>
+		<td width="80%"><a href="value.php?id=<?php echo $v["id"]?>"><?php echo $v["tag"]?></a></td>
+		<td align="right"><?php echo number_format($v["contactcount"])?></td>
 	</tr>
-		<?}
+		<?php }
 	}?>
 	</form>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

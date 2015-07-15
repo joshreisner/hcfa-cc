@@ -1,4 +1,4 @@
-<?  
+<?php  
 include("../include.php");
 
 //if no id, go to funders
@@ -34,62 +34,62 @@ $r = db_grab("SELECT
 <script language="javascript">
 	<!--
 	function deleteAward(id,title) {
-		if (confirm("Are you sure you want to delete this award?")) location.href="<?=$_josh["request"]["path_query"]?>&delAward=" + id;
+		if (confirm("Are you sure you want to delete this award?")) location.href="<?php echo $_josh["request"]["path_query"]?>&delAward=" + id;
 	}
 		
 	function deleteActivity(id,title) {
-		if (confirm("Are you sure you want to delete this activity note?")) location.href="<?=$_josh["request"]["path_query"]?>&delActivity=" + id;
+		if (confirm("Are you sure you want to delete this activity note?")) location.href="<?php echo $_josh["request"]["path_query"]?>&delActivity=" + id;
 	}
 	//-->
 </script>
 <table class="left" cellspacing="1">
-	<? if ($isAdmin && !$printing) {
+	<?php if ($isAdmin && !$printing) {
 		echo drawHeaderRow("View Funder", 2, "edit", "funder_add_edit.php?id=" . $_GET["id"]);
 	} else {
 		echo drawHeaderRow("View Funder", 2);
 	}?>
 	<tr>
 		<td class="left"><nobr>Name:</nobr></td>
-		<td><b><?=$r["name"]?></b></td>
+		<td><b><?php echo $r["name"]?></b></td>
 	</tr>
 	<tr>
 		<td class="left"><nobr>Type:</nobr></td>
-		<td><?=$r["funderTypeDesc"]?></td>
+		<td><?php echo $r["funderTypeDesc"]?></td>
 	</tr>
 	<tr>
 		<td class="left"><nobr>Status:</nobr></td>
-		<td><b><?=$r["FunderStatusDesc"]?></b></td>
+		<td><b><?php echo $r["FunderStatusDesc"]?></b></td>
 	</tr>
 	<tr>
 		<td class="left"><nobr>Funder Contact:</nobr></td>
-		<td><?=$r["staffname"]?></td>
+		<td><?php echo $r["staffname"]?></td>
 	</tr>
 	<tr valign="top">
 		<td class="left"><nobr>Program Interests:</nobr></td>
 		<td>
-			<? 
+			<?php 
 			$result_programs = db_query("SELECT 
 				programDesc 
 				FROM intranet_programs p
 				INNER JOIN Resources_Funders_Program_Interests fp on p.programID = fp.programID
 				WHERE fp.funderID = " . $_GET["id"]);
 			while ($rp = db_fetch($result_programs)) {?>
-			&#183; <?=$rp["programDesc"]?><br>
-			<? }?>
+			&#183; <?php echo $rp["programDesc"]?><br>
+			<?php }?>
 		</td>
 	</tr>
 	<tr valign="top">
 		<td class="left"><nobr>Geographic Interests:</nobr></td>
 		<td>
-			<? 
+			<?php 
 			$result_geographic_areas = db_query("SELECT 
 				geographicAreaDesc 
 				FROM intranet_geographic_areas g
 				INNER JOIN Resources_Funders_Geographic_Interests gp on g.geographicAreaID = gp.geographicAreaID
 				WHERE gp.funderID = " . $_GET["id"]);
 			while ($rg = db_fetch($result_geographic_areas)) {?>
-			&#183; <?=$rg["geographicAreaDesc"]?><br>
-			<?}?>
+			&#183; <?php echo $rg["geographicAreaDesc"]?><br>
+			<?php }?>
 		</td>
 	</tr>
 </table>
@@ -101,13 +101,13 @@ $r = db_grab("SELECT
 				<tr>
 					<td class="bold">Awards, Proposals, Strategies, etc.</td>
 					<td class="small" align="right">
-						<?if ($isAdmin && !$printing) {?>[ <a href="award_add_edit.php?funderID=<?=$_GET["id"]?>" class="black">add award / proposal</a> ]<?}?></td>
+						<?php if ($isAdmin && !$printing) {?>[ <a href="award_add_edit.php?funderID=<?php echo $_GET["id"]?>" class="black">add award / proposal</a> ]<?php }?></td>
 					</td>
 				</tr>
 			</table>
 		</td>
 	</tr>
-<?
+<?php
 $result_award_statuses = db_query("SELECT 
 					s.awardStatusID, 
 					s.awardStatusDescPlural,
@@ -119,7 +119,7 @@ while ($rsa = db_fetch($result_award_statuses)) {
 	if (!$rsa["awardCount"]) continue;
 	?>
 	<tr class="helptext">
-		<td colspan="6" bgcolor="#FFFFFF" height="40" valign="bottom"><b><?=$rsa["awardStatusDescPlural"]?></b></td>
+		<td colspan="6" bgcolor="#FFFFFF" height="40" valign="bottom"><b><?php echo $rsa["awardStatusDescPlural"]?></b></td>
 	</tr>
 	<tr class="left">
 		<th>Award Name</th>
@@ -129,7 +129,7 @@ while ($rsa = db_fetch($result_award_statuses)) {
 		<th>Amount</th>
 		<th></th>
 	</tr>
-<?
+<?php
 	$totalAwards = 0;
 	$result_awards = db_query("SELECT 
 			a.awardID,
@@ -148,21 +148,21 @@ while ($rsa = db_fetch($result_award_statuses)) {
 		$totalAwards += $ra["awardAmount"];
 	?>
 	<tr>
-		<td><a href="award_view.php?id=<?=$ra["awardID"]?>"><?=$ra["awardTitle"]?></a></td>
-		<td><nobr><?=$ra["programDesc"]?></nobr></td>
-		<td><nobr><?=$ra["awardTypeDesc"]?></nobr></td>
-		<td align="right"><?=format_date($ra["reportDate"], false, "", "")?></td>
-		<td align="right">$<?=number_format($ra["awardAmount"])?></td>
-		<td width="16"><a href="javascript:deleteAward(<?=$ra["awardID"]?>);"><img src="<?=$locale?>images/icons/delete.gif" width="16" height="16" border="0"></a></td>
+		<td><a href="award_view.php?id=<?php echo $ra["awardID"]?>"><?php echo $ra["awardTitle"]?></a></td>
+		<td><nobr><?php echo $ra["programDesc"]?></nobr></td>
+		<td><nobr><?php echo $ra["awardTypeDesc"]?></nobr></td>
+		<td align="right"><?php echo format_date($ra["reportDate"], false, "", "")?></td>
+		<td align="right">$<?php echo number_format($ra["awardAmount"])?></td>
+		<td width="16"><a href="javascript:deleteAward(<?php echo $ra["awardID"]?>);"><img src="<?php echo $locale?>images/icons/delete.gif" width="16" height="16" border="0"></a></td>
 	</tr>
-	<?}?>
+	<?php }?>
 	<tr class="total">
 		<td colspan="4" align="right" width="99%">Total:&nbsp;</td>
-		<td align="right" class="bold-w" width="20">$<?=number_format($totalAwards)?></td>
+		<td align="right" class="bold-w" width="20">$<?php echo number_format($totalAwards)?></td>
 		<td width="16"></td>
 	</tr>
-<?}
+<?php }
 if (!$total_awards) echo drawEmptyResult("No awards entered yet!", 6);
 ?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

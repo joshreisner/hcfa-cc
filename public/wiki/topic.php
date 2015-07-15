@@ -81,8 +81,8 @@ $t = db_grab("SELECT
 		} else {
 			var arrFile   = form.userfile.value.split(".");
 			var extension = arrFile[arrFile.length - 1].toLowerCase();
-			if (<?=implode(" && ", $extensions)?>) {
-				alert("Only these filetypes are supported by this system:\n\n <?=implode("\\n", $doctypes)?>\n\nPlease change your selection, or make sure that the \nappropriate extension is at the end of the filename.");
+			if (<?php echo implode(" && ", $extensions)?>) {
+				alert("Only these filetypes are supported by this system:\n\n <?php echo implode("\\n", $doctypes)?>\n\nPlease change your selection, or make sure that the \nappropriate extension is at the end of the filename.");
 				return false;
 			}
 		}
@@ -95,7 +95,7 @@ $t = db_grab("SELECT
 	}
 	//-->
 </script>
-	<?
+	<?php
 	echo drawTableStart();
 	if ($isAdmin) {
 		echo drawHeaderRow("View Topic", 2, "edit", "topic_edit.php?id=" . $_GET["id"], "delete", "topic_edit.php?deleteID=" . $_GET["id"]);
@@ -104,7 +104,7 @@ $t = db_grab("SELECT
 	}?>
 	<tr>
 		<td class="left">Type</td>
-		<td><a href="type.php?id=<?=$t["typeID"]?>"><?=$t["type"]?></a></td>
+		<td><a href="type.php?id=<?php echo $t["typeID"]?>"><?php echo $t["type"]?></a></td>
 	</tr>
 	<tr>
 		<td class="left">Tags</td>
@@ -126,12 +126,12 @@ $t = db_grab("SELECT
 		}?>
 		</td>
 	</tr>
-	<? if ($t["hasAttachments"]) {?>
+	<?php if ($t["hasAttachments"]) {?>
 	<tr>
 		<td class="left">Attachments</td>
 		<td>
 		<table class="nospacing">
-		<?
+		<?php
 				$attachments = db_query("SELECT
 				a.id,
 				a.title,
@@ -142,14 +142,14 @@ $t = db_grab("SELECT
 			WHERE a.topicID = " . $_GET["id"]);
 		while ($a = db_fetch($attachments)) {?>
 			<tr height="21">
-				<td width="18"><a href="download.php?id=<?=$a["id"]?>"><img src="<?=$locale?><?=$a["icon"]?>" width="16" height="16" border="0"></a></td>
-				<td><a href="download.php?id=<?=$a["id"]?>"><?=$a["title"]?></a></td>
+				<td width="18"><a href="download.php?id=<?php echo $a["id"]?>"><img src="<?php echo $locale?><?php echo $a["icon"]?>" width="16" height="16" border="0"></a></td>
+				<td><a href="download.php?id=<?php echo $a["id"]?>"><?php echo $a["title"]?></a></td>
 			</tr>
-		<? } ?>
+		<?php } ?>
 		</table>
 		</td>
 	</tr>
-	<? } 
+	<?php } 
 	echo drawThreadTop($t["title"], $t["description"], $t["createdBy"], $t["first"] . " " . $t["last"], $t["imageID"], $t["width"], $t["height"], $t["createdOn"]);
 		$comments = db_query("SELECT 
 				c.id, 
@@ -174,20 +174,20 @@ $t = db_grab("SELECT
 
 if (!$printing && $isAdmin) {?>
 <table class="left">
-	<?=drawHeaderRow("Attach Document", 2);?>
-	<form enctype="multipart/form-data" action="<?=$_josh["request"]["path_query"]?>" method="post" onsubmit="javascript:return validateComment(this);">
+	<?php echo drawHeaderRow("Attach Document", 2);?>
+	<form enctype="multipart/form-data" action="<?php echo $_josh["request"]["path_query"]?>" method="post" onsubmit="javascript:return validateComment(this);">
 	<tr>
 		<td class="left">Document Name</td>
-		<td><?=draw_form_text("title",  @$d["name"])?></td>
+		<td><?php echo draw_form_text("title",  @$d["name"])?></td>
 	</tr>
 	<tr>
 		<td class="left">File</td>
 		<td><input type="file" name="userfile" size="40" class="field" value=""></td>
 	</tr>
 	<tr>
-		<td class="bottom" colspan="2"><?=draw_form_submit("Attach Document");?></td>
+		<td class="bottom" colspan="2"><?php echo draw_form_submit("Attach Document");?></td>
 	</tr>
 	</form>
 </table>
-<? }
+<?php }
 drawBottom();?>

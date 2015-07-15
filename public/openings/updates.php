@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 drawTop();
 
@@ -21,20 +21,20 @@ $users = db_query("select
 	ORDER BY lastname");
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Staff Profiles Needing Update (" . db_found($users) . ")", 4);?>
+	<?php echo drawHeaderRow("Staff Profiles Needing Update (" . db_found($users) . ")", 4);?>
 	<tr>
 		<th width="25%" align="left">email</th>
 		<th width="30%" align="left">department</th>
 		<th width="30%" align="left">title</th>
 		<th width="15%" align="right">last login</th>
 	</tr>
-	<? while ($u = db_fetch($users)) {?>
+	<?php while ($u = db_fetch($users)) {?>
 	<tr>
-		<td><a href="/staff/view.php?id=<?=$u["userID"]?>"><?=$u["first"]?> <?=$u["last"]?></a></td>
-		<td><?=$u["departmentName"]?>
-		<td><?=$u["title"]?>
-		<td align="right"><?=format_date($u["lastlogin"])?></td>
+		<td><a href="/staff/view.php?id=<?php echo $u["userID"]?>"><?php echo $u["first"]?> <?php echo $u["last"]?></a></td>
+		<td><?php echo $u["departmentName"]?>
+		<td><?php echo $u["title"]?>
+		<td align="right"><?php echo format_date($u["lastlogin"])?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 if (url_action("delete")) {
@@ -21,7 +21,7 @@ drawTop();
 ?>
 
 <table class="left" cellspacing="1">
-    <?
+    <?php
     if ($isAdmin) {
     	echo drawHeaderRow("Document Info", 2, "edit","add_edit.php?id=" . $_GET["id"], "delete", deleteLink("Delete document?"));
     } else {
@@ -30,35 +30,35 @@ drawTop();
     ?>
 	<tr>
 		<td class="left">Name</td>
-		<td><h1><a href="download.php?id=<?=$_GET["id"]?>"><?=$d["name"]?></h1></a></td>
+		<td><h1><a href="download.php?id=<?php echo $_GET["id"]?>"><?php echo $d["name"]?></h1></a></td>
 	</tr>
 	<tr>
 		<td class="left">Type</td>
 		<td><table class="nospacing"><tr>
-			<td><?=draw_img($locale . $d["icon"])?></td>
-			<td><?=$d["fileType"]?> (<?=format_size(strlen($d["content"]))?>)</td>
+			<td><?php echo draw_img($locale . $d["icon"])?></td>
+			<td><?php echo $d["fileType"]?> (<?php echo format_size(strlen($d["content"]))?>)</td>
 			</tr></table>
 		</td>
 	</tr>
 	<tr>
 		<td class="left">Categories</td>
 		<td>
-			<? $categories = db_query("SELECT
+			<?php $categories = db_query("SELECT
 				c.description
 			FROM documents_to_categories d2c
 			JOIN documents_categories c ON d2c.categoryID = c.id
 			WHERE d2c.documentID = " . $_GET["id"]);
 				while ($c = db_fetch($categories)) {?>
-				 &#183; <?=$c["description"]?></a><br>
-			<? }?>
+				 &#183; <?php echo $c["description"]?></a><br>
+			<?php }?>
 		</td>
 	</tr>
 	<tr height="120">
 		<td class="left">Description</td>
-		<td class="text"><?=nl2br($d["description"])?></td>
+		<td class="text"><?php echo nl2br($d["description"])?></td>
 	</tr>
 </table>
-<?
+<?php
 $views = db_query("SELECT 
 			ISNULL(u.nickname, u.firstname) first,
 			u.lastname last,
@@ -77,13 +77,13 @@ if (db_found($views)) {?>
 		<th align="left">Name</th>
 		<th align="right">Date</th>
 	</tr>
-	<? while($v = db_fetch($views)) {?>
+	<?php while($v = db_fetch($views)) {?>
 	<tr>
-		<td width="70%"><a href="/staff/view.php?id=<?=$v["userID"]?>"><?=$v["first"]?> <?=$v["last"]?></a></td>
-		<td width="30%" align="right"><?=format_date_time($v["viewedOn"], " ")?></td>
+		<td width="70%"><a href="/staff/view.php?id=<?php echo $v["userID"]?>"><?php echo $v["first"]?> <?php echo $v["last"]?></a></td>
+		<td width="30%" align="right"><?php echo format_date_time($v["viewedOn"], " ")?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? 
+<?php 
 }
 drawBottom();?>

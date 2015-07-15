@@ -37,7 +37,7 @@ echo drawTicketFilter();
 ?>
 
 <table class="left" cellspacing="1">
-	<? 
+	<?php 
 	if (isset($_GET["id"])) {
 		$type	= db_grab("SELECT description name FROM helpdesk_tickets_types WHERE id = " . $_GET["id"]);
 		if (db_found($tickets)) {
@@ -68,4 +68,4 @@ echo drawTicketFilter();
 	}
 	?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

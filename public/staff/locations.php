@@ -1,4 +1,5 @@
-<?	include("include.php");
+<?php
+include('include.php');
 
 if (!isset($_GET["id"])) $_GET["id"] = 1;
 

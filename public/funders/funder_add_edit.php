@@ -1,4 +1,4 @@
-<?  include("../include.php");
+<?php  include("../include.php");
 
 if ($posting) {
 	if (isset($_GET["id"])) { //edit a funder			
@@ -73,27 +73,27 @@ if (isset($_GET["id"])) { //edit a funder
 ?>
 
 <table class="left" cellspacing="1">
-	<form name="frmFunder" action="<?=$_josh["request"]["path_query"]?>" method="post" onsubmit="javascript:return validate(this);">
-	<? if (isset($_GET["id"])) {
+	<form name="frmFunder" action="<?php echo $_josh["request"]["path_query"]?>" method="post" onsubmit="javascript:return validate(this);">
+	<?php if (isset($_GET["id"])) {
 		echo drawHeaderRow("Edit Funder", 2);
 	} else {
 		echo drawHeaderRow("Add Funder", 2);
 	}?>
 	<tr>
 		<td width="18%" class="gray">Name:</td>
-		<td width="82%"><?=@draw_form_text("name", $r["name"]);?></td>
+		<td width="82%"><?php echo @draw_form_text("name", $r["name"]);?></td>
 	</tr>
 	<tr>
 		<td class="gray"><nobr>Type:</nobr></td>
-		<td><?=draw_form_select("cboFunderTypes", "SELECT funderTypeID, funderTypeDesc FROM Resources_Funders_Types", @$r["funderTypeID"]);?></td>
+		<td><?php echo draw_form_select("cboFunderTypes", "SELECT funderTypeID, funderTypeDesc FROM Resources_Funders_Types", @$r["funderTypeID"]);?></td>
 	</tr>
 	<tr>
 		<td class="gray"><nobr>Status:</nobr></td>
-		<td><?=draw_form_select("cboFunderStatuses", "SELECT funderStatusID, funderStatusDesc FROM Resources_Funders_Statuses", @$r["funderStatusID"]);?></td>
+		<td><?php echo draw_form_select("cboFunderStatuses", "SELECT funderStatusID, funderStatusDesc FROM Resources_Funders_Statuses", @$r["funderStatusID"]);?></td>
 	</tr>
 	<tr>
 		<td class="gray"><nobr>Funder Contact:</nobr></td>
-		<td><?=drawSelectUser("cboStaff", @$r["staffID"]);?></td>
+		<td><?php echo drawSelectUser("cboStaff", @$r["staffID"]);?></td>
 	</tr>
 	<tr>
 		<td colspan="2">
@@ -105,7 +105,7 @@ if (isset($_GET["id"])) { //edit a funder
 							<tr>
 								<td width="100%" class="head" colspan="2">Program Interests</td>
 							</tr>
-							<?
+							<?php
 							$selected_programs = array();
 							if (isset($_GET["id"])) {
 								$result_programs_selected = db_query("SELECT programID FROM resources_funders_program_interests WHERE funderID = " . $_GET["id"]);
@@ -114,10 +114,10 @@ if (isset($_GET["id"])) { //edit a funder
 							$result_programs = db_query("SELECT programID, programDesc FROM intranet_programs ORDER BY programDesc");
 							while ($rp = db_fetch($result_programs)) {?>
 							<tr>
-								<td><input type="checkbox" name="chk_program_<?=$rp["programID"]?>"<?if(@$selected_programs[$rp["programID"]]) {?> checked<?}?>></td>
-								<td width="99%"><?=$rp["programDesc"]?></td>
+								<td><input type="checkbox" name="chk_program_<?php echo $rp["programID"]?>"<?php if(@$selected_programs[$rp["programID"]]) {?> checked<?php }?>></td>
+								<td width="99%"><?php echo $rp["programDesc"]?></td>
 							</tr>
-							<?}?>
+							<?php }?>
 						</table>
 					</td>
 					<td width="20"></td>
@@ -126,7 +126,7 @@ if (isset($_GET["id"])) { //edit a funder
 							<tr>
 								<td width="100%" class="head" colspan="2">Geographic Interests</td>
 							</tr>
-							<?
+							<?php
 							$selected_areas = array();
 							if (isset($_GET["id"])) {
 								$result_geographic_areas_selected = db_query("SELECT geographicAreaID FROM resources_funders_geographic_interests WHERE funderID = " . $_GET["id"]);
@@ -135,10 +135,10 @@ if (isset($_GET["id"])) { //edit a funder
 							$result_geographic_areas = db_query("SELECT geographicAreaID, geographicAreaDesc FROM intranet_geographic_areas ORDER BY geographicAreaDesc");
 							while ($rg = db_fetch($result_geographic_areas)) { ?>
 							<tr>
-								<td><input type="checkbox" name="chk_geographicArea_<?=$rg["geographicAreaID"]?>"<?if(@$selected_areas[$rg["geographicAreaID"]]) {?> checked<?}?>></td>
-								<td width="99%"><?=$rg["geographicAreaDesc"]?></td>
+								<td><input type="checkbox" name="chk_geographicArea_<?php echo $rg["geographicAreaID"]?>"<?php if(@$selected_areas[$rg["geographicAreaID"]]) {?> checked<?php }?>></td>
+								<td width="99%"><?php echo $rg["geographicAreaDesc"]?></td>
 							</tr>
-							<?}?>
+							<?php }?>
 						</table>
 					</td>
 				</tr>
@@ -147,7 +147,7 @@ if (isset($_GET["id"])) { //edit a funder
 		</td>
 	</tr>
 	<tr>
-		<td align="center" colspan="2"><?
+		<td align="center" colspan="2"><?php
 			if (isset($_GET["id"])) {
 				echo draw_form_submit("save changes");
 			} else {
@@ -157,4 +157,4 @@ if (isset($_GET["id"])) { //edit a funder
 	</tr>
 	</form>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

@@ -1,4 +1,5 @@
-<?	include("../include.php");
+<?php
+include('../include.php');
 
 if (!isset($_GET["id"])) url_change("/funders/");
 
@@ -70,24 +71,24 @@ $r = db_grab("SELECT
 </script>
 
 <table width="100%" cellpadding="3" cellspacing="1" border="0" bgcolor="#EEEEEE" class="small">
-	<?=drawHeaderRow("Edit Activity", 3);?>
-	<form method="post" action="<?=$_josh["request"]["path_query"]?>" name="frmActivity">
+	<?php echo drawHeaderRow("Edit Activity", 3);?>
+	<form method="post" action="<?php echo $_josh["request"]["path_query"]?>" name="frmActivity">
 	<tr class="helptext" bgcolor="#FFFFFF">
 		<td bgcolor="#EEEEEE"><nobr>Award:</nobr></td>
-		<td colspan="2" width="99%"><b><a href="award_view.php?id=<?=$r["awardID"]?>"><?=$r["awardTitle"]?></a></b> (awarded by <b><a href="resources_funder_view.php?id=<?=$r["funderID"]?>"><?=$r["name"]?></a></b>)</td>
+		<td colspan="2" width="99%"><b><a href="award_view.php?id=<?php echo $r["awardID"]?>"><?php echo $r["awardTitle"]?></a></b> (awarded by <b><a href="resources_funder_view.php?id=<?php echo $r["funderID"]?>"><?php echo $r["name"]?></a></b>)</td>
 	</tr>
 	<tr class="helptext" bgcolor="#FFFFFF">
 		<td bgcolor="#F6F6F6"><nobr>Activity Title:</nobr></td>
-		<td colspan="2" width="99%"><?=draw_form_text("activityTitle", $r["activityTitle"])?></b></td>
+		<td colspan="2" width="99%"><?php echo draw_form_text("activityTitle", $r["activityTitle"])?></b></td>
 	</tr>
 	<tr class="helptext" bgcolor="#FFFFFF">
 		<td bgcolor="#F6F6F6"><nobr>Activity Date:</nobr></td>
-		<td colspan="2" width="99%"><?=drawFormDate("activityDate", $r["activityDate"])?></td>
+		<td colspan="2" width="99%"><?php echo drawFormDate("activityDate", $r["activityDate"])?></td>
 	</tr>
 	<tr class="helptext" bgcolor="#FFFFFF">
 		<td bgcolor="#F6F6F6"><nobr>Staff Responsible:</nobr></td>
 		<td colspan="2" width="99%">
-			<?=drawSelectUser("activityAssignedTo", $r["activityAssignedTo"]);?>
+			<?php echo drawSelectUser("activityAssignedTo", $r["activityAssignedTo"]);?>
 		</td>
 	</tr>
 	<tr class="helptext" bgcolor="#FFFFFF">
@@ -95,26 +96,26 @@ $r = db_grab("SELECT
 		<td colspan="2" width="99%">
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="small">
 				<tr>
-					<td width="16"><input type="checkbox" name="chkActionItem" onclick="javascript:checkInternal(this);"<?if($r["isActionItem"]) {?> checked<?}?>></td>
+					<td width="16"><input type="checkbox" name="chkActionItem" onclick="javascript:checkInternal(this);"<?php if($r["isActionItem"]) {?> checked<?php }?>></td>
 					<td width="99%">Is this an Action Item?</td>
 				</tr>
 			</table>
-			<div id="internal"<?if(!$r["isActionItem"]) {?> style="visibility:hidden;"<?}?>>
+			<div id="internal"<?php if(!$r["isActionItem"]) {?> style="visibility:hidden;"<?php }?>>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="small">
 				<tr>
-					<td width="16"><input type="radio" name="isInternal" value="true" onclick="javascript:checkReport();"<?if($r["isInternalDeadline"]) {?> checked<?}?>></td>
+					<td width="16"><input type="radio" name="isInternal" value="true" onclick="javascript:checkReport();"<?php if($r["isInternalDeadline"]) {?> checked<?php }?>></td>
 					<td width="99%">Internal Deadline</td>
 				</tr>
 				<tr>
-					<td width="16"><input type="radio" name="isInternal" value="false" onclick="javascript:checkReport();"<?if(!$r["isInternalDeadline"]) {?> checked<?}?>></td>
+					<td width="16"><input type="radio" name="isInternal" value="false" onclick="javascript:checkReport();"<?php if(!$r["isInternalDeadline"]) {?> checked<?php }?>></td>
 					<td width="99%">External Deadline</td>
 				</tr>
 			</table>
 			</div>
-			<div id="report" <?if((!$r["isActionItem"]) || ($r["isInternalDeadline"])) {?>style="visibility:hidden;"<?}?>>
+			<div id="report" <?php if((!$r["isActionItem"]) || ($r["isInternalDeadline"])) {?>style="visibility:hidden;"<?php }?>>
 			<table width="100%" cellpadding="0" cellspacing="0" border="0" class="small">
 				<tr>
-					<td width="16"><?=draw_form_checkbox("chkReport", $r["isReport"]);?></td>
+					<td width="16"><?php echo draw_form_checkbox("chkReport", $r["isReport"]);?></td>
 					<td width="99%">Is this a Report?</td>
 				</tr>
 			</table>
@@ -125,18 +126,18 @@ $r = db_grab("SELECT
 		<td bgcolor="#F6F6F6"><nobr>Status:</nobr></td>
 		<td colspan="2" width="99%">
 			<select class="field" name="isComplete">
-				<option value="0" <?if(!$r["isComplete"]){?> selected<?}?>>Incomplete</option>
-				<option value="1" <?if( $r["isComplete"]){?> selected<?}?>>Complete</option>
+				<option value="0" <?php if(!$r["isComplete"]){?> selected<?php }?>>Incomplete</option>
+				<option value="1" <?php if( $r["isComplete"]){?> selected<?php }?>>Complete</option>
 			</select>
 		</td>
 	</tr>
 	<tr class="helptext" bgcolor="#FFFFFF">
 		<td bgcolor="#F6F6F6" valign="top"><nobr>Notes:</nobr></td>
-		<td colspan="2" width="99%" valign="top"><?=draw_form_textarea("activityText",$r["activityText"])?></td>
+		<td colspan="2" width="99%" valign="top"><?php echo draw_form_textarea("activityText",$r["activityText"])?></td>
 	</tr>
 	<tr bgcolor="#F6F6F6">
-		<td colspan="3" align="center"><?=draw_form_submit("save changes")?></td>
+		<td colspan="3" align="center"><?php echo draw_form_submit("save changes")?></td>
 	</tr>
 	</form>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

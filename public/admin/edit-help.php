@@ -1,4 +1,4 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 if ($posting) {
 	format_post_bits("isInstancePage, isSecure, isAdmin");

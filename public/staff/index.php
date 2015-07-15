@@ -1,4 +1,5 @@
-<?	include("include.php");
+<?php
+include("include.php");
 
 if (!isset($_GET["id"])) $_GET["id"] = 1;
 
@@ -7,15 +8,15 @@ drawTop();
 ?>
 <table class="navigation staff" cellspacing="1">
 	<tr class="staff-hilite">
-		<td width="20%"<? if ($_GET["id"] == 1) {?> class="selected"<?}?>><? if ($_GET["id"] != 1) {?><a href="index.php?id=1"><?}?>A - E</a></td>
-		<td width="20%"<? if ($_GET["id"] == 2) {?> class="selected"<?}?>><? if ($_GET["id"] != 2) {?><a href="index.php?id=2"><?}?>F - J</a></td>
-		<td width="20%"<? if ($_GET["id"] == 3) {?> class="selected"<?}?>><? if ($_GET["id"] != 3) {?><a href="index.php?id=3"><?}?>K - O</a></td>
-		<td width="20%"<? if ($_GET["id"] == 4) {?> class="selected"<?}?>><? if ($_GET["id"] != 4) {?><a href="index.php?id=4"><?}?>P - T</a></td>
-		<td width="20%"<? if ($_GET["id"] == 5) {?> class="selected"<?}?>><? if ($_GET["id"] != 5) {?><a href="index.php?id=5"><?}?>U - Z</a></td>
+		<td width="20%"<?php if ($_GET["id"] == 1) {?> class="selected"<?php }?>><?php if ($_GET["id"] != 1) {?><a href="index.php?id=1"><?php }?>A - E</a></td>
+		<td width="20%"<?php if ($_GET["id"] == 2) {?> class="selected"<?php }?>><?php if ($_GET["id"] != 2) {?><a href="index.php?id=2"><?php }?>F - J</a></td>
+		<td width="20%"<?php if ($_GET["id"] == 3) {?> class="selected"<?php }?>><?php if ($_GET["id"] != 3) {?><a href="index.php?id=3"><?php }?>K - O</a></td>
+		<td width="20%"<?php if ($_GET["id"] == 4) {?> class="selected"<?php }?>><?php if ($_GET["id"] != 4) {?><a href="index.php?id=4"><?php }?>P - T</a></td>
+		<td width="20%"<?php if ($_GET["id"] == 5) {?> class="selected"<?php }?>><?php if ($_GET["id"] != 5) {?><a href="index.php?id=5"><?php }?>U - Z</a></td>
 	</tr>
 </table>
 
-<?
+<?php
 if ($_GET["id"] == 1) {
 	$letters = "u.lastname like 'a%' or 
 				u.lastname like 'b%' or 

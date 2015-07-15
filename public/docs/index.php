@@ -1,4 +1,5 @@
-<?	include("../include.php");
+<?php
+include('../include.php');
 
 if (url_action("delete")) {
 	db_query("UPDATE documents SET isActive = 0, deletedOn = GETDATE(), deletedBy = {$user["id"]} WHERE id = " . $_GET["id"]);
@@ -9,7 +10,7 @@ drawTop();
 
 ?>
 <table class="left" cellspacing="1">
-    <? if ($isAdmin) {
+    <?php if ($isAdmin) {
     	$colspan = 4;
 	    echo drawHeaderRow("List", $colspan, "add", "add_edit.php");
     } else {
@@ -20,9 +21,9 @@ drawTop();
 		<th></th>
 		<th align="left">Name, Description</th>
 		<th align="right">Updated</th>
-		<? if ($isAdmin) {?><th></th><? }?>
+		<?php if ($isAdmin) {?><th></th><?php }?>
 	</tr>
-    <?
+    <?php
     $categories = db_query("SELECT 
     			c.id, 
     			c.description, 
@@ -33,9 +34,9 @@ drawTop();
 		if (!$c["documents"]) continue;
 		?>
 		<tr class="group">
-			<td colspan="<?=$colspan?>"><?=$c["description"]?></td>
+			<td colspan="<?php echo $colspan?>"><?php echo $c["description"]?></td>
 		</tr>
-		<? $documents = db_query("SELECT 
+		<?php $documents = db_query("SELECT 
 							d.id, 
 							d.name, 
 							d.description,
@@ -50,12 +51,12 @@ drawTop();
 						ORDER BY d.name;");
 				while ($d = db_fetch($documents)) {?>
 		<tr>
-			<td width="16"><a href="info.php?id=<?=$d["id"]?>"><img src="<?=$locale?><?=$d["icon"]?>" width="16" height="16" border="0" alt="<?=$d["alt"]?>"></a></td>
-			<td class="text2"><a href="info.php?id=<?=$d["id"]?>"><?=$d["name"]?></a></td>
-			<td align="right"><?=format_date($d["updatedOn"])?></td>
-			<?=deleteColumn("Delete document?", $d["id"]);?>
+			<td width="16"><a href="info.php?id=<?php echo $d["id"]?>"><img src="<?php echo $locale?><?php echo $d["icon"]?>" width="16" height="16" border="0" alt="<?php echo $d["alt"]?>"></a></td>
+			<td class="text2"><a href="info.php?id=<?php echo $d["id"]?>"><?php echo $d["name"]?></a></td>
+			<td align="right"><?php echo format_date($d["updatedOn"])?></td>
+			<?php echo deleteColumn("Delete document?", $d["id"]);?>
 		</tr>
-	<? }
+	<?php }
 } ?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

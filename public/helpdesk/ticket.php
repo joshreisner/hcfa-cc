@@ -151,8 +151,8 @@ while ($t = db_fetch($types)) {
 		} else {
 			var arrFile   = form.userfile.value.split(".");
 			var extension = arrFile[arrFile.length - 1].toLowerCase();
-			if (<?=implode(" && ", $extensions)?>) {
-				alert("Only these filetypes are supported by this system:\n\n <?=implode("\\n", $doctypes)?>\n\nPlease change your selection, or make sure that the \nappropriate extension is at the end of the filename.");
+			if (<?php echo implode(" && ", $extensions)?>) {
+				alert("Only these filetypes are supported by this system:\n\n <?php echo implode("\\n", $doctypes)?>\n\nPlease change your selection, or make sure that the \nappropriate extension is at the end of the filename.");
 				return false;
 			}
 		}
@@ -161,21 +161,21 @@ while ($t = db_fetch($types)) {
 	
 	function newStatus(status) {
 		if (status == 9) {
-		<? if ($r["timeSpent"] && $r["typeID"]) {?>
-			location.href='<?=$request["path_query"]?>&ticketID=<?=$_GET["id"]?>&newStatus=' + status;
-		<? } else { ?>
-			document.all["statusID<?=$r["statusID"]?>"].selected = true;
+		<?php if ($r["timeSpent"] && $r["typeID"]) {?>
+			location.href='<?php echo $request["path_query"]?>&ticketID=<?php echo $_GET["id"]?>&newStatus=' + status;
+		<?php } else { ?>
+			document.all["statusID<?php echo $r["statusID"]?>"].selected = true;
 			alert("In order to close a ticket, you have to select a Type and an amount of Time Spent");
-		<? } ?>
+		<?php } ?>
 		} else {
-			location.href='<?=$request["path_query"]?>&ticketID=<?=$_GET["id"]?>&newStatus=' + status;
+			location.href='<?php echo $request["path_query"]?>&ticketID=<?php echo $_GET["id"]?>&newStatus=' + status;
 		}
 	}
 	//-->
 </script>
 
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	if ($r["statusID"] != 9) {
 		$nextTicketID			= false;
 		$lastTicketID			= false;
@@ -220,55 +220,55 @@ while ($t = db_fetch($types)) {
 	<form name="ticketForm">
 	<tr class="helpdesk-hilite" height="30">
 		<td class="left">Status</td>
-		<td><?=draw_form_select("statusID", "SELECT id, description FROM helpdesk_tickets_statuses", $r["statusID"], true, "", "newStatus(this.value);")?></td>
+		<td><?php echo draw_form_select("statusID", "SELECT id, description FROM helpdesk_tickets_statuses", $r["statusID"], true, "", "newStatus(this.value);")?></td>
 	</tr>
 	<tr class="helpdesk-hilite" height="30">
 		<td class="left">Posted By</td>
-		<td><?
+		<td><?php
 		$sql = ($_josh["db"]["language"] == "mssql") ? "SELECT u.userID, u.lastname + ', ' + ISNULL(u.nickname, u.firstname) FROM intranet_users u WHERE u.isactive = 1 ORDER BY u.lastname, ISNULL(u.nickname, u.firstname)" : "SELECT u.userID, CONCAT(u.lastname, ', ', IFNULL(u.nickname, u.firstname)) FROM intranet_users u WHERE u.isactive = 1 ORDER BY u.lastname, IFNULL(u.nickname, u.firstname)";
 		echo draw_form_select("postedBy", $sql, $r["createdBy"], true, "", "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newUser=' + this.value");
 		?>
-		<a href="user.php?id=<?=$r["createdBy"]?>">view all</a> / <a href="user.php?id=<?=$r["createdBy"]?>&month=<?=$r["createdMonth"]?>&year=<?=$r["createdYear"]?>">this month</a>
+		<a href="user.php?id=<?php echo $r["createdBy"]?>">view all</a> / <a href="user.php?id=<?php echo $r["createdBy"]?>&month=<?php echo $r["createdMonth"]?>&year=<?php echo $r["createdYear"]?>">this month</a>
 		</td>
 	</tr>
 	<tr class="helpdesk-hilite" height="30">
 		<td class="left">Location</td>
-		<td><?=$r["office"]?>
-		<a href="office.php?id=<?=$r["officeID"]?>">view all</a> / <a href="office.php?id=<?=$r["officeID"]?>&month=<?=$r["createdMonth"]?>&year=<?=$r["createdYear"]?>">this month</a>
+		<td><?php echo $r["office"]?>
+		<a href="office.php?id=<?php echo $r["officeID"]?>">view all</a> / <a href="office.php?id=<?php echo $r["officeID"]?>&month=<?php echo $r["createdMonth"]?>&year=<?php echo $r["createdYear"]?>">this month</a>
 		</td>
 	</tr>
 	<tr class="helpdesk-hilite" height="30">
 		<td class="left">Assigned To</td>
 		<td>
-			<?
+			<?php
 			echo draw_form_select("ownerID", $ownerOptions, $r["ownerID"], false, "field", "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newOwner=' + this.value", false);
 			if ($r["ownerID"]) {?>
-			<a href="admin.php?id=<?=$r["ownerID"]?>">view all</a> / <a href="admin.php?id=<?=$r["ownerID"]?>&month=<?=$r["createdMonth"]?>&year=<?=$r["createdYear"]?>">this month</a>
-			<? }?>
+			<a href="admin.php?id=<?php echo $r["ownerID"]?>">view all</a> / <a href="admin.php?id=<?php echo $r["ownerID"]?>&month=<?php echo $r["createdMonth"]?>&year=<?php echo $r["createdYear"]?>">this month</a>
+			<?php }?>
 		</td>
 	</tr>
 	<tr class="helpdesk-hilite" height="30">
 		<td class="left">Time Spent</td>
-		<td><?=draw_form_select("timeSpent", $timeSpentOptions, $r["timeSpent"], true, "field", "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newTime=' + this.value", false);?> minutes</td>
+		<td><?php echo draw_form_select("timeSpent", $timeSpentOptions, $r["timeSpent"], true, "field", "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newTime=' + this.value", false);?> minutes</td>
 	</tr>
-	<? } elseif ($r["ownerID"]) {?>
+	<?php } elseif ($r["ownerID"]) {?>
 	<tr height="30">
 		<td class="left">Assigned To</td>
-		<td><a href="/staff/view.php?id=<?=$r["ownerID"]?>"><?=$r["ownerFirst"]?></a></td>
+		<td><a href="/staff/view.php?id=<?php echo $r["ownerID"]?>"><?php echo $r["ownerFirst"]?></a></td>
 	</tr>
-	<? }?>
+	<?php }?>
 	<!-- <tr height="30">
 		<td class="left">Ticket Number</td>
-		<td><?=$_GET["id"]?></td>
+		<td><?php echo $_GET["id"]?></td>
 	</tr> -->
 	<tr height="30">
 		<td class="left">Ticket Age</td>
-		<td><?=format_time_business($r["createdOn"], $r["closedDate"]);?></td>
+		<td><?php echo format_time_business($r["createdOn"], $r["closedDate"]);?></td>
 	</tr>
 	<tr height="30">
 		<td class="left">Type</td>
-		<td><?=draw_form_select("typeID", "SELECT id, description FROM helpdesk_tickets_types WHERE departmentID = " . $r["departmentID"] . " ORDER BY description", $r["typeID"], $typeRequired, false, "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newType=' + this.value");?>
-			<? if ($isAdmin) {
+		<td><?php echo draw_form_select("typeID", "SELECT id, description FROM helpdesk_tickets_types WHERE departmentID = " . $r["departmentID"] . " ORDER BY description", $r["typeID"], $typeRequired, false, "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newType=' + this.value");?>
+			<?php if ($isAdmin) {
 			 if ($r["typeID"]) {
 			 	echo '<a href="type.php?id=' . $r["typeID"] . '">view all</a> / <a href="type.php?id=' . $r["typeID"] . '&month=' . $r["createdMonth"] . '&year=' . $r["createdYear"] . '">this month</a>';
 			 } else {
@@ -279,11 +279,11 @@ while ($t = db_fetch($types)) {
 	</tr>
 	<tr height="30">
 		<td class="left">Department</td>
-		<td><?=draw_form_select("departmentID", "SELECT departmentID, shortName FROM intranet_departments WHERE isHelpdesk = 1", $r["departmentID"], true, "field", "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newDepartment=' + this.value", false);?></td>
+		<td><?php echo draw_form_select("departmentID", "SELECT departmentID, shortName FROM intranet_departments WHERE isHelpdesk = 1", $r["departmentID"], true, "field", "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newDepartment=' + this.value", false);?></td>
 	</tr>
 	<tr height="30">
 		<td class="left">Priority</td>
-		<td><?
+		<td><?php
 		if ($isAdmin || $r["isAdminPriority"]) {
 			echo draw_form_select("priorityID", "SELECT id, description FROM helpdesk_tickets_priorities", $r["priorityID"], true, "field", "location.href='" . $request["path_query"] . "&ticketID=" . $_GET["id"] . "&newPriority=' + this.value");
 		} else {
@@ -291,19 +291,19 @@ while ($t = db_fetch($types)) {
 		}
 		?></td>
 	</tr>
-	<? if ($r["ipAddress"]) {?>
+	<?php if ($r["ipAddress"]) {?>
 	<tr height="30">
 		<td class="left">IP Address</td>
-		<td><?=$r["ipAddress"]?></td>
+		<td><?php echo $r["ipAddress"]?></td>
 	</tr>
-	<? }
+	<?php }
 	
 	if ($r["attachments"]) {?>
 	<tr height="30">
-		<td class="left">Attachment<? if ($r["attachments"] > 1) {?>s<? }?></td>
+		<td class="left">Attachment<?php if ($r["attachments"] > 1) {?>s<?php }?></td>
 		<td>
 			<table class="nospacing">
-			<?
+			<?php
 				$attachments = db_query("SELECT
 				a.id,
 				a.title,
@@ -314,16 +314,16 @@ while ($t = db_fetch($types)) {
 			WHERE a.ticketID = " . $_GET["id"]);
 		while ($a = db_fetch($attachments)) {?>
 			<tr height="21">
-				<td width="18"><a href="download.php?id=<?=$a["id"]?>"><img src="<?=$locale?><?=$a["icon"]?>" width="16" height="16" border="0"></a></td>
-				<td><a href="download.php?id=<?=$a["id"]?>"><?=$a["title"]?></a></td>
+				<td width="18"><a href="download.php?id=<?php echo $a["id"]?>"><img src="<?php echo $locale?><?php echo $a["icon"]?>" width="16" height="16" border="0"></a></td>
+				<td><a href="download.php?id=<?php echo $a["id"]?>"><?php echo $a["title"]?></a></td>
 			</tr>
-		<? } ?>
+		<?php } ?>
 		</table>
 		</td>
 	</tr>
-	<? } ?>
+	<?php } ?>
 	</form>
-	<? 
+	<?php 
 $editurl = ($isAdmin) ? "ticket-edit.php?id=" . $_GET["id"] : false;
 echo drawThreadTop($r["title"], $r["description"], $r["createdBy"], $r["first"] . " " . $r["last"], $r["imageID"], $r["width"], $r["height"], $r["createdOn"], $editurl);
 
@@ -352,20 +352,20 @@ echo '</table>';
 
 if (!$printing) {?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Attach Document", 2);?>
-	<form enctype="multipart/form-data" action="<?=$request["path_query"]?>" method="post" onsubmit="javascript:return validateAttachment(this);">
+	<?php echo drawHeaderRow("Attach Document", 2);?>
+	<form enctype="multipart/form-data" action="<?php echo $request["path_query"]?>" method="post" onsubmit="javascript:return validateAttachment(this);">
 	<tr>
 		<td class="left">Document Name</td>
-		<td><?=draw_form_text("title",  @$d["name"])?></td>
+		<td><?php echo draw_form_text("title",  @$d["name"])?></td>
 	</tr>
 	<tr>
 		<td class="left">File</td>
 		<td><input type="file" name="userfile" size="40" class="field" value=""></td>
 	</tr>
 	<tr>
-		<td class="bottom" align="center" colspan="2"><?=draw_form_submit("Attach Document");?></td>
+		<td class="bottom" align="center" colspan="2"><?php echo draw_form_submit("Attach Document");?></td>
 	</tr>
 	</form>
 </table>
-<? }
+<?php }
 drawBottom(); ?>

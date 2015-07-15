@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 if ($_POST) {
@@ -68,42 +68,42 @@ if (isset($_GET["id"])) {
 
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Organization", 2);?>
-	<form method="post" action="<?=$_josh["request"]["path_query"]?>">
+	<?php echo drawHeaderRow("Organization", 2);?>
+	<form method="post" action="<?php echo $_josh["request"]["path_query"]?>">
 	<tr>
 		<td class="left">Name</td>
-		<td><?=draw_form_text("name", @$r["name"])?></td>
+		<td><?php echo draw_form_text("name", @$r["name"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Address 1</td>
-		<td><?=draw_form_text("address1", @$r["address1"])?></td>
+		<td><?php echo draw_form_text("address1", @$r["address1"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Address 2</td>
-		<td><?=draw_form_text("address2", @$r["address2"])?></td>
+		<td><?php echo draw_form_text("address2", @$r["address2"])?></td>
 	</tr>
 	<tr>
 		<td class="left">ZIP</td>
-		<td><?=draw_form_text("zip", @$r["zip"], 5, 5)?></td>
+		<td><?php echo draw_form_text("zip", @$r["zip"], 5, 5)?></td>
 	</tr>
 	<tr>
 		<td class="left">Phone</td>
-		<td><?=draw_form_text("phone", @$r["phone"], 14, 14)?></td>
+		<td><?php echo draw_form_text("phone", @$r["phone"], 14, 14)?></td>
 	</tr>
 	<tr valign="top">
 		<td class="left">Services</td>
 		<td>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
-			<?
+			<?php
 			$services = db_query("SELECT s.id, s.name, 
 						(SELECT count(*) FROM web_organizations_2_services o2s WHERE o2s.organizationID = {$_GET["id"]} AND o2s.serviceID = s.id) as checked
 						FROM web_services s ORDER BY s.name");
 			while ($s = db_fetch($services)) {?>
 			<tr>
-				<td width="25"><?=draw_form_checkbox("chks_" . $_GET["id"] . "_" . $s["id"], $s["checked"])?></td>
-				<td><?=$s["name"]?></td>
+				<td width="25"><?php echo draw_form_checkbox("chks_" . $_GET["id"] . "_" . $s["id"], $s["checked"])?></td>
+				<td><?php echo $s["name"]?></td>
 			</tr>
-			<? }?>
+			<?php }?>
 			</table>
 		</td>
 	</tr>
@@ -111,23 +111,23 @@ if (isset($_GET["id"])) {
 		<td class="left">Languages (other than english)</td>
 		<td>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
-			<?
+			<?php
 			$languages = db_query("SELECT l.id, l.name, 
 						(SELECT count(*) FROM web_organizations_2_languages o2l WHERE o2l.organizationID = {$_GET["id"]} AND o2l.languageID = l.id) as checked
 						FROM web_languages l ORDER BY l.name");
 			while ($l = db_fetch($languages)) {
 				if ($l["name"] == "English") continue;?>
 			<tr>
-				<td width="25"><?=draw_form_checkbox("chkl_" . $_GET["id"] . "_" . $l["id"], $l["checked"])?></td>
-				<td><?=$l["name"]?></td>
+				<td width="25"><?php echo draw_form_checkbox("chkl_" . $_GET["id"] . "_" . $l["id"], $l["checked"])?></td>
+				<td><?php echo $l["name"]?></td>
 			</tr>
-			<? }?>
+			<?php }?>
 			</table>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2" align="center" class="bottom">
-			<? if ($_GET["id"]) {
+			<?php if ($_GET["id"]) {
 				echo draw_form_submit("save changes");
 			} else {
 				echo draw_form_submit("add organization");
@@ -135,4 +135,4 @@ if (isset($_GET["id"])) {
 	</tr>
 	</form>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

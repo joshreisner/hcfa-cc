@@ -23,13 +23,13 @@ if (db_found($result)) {?>
 		<th width="30%" class="r">Invited On</th>
 		<th></th>
 	</tr>
-	<? while ($r = db_fetch($result)) {?>
+	<?php while ($r = db_fetch($result)) {?>
 	<tr>
-		<td><a href="add_edit.php?requestID=<?=$r["id"]?>"><?=$r["lastname"]?>, <?=$r["firstname"]?></a></td>
-		<td class="r"><?=format_date_time($r["createdOn"])?></td>
-		<td width="16"><?=draw_img($locale . "images/icons/delete.gif", url_query_add(array("action"=>"deletereq", "id"=>$r["id"]), false))?></td>
+		<td><a href="add_edit.php?requestID=<?php echo $r["id"]?>"><?php echo $r["lastname"]?>, <?php echo $r["firstname"]?></a></td>
+		<td class="r"><?php echo format_date_time($r["createdOn"])?></td>
+		<td width="16"><?php echo draw_img($locale . "images/icons/delete.gif", url_query_add(array("action"=>"deletereq", "id"=>$r["id"]), false))?></td>
 	</tr>
-	<?
+	<?php
 	}
 } else {
 	echo drawEmptyResult("No pending requests!");
@@ -45,14 +45,14 @@ if (db_found($result)) {?>
 		<th width="30%" class="r">Created Date</th>
 		<th></th>
 	</tr>
-	<?
+	<?php
 	while ($r = db_fetch($result)) {?>
 	<tr>
-		<td><a href="view.php?id=<?=$r["userid"]?>"><?=$r["lastname"]?>, <?=$r["firstname"]?></a></td>
-		<td class="r"><?=format_date_time($r["createdOn"])?></td>
-		<?=deleteColumn("Delete user?", $r["userid"])?>
+		<td><a href="view.php?id=<?php echo $r["userid"]?>"><?php echo $r["lastname"]?>, <?php echo $r["firstname"]?></a></td>
+		<td class="r"><?php echo format_date_time($r["createdOn"])?></td>
+		<?php echo deleteColumn("Delete user?", $r["userid"])?>
 	</tr>
-	<?
+	<?php
 	}
 } else {
 	echo drawEmptyResult("No pending requests!");

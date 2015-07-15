@@ -1,4 +1,4 @@
-<?  
+<?php  
 include("../include.php");
 
 drawTop();
@@ -8,23 +8,23 @@ $r = db_grab("SELECT programDesc FROM intranet_programs WHERE programID = " . $_
 ?>
 
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow($r, 2)?>
+	<?php echo drawHeaderRow($r, 2)?>
 	<tr>
 		<td class="left">Name</td>
-		<td><b><?=$r?></b></td>
+		<td><b><?php echo $r?></b></td>
 	</tr>
 	<tr>
-		<td class="bottom" colspan="2"><?=draw_form_button("edit name","program_add_edit.php?id=" . $_GET["id"])?></td>
+		<td class="bottom" colspan="2"><?php echo draw_form_button("edit name","program_add_edit.php?id=" . $_GET["id"])?></td>
 	</tr>
 </table>
 
 <table class="left" cellspacing="1">
 	<tr>
 		<td colspan="5" class="head">
-			Funders Interesed in <?=$r?>
+			Funders Interesed in <?php echo $r?>
 		</td>
 	</tr>
-<?
+<?php
 	$result = db_query("SELECT 
 					f.funderID, 
 					f.name 
@@ -34,9 +34,9 @@ $r = db_grab("SELECT programDesc FROM intranet_programs WHERE programID = " . $_
 				ORDER BY f.name");
 	while ($r = db_fetch($result)) {?>
 		<tr>
-			<td><a href="funder_view.php?id=<?=$r["funderID"]?>"><?=$r["name"]?></a></td>
+			<td><a href="funder_view.php?id=<?php echo $r["funderID"]?>"><?php echo $r["name"]?></a></td>
 		</tr>
-	<? }?>
+	<?php }?>
 </table>
 
 <table class="left" cellspacing="1">
@@ -51,7 +51,7 @@ $r = db_grab("SELECT programDesc FROM intranet_programs WHERE programID = " . $_
 		<th align="left">Type</th>
 		<th align="right">Amount</th>
 	</tr>
-<?
+<?php
 $result_award_statuses = db_query("SELECT 
 					s.awardStatusID, 
 					s.awardStatusDescPlural,
@@ -61,9 +61,9 @@ while ($rsa = db_fetch($result_award_statuses)) {
 	if (!$rsa["awardCount"]) continue;
 	?>
 	<tr class="group">
-		<td colspan="4"><?=$rsa["awardStatusDescPlural"]?></td>
+		<td colspan="4"><?php echo $rsa["awardStatusDescPlural"]?></td>
 	</tr>
-<?
+<?php
 	$totalAwards = 0;
 	$result_awards = db_query("SELECT 
 			a.awardID,
@@ -81,17 +81,17 @@ while ($rsa = db_fetch($result_award_statuses)) {
 		$totalAwards += $ra["awardAmount"];
 	?>
 	<tr>
-		<td width="99%"><a href="award_view.php?id=<?=$ra["awardID"]?>"><?=$ra["awardTitle"]?></a></td>
-		<td><nobr><?=$ra["programDesc"]?></nobr></td>
-		<td><nobr><?=$ra["awardTypeDesc"]?></nobr></td>
-		<td align="right">$<?=number_format($ra["awardAmount"])?></td>
+		<td width="99%"><a href="award_view.php?id=<?php echo $ra["awardID"]?>"><?php echo $ra["awardTitle"]?></a></td>
+		<td><nobr><?php echo $ra["programDesc"]?></nobr></td>
+		<td><nobr><?php echo $ra["awardTypeDesc"]?></nobr></td>
+		<td align="right">$<?php echo number_format($ra["awardAmount"])?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 	<tr class="total">
 		<td colspan="3" align="right" width="99%">Total:&nbsp;</td>
-		<td>$<?=number_format($totalAwards)?></td>
+		<td>$<?php echo number_format($totalAwards)?></td>
 	</tr>
-<? }?>
+<?php }?>
 </table>
 
-<? drawBottom();?>
+<?php drawBottom();?>

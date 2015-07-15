@@ -1,4 +1,5 @@
-<?	include("../include.php");
+<?php
+include('../include.php');
 
 if ($posting) {
 	error_debug("handling bb post");
@@ -48,16 +49,16 @@ if ($posting) {
 drawTop();
 ?>
 <meta http-equiv="refresh" content="300">
-<?=drawSyndicateLink("bb")?>
+<?php echo drawSyndicateLink("bb")?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("", 4, "new", "#bottom")?>
+	<?php echo drawHeaderRow("", 4, "new", "#bottom")?>
 	<tr>
 		<th width="320">Topic</th>
 		<th width="120">Starter</th>
 		<th class="c">Replies</th>
 		<th class="r">Last Post</th>
 	</tr>
-<?
+<?php
 error_debug("get bb topix");
 
 $topics = db_query("SELECT 
@@ -76,16 +77,16 @@ if (db_found($topics)) {
 	while ($r = db_fetch($topics)) {
 		$r["lastname"] = htmlentities($r["lastname"]); //see http://work.joshreisner.com/request/?id=477
 		if ($r["isAdmin"]) $r["replies"] = "-";?>
-		<tr class="thread"<? if ($r["isAdmin"]) {?> style="background-color:#fffce0;"<? }?>
-			onclick		= "location.href='topic.php?id=<?=$r["id"]?>';"
-			onmouseover	= "javascript:aOver('id<?=$r["id"]?>')"
-			onmouseout	= "javascript:aOut('id<?=$r["id"]?>')">
-			<td class="input"><a href="topic.php?id=<?=$r["id"]?>" id="id<?=$r["id"]?>"><?=$r["title"]?></a></td>
-			<td><?=$r["firstname"]?> <?=$r["lastname"]?></td>
-			<td align="center"><?=$r["replies"]?></td>
-			<td align="right"><?=format_date($r["threadDate"])?></td>
+		<tr class="thread"<?php if ($r["isAdmin"]) {?> style="background-color:#fffce0;"<?php }?>
+			onclick		= "location.href='topic.php?id=<?php echo $r["id"]?>';"
+			onmouseover	= "javascript:aOver('id<?php echo $r["id"]?>')"
+			onmouseout	= "javascript:aOut('id<?php echo $r["id"]?>')">
+			<td class="input"><a href="topic.php?id=<?php echo $r["id"]?>" id="id<?php echo $r["id"]?>"><?php echo $r["title"]?></a></td>
+			<td><?php echo $r["firstname"]?> <?php echo $r["lastname"]?></td>
+			<td align="center"><?php echo $r["replies"]?></td>
+			<td align="right"><?php echo format_date($r["threadDate"])?></td>
 		</tr>
-	<? }
+	<?php }
 } else {
 	echo drawEmptyResult("No topics have been added yet.  Why not <a href='#bottom'>be the first</a>?", 4);
 }
@@ -93,7 +94,7 @@ if (db_found($topics)) {
 ?>
 </table>
 <a name="bottom"></a>
-<?
+<?php
 $form = new intranet_form;
 if ($isAdmin) {
 	$form->addUser("createdBy",  "Posted By" , $user["id"], false, true);

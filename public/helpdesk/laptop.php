@@ -27,61 +27,61 @@ $openEnded = (empty($r["laptopEnd"])) ? true : false;
 ?>
 
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("View Laptop", 2, "edit", "laptop_add_edit.php?id=" . $_GET["id"])?>
-	<form method="post" action="<?=$request["path_query"]?>">
+	<?php echo drawHeaderRow("View Laptop", 2, "edit", "laptop_add_edit.php?id=" . $_GET["id"])?>
+	<form method="post" action="<?php echo $request["path_query"]?>">
 	<tr>
 		<td class="left">Name</td>
-		<td><b><?=$r["laptopName"]?></b></td>
+		<td><b><?php echo $r["laptopName"]?></b></td>
 	</tr>
 	<tr>
 		<td class="left"><nobr>Model #</nobr></td>
-		<td><?=$r["laptopModel"]?></td>
+		<td><?php echo $r["laptopModel"]?></td>
 	</tr>
 	<tr>
 		<td class="left"><nobr>Home</nobr></td>
-		<td><?=$r["laptopHome"]?></td>
+		<td><?php echo $r["laptopHome"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Serial #</td>
-		<td><?=$r["laptopSerial"]?></td>
+		<td><?php echo $r["laptopSerial"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Express Service Code</td>
-		<td><?=$r["laptopExpressServiceCode"]?></td>
+		<td><?php echo $r["laptopExpressServiceCode"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Service Tag #</td>
-		<td><?=$r["laptopServiceTag"]?></td>
+		<td><?php echo $r["laptopServiceTag"]?></td>
 	</tr>
 	<tr>
 		<td class="left">OS</td>
-		<td><?=$r["laptopOS"]?></td>
+		<td><?php echo $r["laptopOS"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Office Version</td>
-		<td><?=$r["laptopOffice"]?></td>
+		<td><?php echo $r["laptopOffice"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Is Wireless?</td>
-		<td><?=$r["laptopIsWireless"]?></td>
+		<td><?php echo $r["laptopIsWireless"]?></td>
 	</tr>
 	<tr>
 		<td class="left">MAC Address</td>
-		<td><?=$r["laptopMACAddress"]?></td>
+		<td><?php echo $r["laptopMACAddress"]?></td>
 	</tr>
-	<? if ($r["accessories"]) {?>
+	<?php if ($r["accessories"]) {?>
 	<tr>
 		<td class="left">Accessories</td>
 		<td>
-		<?
+		<?php
 		$accessories = db_query("SELECT a.name FROM it_laptops_accessories a JOIN it_laptops_2_accessories l2a ON a.id = l2a.accessoryID WHERE l2a.laptopID = " . $_GET["id"]);
 		while ($a = db_fetch($accessories)) echo "&#183; " . $a["name"] . "<br>";?>
 		</td>
 	</tr>
-	<? }?>
+	<?php }?>
 	<tr>
 		<td class="left" height="120">Notes</td>
-		<td><?=nl2br($r["laptopPurpose"])?></td>
+		<td><?php echo nl2br($r["laptopPurpose"])?></td>
 	</tr>
 	</form>
 </table>
@@ -96,7 +96,7 @@ $openEnded = (empty($r["laptopEnd"])) ? true : false;
 		<th align="left">End</th>
 		<th align="left">Notes</th>
 	</tr>
-	<?
+	<?php
 	$result = db_query("SELECT
 							ISNULL(u.nickname, u.firstname) first,
 							u.lastname last,
@@ -114,12 +114,12 @@ $openEnded = (empty($r["laptopEnd"])) ? true : false;
 						ORDER BY checkoutStart DESC");
 	while ($r = db_fetch($result)) {?>
 	<tr>
-		<td><?=drawName($r["userID"],$r["first"] . " " . $r["last"], $r["imageID"], $r["width"], $r["height"])?></td>
-		<td><?=format_date($r["checkoutStart"]);?></td>
-		<td><?=format_date($r["checkoutEnd"]);?></td>
-		<td><?=nl2br($r["checkoutNotes"])?></td>
+		<td><?php echo drawName($r["userID"],$r["first"] . " " . $r["last"], $r["imageID"], $r["width"], $r["height"])?></td>
+		<td><?php echo format_date($r["checkoutStart"]);?></td>
+		<td><?php echo format_date($r["checkoutEnd"]);?></td>
+		<td><?php echo nl2br($r["checkoutNotes"])?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
 
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

@@ -1,4 +1,4 @@
-<?  include("../include.php");
+<?php  include("../include.php");
 
 url_query_require();
 
@@ -79,7 +79,7 @@ $r = db_grab("SELECT
 	}
 		
 	function deleteActivity(id,title) {
-		if (confirm("Are you sure you want to delete this activity note?")) location.href="<?=$_josh["request"]["path_query"]?>&delActivity=" + id;
+		if (confirm("Are you sure you want to delete this activity note?")) location.href="<?php echo $_josh["request"]["path_query"]?>&delActivity=" + id;
 	}
 	
 	function checkInternal() {
@@ -106,7 +106,7 @@ $r = db_grab("SELECT
 </script>
 
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	if ($isAdmin) {
 		echo drawHeaderRow("View Award", 2, "edit", "award_add_edit.php?id=" . $_GET["id"]);
 	} else {
@@ -114,49 +114,49 @@ $r = db_grab("SELECT
 	}?>
 	<tr>
 		<td class="left">Award Name</td>
-		<td><b><?=$r["awardTitle"]?></b></td>
+		<td><b><?php echo $r["awardTitle"]?></b></td>
 	</tr>
 	<tr>
 		<td class="left">Filing Number</td>
-		<td><?=$r["awardFilingNumber"]?></td>
+		<td><?php echo $r["awardFilingNumber"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Funder</td>
-		<td><a href="funder_view.php?id=<?=$r["funderID"]?>"><?=$r["name"]?></a></td>
+		<td><a href="funder_view.php?id=<?php echo $r["funderID"]?>"><?php echo $r["name"]?></a></td>
 	</tr>
 	<tr>
 		<td class="left">Term</td>
-		<td><?=date("F Y", strToTime($r["awardStartDate"]))?> - <?=date("F Y", strToTime($r["awardEndDate"]))?></td>
+		<td><?php echo date("F Y", strToTime($r["awardStartDate"]))?> - <?php echo date("F Y", strToTime($r["awardEndDate"]))?></td>
 	</tr>
 	<tr>
 		<td class="left">Type</td>
-		<td><?=$r["awardTypeDesc"]?></td>
+		<td><?php echo $r["awardTypeDesc"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Status</td>
-		<td><?=$r["awardStatusDesc"]?></td>
+		<td><?php echo $r["awardStatusDesc"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Program</td>
-		<td><?=$r["programDesc"]?></td>
+		<td><?php echo $r["programDesc"]?></td>
 	</tr>
-	<? if($r["programDesc2"]) {?>
+	<?php if($r["programDesc2"]) {?>
 	<tr>
 		<td class="left">Cross-List</td>
-		<td><?=$r["programDesc2"]?></td>
+		<td><?php echo $r["programDesc2"]?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 	<tr>
 		<td class="left"><div style="float:right;">$</div>Amount</td>
-		<td><b><?=number_format($r["awardAmount"])?></b></td>
+		<td><b><?php echo number_format($r["awardAmount"])?></b></td>
 	</tr>
 	<tr>
 		<td class="left">Project Description</td>
-		<td><?=nl2br($r["awardNotes"])?></td>
+		<td><?php echo nl2br($r["awardNotes"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Award Contact</td>
-		<td><?=$r["staffname"]?></td>
+		<td><?php echo $r["staffname"]?></td>
 	</tr>
 </table>
 
@@ -164,7 +164,7 @@ $r = db_grab("SELECT
 	<tr>
 		<td class="head" colspan="4">Activity</td>
 	</tr>
-	<?
+	<?php
 	$activity = db_query("SELECT
 			a.activityID,
 			a.activityTitle,
@@ -186,7 +186,7 @@ $r = db_grab("SELECT
 			<td>Status</td>
 			<td></td>
 		</tr>
-		<? while ($a = db_fetch($activity)) {
+		<?php while ($a = db_fetch($activity)) {
 			$date    = ($a["activityDate"]) ? format_date($a["activityDate"]) : "N/A";
 			$bgcolor = (!$a["isInternalDeadline"] && !$a["isComplete"]) ? "FFEEEE" : "FFFFFF";
 			if (!$a["isActionItem"]) {
@@ -197,21 +197,21 @@ $r = db_grab("SELECT
 				$status .= ($a["isComplete"])         ? ", complete" : ", incomplete";
 			}
 			?>
-		<tr class="helptext" bgcolor="<?=$bgcolor?>">
-			<td width="120"><b><nobr><?=$a["staffname"]?>&nbsp;&nbsp;</nobr></b><br><nobr><?=$date?></nobr>&nbsp;</td>
-			<td width="99%"><b><a href="activity_view.php?id=<?=$a["activityID"]?>"><?=$a["activityTitle"]?></a></b><br><?=$a["activityText"]?></td>
-			<td><?=$status?></td>
-			<td width="16"><a href="javascript:deleteActivity(<?=$a["activityID"]?>,'<?=$a["activityID"]?>');"><img src="<?=$locale?>images/icons/delete.gif" width="16" height="16" border="0"></a></td>
+		<tr class="helptext" bgcolor="<?php echo $bgcolor?>">
+			<td width="120"><b><nobr><?php echo $a["staffname"]?>&nbsp;&nbsp;</nobr></b><br><nobr><?php echo $date?></nobr>&nbsp;</td>
+			<td width="99%"><b><a href="activity_view.php?id=<?php echo $a["activityID"]?>"><?php echo $a["activityTitle"]?></a></b><br><?php echo $a["activityText"]?></td>
+			<td><?php echo $status?></td>
+			<td width="16"><a href="javascript:deleteActivity(<?php echo $a["activityID"]?>,'<?php echo $a["activityID"]?>');"><img src="<?php echo $locale?>images/icons/delete.gif" width="16" height="16" border="0"></a></td>
 		</tr>
-		<? }
+		<?php }
 	} else {
 		echo drawEmptyResult("No actiivty has been entered.", 4);
 	}?>
 </table>
 
-<? if (!$printing) {?>
+<?php if (!$printing) {?>
 <table class="left" cellspacing="1">
-	<form action="<?=$_josh["request"]["path_query"]?>" method="post" onsubmit="javascript: return validate(this);" name="frmActivity">
+	<form action="<?php echo $_josh["request"]["path_query"]?>" method="post" onsubmit="javascript: return validate(this);" name="frmActivity">
 	<tr>
 		<td class="head">Add Activity to this Award</td>
 	</tr>
@@ -221,7 +221,7 @@ $r = db_grab("SELECT
 				<tr>
 					<td width="50%" height="50">
 						ACTIVITY TITLE<br>
-						<?=draw_form_text("txtTitle", "", 35);?>
+						<?php echo draw_form_text("txtTitle", "", 35);?>
 					</td>
 					<td width="50%">
 						<table width="100%" cellpadding="0" cellspacing="0" border="0" class="small">
@@ -235,7 +235,7 @@ $r = db_grab("SELECT
 				<tr>
 					<td width="50%" height="50">
 						DATE<br>
-						<?=draw_form_date("cboDate");?>
+						<?php echo draw_form_date("cboDate");?>
 					</td>
 					<td width="50%" valign="middle">
 						<div id="internal" style="visibility:hidden;">
@@ -254,13 +254,13 @@ $r = db_grab("SELECT
 				<tr>
 					<td width="50%" height="50">
 						STAFF RESPONSIBLE<br>
-						<?=drawSelectUser("cboStaff", $user["id"]);?>
+						<?php echo drawSelectUser("cboStaff", $user["id"]);?>
 					</td>
 					<td width="50%">
 						<div id="report" style="visibility:hidden;">
 						<table width="100%" cellpadding="0" cellspacing="0" border="0" class="small">
 							<tr>
-								<td width="16"><?=draw_form_checkbox("chkReport", 0);?></td>
+								<td width="16"><?php echo draw_form_checkbox("chkReport", 0);?></td>
 								<td width="99%">Is this a Report?</td>
 							</tr>
 						</table></div>
@@ -269,18 +269,18 @@ $r = db_grab("SELECT
 				<tr>
 					<td colspan="2">
 						NOTES<br>
-						<?=draw_form_textarea("tarDescription", "");?>
+						<?php echo draw_form_textarea("tarDescription", "");?>
 					</td>
 				</tr>
 			</table>
 		</td>
 	</tr>
 	<tr>
-		<td class="bottom"><?=draw_form_submit("add activity")?></td>
+		<td class="bottom"><?php echo draw_form_submit("add activity")?></td>
 	</tr>
 	</form>
 </table>
 
-<?
+<?php
 	}
 drawBottom(); ?>

@@ -1,14 +1,14 @@
-<? include("../include.php");
+<?php include("../include.php");
 drawTop();
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Organizations", 4, "new", "organization_add_edit.php");?>
+	<?php echo drawHeaderRow("Organizations", 4, "new", "organization_add_edit.php");?>
 	<tr>
 		<th align="left">Organization</th>
 		<th align="left" style="width:120px">City, State</th>
 		<th align="right" style="width:100px">Last Update</th>
 	</tr>
-	<?
+	<?php
 	$result = db_query("SELECT 
 							o.id,
 							o.name, 
@@ -22,10 +22,10 @@ drawTop();
 						ORDER BY name");
 	while ($r = db_fetch($result)) {?>
 		<tr>
-			<td><a href="organization_view.php?id=<?=$r["id"]?>"><?=$r["name"]?></a></td>
-			<td><?=$r["city"]?>, <?=$r["state"]?></td>
-			<td align="right"><?=format_date($r["lastUpdatedOn"])?></td>
+			<td><a href="organization_view.php?id=<?php echo $r["id"]?>"><?php echo $r["name"]?></a></td>
+			<td><?php echo $r["city"]?>, <?php echo $r["state"]?></td>
+			<td align="right"><?php echo format_date($r["lastUpdatedOn"])?></td>
 		</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

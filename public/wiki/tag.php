@@ -8,7 +8,7 @@ drawTop();
 $r = db_grab("SELECT description FROM wiki_tags WHERE id = " . $_GET["id"]);
 ?>
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	echo drawHeaderRow("<a href='tags.php' class='white'>Tags</a> &gt; " . $r["description"], 4);
 	$topics = db_query("SELECT 
 		w.id,
@@ -33,14 +33,14 @@ $r = db_grab("SELECT description FROM wiki_tags WHERE id = " . $_GET["id"]);
 	while ($t = db_fetch($topics)) {?>
 	<tr height="36">
 		<td></td>
-		<td><a href="topic.php?id=<?=$t["id"]?>"><?=$t["title"]?></a></td>
-		<td><?=$t["first"]?> <?=$t["last"]?></td>
-		<td align="right"><?=format_date($t["createdOn"])?></td>
+		<td><a href="topic.php?id=<?php echo $t["id"]?>"><?php echo $t["title"]?></a></td>
+		<td><?php echo $t["first"]?> <?php echo $t["last"]?></td>
+		<td align="right"><?php echo format_date($t["createdOn"])?></td>
 	</tr>
-	<? }
+	<?php }
 	} else {
 		echo drawEmptyResult("No Wiki Topics have been entered into the system with this tag yet", 4);
 	}?>
 </table>
 
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

@@ -1,4 +1,4 @@
-<?  
+<?php  
 include("../include.php");
 
 $bgcolors[1] = "#FF99CC";

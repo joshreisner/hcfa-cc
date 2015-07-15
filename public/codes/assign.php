@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 drawTop();
 $result = db_query("SELECT code FROM ldcodes");

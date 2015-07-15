@@ -1,4 +1,4 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 drawTop();
 
@@ -16,20 +16,20 @@ $result = db_query("select
 ?>
 
 <table class="left">
-	<?=drawHeaderRow("Management Contact Numbers", 4);?>
+	<?php echo drawHeaderRow("Management Contact Numbers", 4);?>
 	<tr>
 		<th align="left">Name</th>
 		<th align="left">Title</th>
 		<th align="left">Home #</th>
 		<th align="left">Cell #</th>
 	</tr>
-	<? while ($r = db_fetch($result)) {?>
+	<?php while ($r = db_fetch($result)) {?>
 	<tr>
-		<td><a href="staff_view.php?id=<?=$r["userID"]?>"><?=$r["name"]?></a></td>
-		<td><?=$r["title"]?></td>
-		<td><?=format_phone($r["homephone"])?></td>
-		<td><?=format_phone($r["homecell"])?></td>
+		<td><a href="staff_view.php?id=<?php echo $r["userID"]?>"><?php echo $r["name"]?></a></td>
+		<td><?php echo $r["title"]?></td>
+		<td><?php echo format_phone($r["homephone"])?></td>
+		<td><?php echo format_phone($r["homecell"])?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

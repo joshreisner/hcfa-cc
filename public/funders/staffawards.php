@@ -1,4 +1,4 @@
-<?  include("../include.php");
+<?php  include("../include.php");
 
 //default to active awards
 if (!isset($_GET["statusID"])) url_change($_josh["request"]["path_query"] . "&statusID=1");
@@ -13,8 +13,8 @@ $r2 = db_grab("SELECT ISNULL(u.nickname, u.firstname) staffname
 	
 ?>
 <table width="100%" cellpadding="3" cellspacing="1" border="0" bgcolor="#EEEEEE" class="small">
-	<?=drawHeaderRow($r2["staffname"] . "'s " . $r["awardStatusDescPlural"], 5)?>
-<?
+	<?php echo drawHeaderRow($r2["staffname"] . "'s " . $r["awardStatusDescPlural"], 5)?>
+<?php
 $programs = db_query("SELECT p.programID, p.programDesc, (SELECT count(*) 
 		FROM resources_awards a
 		INNER JOIN resources_funders f on a.funderID = f.funderID
@@ -29,8 +29,8 @@ while ($rp = db_fetch($programs)) {
 		<td colspan="5" bgcolor="#FFFFFF" height="40" valign="bottom">
 			<table width="100%" cellpadding="0" cellspacing="0" border="0">
 				<tr class="helptext">
-					<td><b><?=$rp["programDesc"]?></b></td>
-					<td align="right" class="small">[ <a href="program.php?id=<?=$rp["programID"]?>">view program</a> ]</td>
+					<td><b><?php echo $rp["programDesc"]?></b></td>
+					<td align="right" class="small">[ <a href="program.php?id=<?php echo $rp["programID"]?>">view program</a> ]</td>
 				</tr>
 			</table>
 		</td>
@@ -42,7 +42,7 @@ while ($rp = db_fetch($programs)) {
 		<td><nobr>Next Step / Status</nobr></td>
 		<td align="right"><nobr>Amt. Awarded</nobr></td>
 	</tr>
-		<?
+		<?php
 		$result = db_query("SELECT 
 			a.awardID,
 			a.awardTitle,
@@ -63,16 +63,16 @@ while ($rp = db_fetch($programs)) {
 
 	?>
 		<tr bgcolor="#FFFFFF" class="helptext" valign="top">
-			<? if ($lastfunderID != $r["funderID"]) { ?>
-			<td width="39%" rowspan="<?
+			<?php if ($lastfunderID != $r["funderID"]) { ?>
+			<td width="39%" rowspan="<?php
 			$result_rowcount = db_query("SELECT count(*) as 'rowcount' FROM resources_awards WHERE funderID = " . $r["funderID"] . " AND awardprogramID = " . $rp["programID"] . " AND awardStatusID  = " . $_GET["statusID"] . " AND staffID  = " . $_GET["staffID"]);
 			$rr = db_fetch($result_rowcount);
 			echo $rr["rowcount"];
-			?>"><a href="funder_view.php?id=<?=$r["funderID"]?>"><?=$r["name"]?></a></td>
-			<?}?>
-			<td width="40%"><a href="award_view.php?id=<?=$r["awardID"]?>"><?=$r["awardTitle"]?></a></td>
-			<td><nobr><?=date("n/y", strToTime($r["awardStartDate"]))?> - <?=date("n/y", strToTime($r["awardEndDate"]))?></nobr></td>
-			<td width="40%"><?
+			?>"><a href="funder_view.php?id=<?php echo $r["funderID"]?>"><?php echo $r["name"]?></a></td>
+			<?php }?>
+			<td width="40%"><a href="award_view.php?id=<?php echo $r["awardID"]?>"><?php echo $r["awardTitle"]?></a></td>
+			<td><nobr><?php echo date("n/y", strToTime($r["awardStartDate"]))?> - <?php echo date("n/y", strToTime($r["awardEndDate"]))?></nobr></td>
+			<td width="40%"><?php
 				$result_notes = db_query("SELECT 
 						a.activityDate, 
 						a.activityTitle,
@@ -94,17 +94,17 @@ while ($rp = db_fetch($programs)) {
 			?>
 			
 			</td>
-			<td align="right">$<?=number_format($r["awardAmount"])?></td>
+			<td align="right">$<?php echo number_format($r["awardAmount"])?></td>
 		</tr>
 	<?	$lastfunderID = $r["funderID"];
 	}?>
 		<tr class="helptext">
 			<td colspan="4" align="right">Total: </td>
-			<td bgcolor="#666666" align="right"><font color="#FFFFFF"><b>$<?=number_format($award_amt)?></b></font></td>
+			<td bgcolor="#666666" align="right"><font color="#FFFFFF"><b>$<?php echo number_format($award_amt)?></b></font></td>
 		</tr>
-	<?
+	<?php
 	}
 	}?>
 </table>
 <br><br>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

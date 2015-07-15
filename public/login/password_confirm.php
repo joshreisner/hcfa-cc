@@ -1,8 +1,8 @@
-<? include("../include.php");?>
+<?php include("../include.php");?>
 <html>
 	<head>
 		<title>Reset Your Password</title>
-		<link rel="stylesheet" type="text/css" href="<?=$locale?>style.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style.css" />
 		<script language="javascript" src="/javascript.js"></script>
 	</head>
 	<body>
@@ -10,7 +10,7 @@
 <table width="600" align="center">
 	<tr>
 		<td>
-<?
+<?php
 echo drawServerMessage("<h1>Check your email</h1>  You should receive an email shortly with a link to reset your password.<br>
 Click <a href='/'>here</a> to go back.");
 ?>

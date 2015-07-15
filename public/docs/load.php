@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 $docs = db_query("SELECT id, name FROM documents");

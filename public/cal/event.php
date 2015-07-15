@@ -1,4 +1,4 @@
-<?
+<?php
 include("include.php");
 
 $e = db_grab("SELECT 
@@ -31,7 +31,7 @@ drawTop();
 echo drawNavigationCal($e["month"], $e["year"], true)
 ?>
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	if ($isAdmin) {
 		echo drawHeaderRow("Event Details", 2, "edit", "event_edit.php?id=" . $_GET["id"], "delete", url_query_add(array("action"=>"delete"), false));
 	} elseif ($user["id"] == $e["createdBy"]) {
@@ -41,23 +41,23 @@ echo drawNavigationCal($e["month"], $e["year"], true)
 	}?>
 	<tr>
 		<td class="left">Title</td>
-		<td class="right" bgcolor="#ffffff"><b><?=$e["title"]?></b></td>
+		<td class="right" bgcolor="#ffffff"><b><?php echo $e["title"]?></b></td>
 	</tr>
 	<tr>
 		<td class="left">Type</td>
-		<td><span class="block" style="background-color:<?=$e["color"]?>;"><?=$e["type"]?></span></td>
+		<td><span class="block" style="background-color:<?php echo $e["color"]?>;"><?php echo $e["type"]?></span></td>
 	</tr>
 	<tr>
 		<td class="left">Start Date</td>
-		<td><?=format_date_time($e["startDate"])?></td>
+		<td><?php echo format_date_time($e["startDate"])?></td>
 	</tr>
 	<tr valign="top">
 		<td class="left" height="200">Description</td>
-		<td class="text"><?=$e["description"]?></td>
+		<td class="text"><?php echo $e["description"]?></td>
 	</tr>
 	<tr valign="top">
 		<td class="left">Created</td>
-		<td><?=drawName($e["createdBy"], $e["first"] . " " . $e["last"], $e["imageID"], $e["imgwidth"], $e["imgheight"], $e["createdOn"], true);?></td>
+		<td><?php echo drawName($e["createdBy"], $e["first"] . " " . $e["last"], $e["imageID"], $e["imgwidth"], $e["imgheight"], $e["createdOn"], true);?></td>
 	</tr>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

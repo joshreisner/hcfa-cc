@@ -23,7 +23,7 @@ if ($user["departmentID"] != 8) {
 
 ?>
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	echo drawHeaderRow("Laptop Requests", 5);
 	$result = db_query("select
 						t.title,
@@ -54,7 +54,7 @@ if (db_found($result)) {?>
 		<th>Assigned To</th>
 		<th width="16"></th>
 	</tr>
-	<? while ($r = db_fetch($result)) echo drawTicketRow($r);
+	<?php while ($r = db_fetch($result)) echo drawTicketRow($r);
 } else {
 	echo drawEmptyResult("There are no open laptop requests right now!", 5);
 }?>
@@ -71,13 +71,13 @@ if (db_found($result)) {?>
 	}
 
 	function deactivateLaptop(id,name) {
-		if(confirm("Are you sure you want to deactivate the laptop " + name + "?")) location.href="<?=$request["path_query"]?>?deactivate=" + id;
+		if(confirm("Are you sure you want to deactivate the laptop " + name + "?")) location.href="<?php echo $request["path_query"]?>?deactivate=" + id;
 	}
 	//-->
 </script>
 
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Laptops", 7, "add a laptop", "laptop_add_edit.php");?>
+	<?php echo drawHeaderRow("Laptops", 7, "add a laptop", "laptop_add_edit.php");?>
 	<tr>
 		<th align="left">Name</th>
 		<th>Status</th>
@@ -87,14 +87,14 @@ if (db_found($result)) {?>
 		<th></th>
 		<th></th>
 	</tr>
-	<?
+	<?php
 	$homes = db_query("SELECT id, name, (SELECT count(*) FROM it_laptops l WHERE l.laptopHomeID = h.id) countlaptops FROM it_laptops_homes h");
 	while ($h = db_fetch($homes)) {
 		if ($h["countlaptops"]) {?>
 	<tr class="group">
-		<td colspan="7"><b><?=$h["name"]?></b></td>
+		<td colspan="7"><b><?php echo $h["name"]?></b></td>
 	</tr>
-	<? $result = db_query("SELECT 
+	<?php $result = db_query("SELECT 
 			l.laptopID,
 			l.laptopName,
 			l.laptopIsWireless as isWireless,
@@ -111,20 +111,20 @@ if (db_found($result)) {?>
 		ORDER BY laptopName");
 	while ($r = db_fetch($result)) {?>
 	<tr>
-		<td><a href="laptop.php?id=<?=$r["laptopID"]?>"><?=$r["laptopName"]?></a></td>
-		<td><?=$r["laptopStatusDesc"]?></td>
-		<td><?=$r["first"]?> <?=$r["last"]?></td>
-		<td align="right"><?=format_date($r["checkoutStart"], "")?></td>
-		<td align="right"><?=format_date($r["checkoutEnd"], "")?></td>
-		<td align="center"><nobr><? if ($r["laptopStatusDesc"] == "In") {?>
-			<a href="laptop_checkout.php?id=<?=$r["laptopID"]?>">check out</a>
-			<? } else { ?>
-			<a href="<?=url_query_add(array("checkin"=>$r["laptopID"]), false)?>">check in</a>
-			<? }?></nobr></td>
-		<td width="16"><a href="javascript:deactivateLaptop(<?=$r["laptopID"]?>,'<?=$r["laptopName"]?>');"><img src="<?=$locale?>images/icons/delete.gif" width="16" height="16" border="0"></a></td>
+		<td><a href="laptop.php?id=<?php echo $r["laptopID"]?>"><?php echo $r["laptopName"]?></a></td>
+		<td><?php echo $r["laptopStatusDesc"]?></td>
+		<td><?php echo $r["first"]?> <?php echo $r["last"]?></td>
+		<td align="right"><?php echo format_date($r["checkoutStart"], "")?></td>
+		<td align="right"><?php echo format_date($r["checkoutEnd"], "")?></td>
+		<td align="center"><nobr><?php if ($r["laptopStatusDesc"] == "In") {?>
+			<a href="laptop_checkout.php?id=<?php echo $r["laptopID"]?>">check out</a>
+			<?php } else { ?>
+			<a href="<?php echo url_query_add(array("checkin"=>$r["laptopID"]), false)?>">check in</a>
+			<?php }?></nobr></td>
+		<td width="16"><a href="javascript:deactivateLaptop(<?php echo $r["laptopID"]?>,'<?php echo $r["laptopName"]?>');"><img src="<?php echo $locale?>images/icons/delete.gif" width="16" height="16" border="0"></a></td>
 	</tr>
-			<? }
+			<?php }
 		}
 	}?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

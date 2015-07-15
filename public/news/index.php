@@ -28,7 +28,7 @@ if (url_id()) {
 	echo drawHeaderRow("News Item", 2, "edit", "edit.php?id=" . $_GET["id"]);?>
 	<tr>
 		<td class="left">Organization(s)</td>
-		<td><?
+		<td><?php
 		$organizations = db_query("SELECT 
 			o.description 
 			FROM news_stories_to_organizations ns2o
@@ -41,34 +41,34 @@ if (url_id()) {
 	</tr>
 	<tr>
 		<td class="left">Headline</td>
-		<td class="big"><?=draw_img($locale . "news/thumbnail-" . $_GET["id"] . "." . $r["imageExt"], false, "", "news-thumbnail")?><?=$r["headline"]?></td>
+		<td class="big"><?php echo draw_img($locale . "news/thumbnail-" . $_GET["id"] . "." . $r["imageExt"], false, "", "news-thumbnail")?><?php echo $r["headline"]?></td>
 	</tr>
 	<tr>
 		<td class="left">News Outlet</td>
-		<td><?=$r["outlet"]?></td>
+		<td><?php echo $r["outlet"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Date</td>
-		<td><?=format_date($r["pubDate"])?></td>
+		<td><?php echo format_date($r["pubDate"])?></td>
 	</tr>
 	<tr>
 		<td class="left">File</td>
-		<td><table class="nospacing"><tr><td><?=draw_img($locale . $r["icon"], "download.php?id=" . $_GET["id"])?></td>
-		<td><a href="download.php?id=<?=$_GET["id"]?>"> <?=$r["docTypeDesc"]?> (<?=format_size(strlen($r["content"]))?>)</a></td>
+		<td><table class="nospacing"><tr><td><?php echo draw_img($locale . $r["icon"], "download.php?id=" . $_GET["id"])?></td>
+		<td><a href="download.php?id=<?php echo $_GET["id"]?>"> <?php echo $r["docTypeDesc"]?> (<?php echo format_size(strlen($r["content"]))?>)</a></td>
 		</tr></table></td>
 	</tr>
-	<? if ($r["url"]) {?>
+	<?php if ($r["url"]) {?>
 	<tr>
 		<td class="left">URL</td>
-		<td><a href="<?=$r["url"]?>"><?=$r["url"]?></a></td>
+		<td><a href="<?php echo $r["url"]?>"><?php echo $r["url"]?></a></td>
 	</tr>
-	<? }
+	<?php }
 	if ($r["description"]) {?>
 	<tr>
 		<td class="left">Description</td>
-		<td class="text"><?=nl2br($r["description"])?></td>
+		<td class="text"><?php echo nl2br($r["description"])?></td>
 	</tr>
-	<? }
+	<?php }
 	echo drawTableEnd();
 
 } else {
@@ -93,18 +93,18 @@ if (url_id()) {
 			<th>Outlet</th>
 			<th>Organization</th>
 			<th class="r">Date</th>
-			<? if ($isAdmin) {?><th class="x"></th><? }?>
+			<?php if ($isAdmin) {?><th class="x"></th><?php }?>
 		</tr>
-		<?
+		<?php
 		while ($r = db_fetch($result)) {?>
 		<tr>
-			<td><a href="./?id=<?=$r["id"]?>"><?=format_string($r["headline"], 40)?></a></td>
-			<td><?=$r["outlet"]?></td>
-			<td><?=$r["organization"]?></td>
-			<td class="r"><?=format_date($r["pubdate"], "n/a", "M d, Y", false)?></td>
-			<?=deleteColumn("Delete news clip?", $r["id"])?>
+			<td><a href="./?id=<?php echo $r["id"]?>"><?php echo format_string($r["headline"], 40)?></a></td>
+			<td><?php echo $r["outlet"]?></td>
+			<td><?php echo $r["organization"]?></td>
+			<td class="r"><?php echo format_date($r["pubdate"], "n/a", "M d, Y", false)?></td>
+			<?php echo deleteColumn("Delete news clip?", $r["id"])?>
 		</tr>
-		<? }
+		<?php }
 	} else {
 		echo drawEmptyResult("No stories in the system yet");;
 	}

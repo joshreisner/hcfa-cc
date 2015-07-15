@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 if ($_POST) {
@@ -10,7 +10,7 @@ if ($_POST) {
 <html>
 	<head>
 		<title>Update Your Password</title>
-		<link rel="stylesheet" type="text/css" href="<?=$locale?>style.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style.css" />
 		<script language="javascript" src="/javascript.js"></script>
 	</head>
 	<body>
@@ -18,7 +18,7 @@ if ($_POST) {
 <table width="600" align="center">
 	<tr>
 		<td>
-<?
+<?php
 $form = new intranet_form;
 $form->addRow("password", "Password", "password1", "", "", true);
 $form->addRow("password", "Confirm", "password2", "", "", true);

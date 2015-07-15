@@ -3,7 +3,7 @@ drawTop();
 ?>
 
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	echo drawHeaderRow("Assign " . db_grab("SELECT shortName name FROM intranet_departments WHERE departmentID = " . $departmentID) . " Tickets", 5);
 	echo drawTicketHeader();
 
@@ -34,7 +34,7 @@ drawTop();
 		<tr class="group">
 			<td colspan="5">Unassigned Tickets</td>
 		</tr>
-		<? while ($r = db_fetch($result)) echo drawTicketRow($r);
+		<?php while ($r = db_fetch($result)) echo drawTicketRow($r);
 	}
 	
 	//your tickets
@@ -64,7 +64,7 @@ drawTop();
 		<tr class="group">
 			<td colspan="5">Your Tickets</td>
 		</tr>
-		<? while ($r = db_fetch($result)) echo drawTicketRow($r);
+		<?php while ($r = db_fetch($result)) echo drawTicketRow($r);
 	}
 	
 	//other tickets
@@ -94,8 +94,8 @@ drawTop();
 		<tr class="group">
 			<td colspan="5">Other People's Tickets</td>
 		</tr>
-		<?
+		<?php
 		while ($r = db_fetch($result)) echo drawTicketRow($r);
 	}?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

@@ -60,7 +60,7 @@ function changeCursor(state) {
 
 
 function changeDept(id, userID) {
-	location.href='<?=$request["path_query"]?>&newDeptID=' + id + '&contactID=' + userID;
+	location.href='<?php echo $request["path_query"]?>&newDeptID=' + id + '&contactID=' + userID;
 }
 
 function toggleCheckbox(which) {

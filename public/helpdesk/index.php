@@ -42,15 +42,15 @@ echo drawServerMessage($helpdeskStatus, "center");
 	<!--
 	function updateTypes(departmentID) {
 		var types = new Array(3, 8);
-		<?
+		<?php
 		$types = db_query("SELECT id, departmentID, description FROM helpdesk_tickets_types ORDER BY departmentID, description");
 		$options = array();
 		while ($t = db_fetch($types)) {
 			$options[$t["departmentID"]][] = '"' . $t["id"] . '|' . $t["description"] . '"';
 		}
 		while (list($key, $value) = each($options)) {?>
-			types[<?=$key?>] = new Array(<?=implode(",", $value)?>);
-		<? }?>
+			types[<?php echo $key?>] = new Array(<?php echo implode(",", $value)?>);
+		<?php }?>
 		var field = document.getElementById("typeID").options;
 		field.length = 0;
 		field[i] = new Option("", "");
@@ -102,35 +102,35 @@ echo drawServerMessage($helpdeskStatus, "center");
 		<th width="20%" align="left">Status</th>
 		<th width="15%"><nobr>Assigned To</nobr></th>
 	</tr>
-	<? while ($r = db_fetch($result)) {
+	<?php while ($r = db_fetch($result)) {
 		if ($r["department"] != $lastDept) {
 			$lastDept = $r["department"];
 			$count = db_grab("SELECT COUNT(*) tickets FROM helpdesk_tickets WHERE departmentID = " . $r["departmentID"] . " AND statusID <> 9");
 			?>
 		<tr class="group">
-			<td colspan="4"><?=$lastDept?> Tickets (<?=$count ?>)</td>
+			<td colspan="4"><?php echo $lastDept?> Tickets (<?php echo $count ?>)</td>
 		</tr>
-		<? }
+		<?php }
 		if (($r["departmentID"] == 2) && !$isAdmin && ($r["createdBy"] != $user["id"])) {
 			//ticket not clickable in this scenario
 			?>
 		<tr height="32" class="thread">
-			<td class="input"><?=$r["title"]?></td>
-			<td><nobr><?=$r["firstname"]?> <?=substr($r["lastname"], 0, 1)?>.</nobr></td>
-			<td><?=$r["description"]?></td>
-			<td align="center"><?=$r["owner"]?></td>
+			<td class="input"><?php echo $r["title"]?></td>
+			<td><nobr><?php echo $r["firstname"]?> <?php echo substr($r["lastname"], 0, 1)?>.</nobr></td>
+			<td><?php echo $r["description"]?></td>
+			<td align="center"><?php echo $r["owner"]?></td>
 		</tr>
-		<? } else { ?>
+		<?php } else { ?>
 		<tr height="32" class="thread"
-			onclick		= "location.href='ticket.php?id=<?=$r["id"]?>';"
-			onmouseover	= "javascript:aOver('id<?=$r["id"]?>');"
-			onmouseout	= "javascript:aOut('id<?=$r["id"]?>');">
-			<td class="input"><a href="ticket.php?id=<?=$r["id"]?>" id="id<?=$r["id"]?>"><?=$r["title"]?></a></td>
-			<td><nobr><?=$r["firstname"]?> <?=substr($r["lastname"], 0, 1)?>.</nobr></td>
-			<td><?=$r["description"]?></td>
-			<td align="center"><?=$r["owner"]?></td>
+			onclick		= "location.href='ticket.php?id=<?php echo $r["id"]?>';"
+			onmouseover	= "javascript:aOver('id<?php echo $r["id"]?>');"
+			onmouseout	= "javascript:aOut('id<?php echo $r["id"]?>');">
+			<td class="input"><a href="ticket.php?id=<?php echo $r["id"]?>" id="id<?php echo $r["id"]?>"><?php echo $r["title"]?></a></td>
+			<td><nobr><?php echo $r["firstname"]?> <?php echo substr($r["lastname"], 0, 1)?>.</nobr></td>
+			<td><?php echo $r["description"]?></td>
+			<td align="center"><?php echo $r["owner"]?></td>
 		</tr>
-		<? }
+		<?php }
 	 }
 } else {
 	echo drawHeaderRow("No Tickets", 1, "new", "#bottom");
@@ -139,7 +139,7 @@ echo drawServerMessage($helpdeskStatus, "center");
 </table>
 
 <a name="bottom"></a>
-<?
+<?php
 if (!$printing) {
 	$form = new intranet_form;
 	if ($isAdmin) $form->addUser("userID",  "Posted By" , $user["id"], false);

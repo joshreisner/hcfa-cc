@@ -24,7 +24,7 @@ if ($posting) {
 <html>
 	<head>
 		<title>Reset Your Password</title>
-		<link rel="stylesheet" type="text/css" href="<?=$locale?>style.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style.css" />
 		<script language="javascript" src="/javascript.js"></script>
 	</head>
 	<body>
@@ -32,7 +32,7 @@ if ($posting) {
 <table width="600" align="center">
 	<tr>
 		<td>
-<?
+<?php
 if (@$_GET["msg"] == "email-not-found") {
 	echo drawServerMessage("<h1>Email Not Found</h1>That email address wasn't found in the system.  If the address below is correct and you've never logged in, you may need to <a href='account_request.php'>request an account</a>.");
 } else {

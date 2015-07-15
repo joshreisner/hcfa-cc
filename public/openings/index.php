@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 if (url_action("delete")) {
@@ -37,7 +37,7 @@ if ($posting) {
 drawTop();
 ?>
 <table class="left" cellspacing="1">
-	<? if ($isAdmin) {
+	<?php if ($isAdmin) {
 		$colspan = 4;
 		echo drawHeaderRow("Open Positions", $colspan, "new", "#bottom");
 	} else {
@@ -48,9 +48,9 @@ drawTop();
 		<th align="left" width="50%">Title</th>
 		<th align="left" width="30%">Location</th>
 		<th align="right" width="20%"><nobr>Last Update</nobr></th>
-		<? if ($isAdmin) {?><th></th><? }?>
+		<?php if ($isAdmin) {?><th></th><?php }?>
 	</tr>
-	<?
+	<?php
 	$result = db_query("SELECT 
 							j.id,
 							j.title,
@@ -69,17 +69,17 @@ drawTop();
 		echo '<tr class="group"><td colspan="' . $colspan . '">' . $lastCorporation . '</td></tr>';
 		}?>
 		<tr>
-			<td><a href="position.php?id=<?=$r["id"]?>"><?=$r["title"]?></a></td>
-			<td><?=$r["office"]?></td>
-			<td align="right"><?=format_date($r["updatedOn"])?></td>
-			<?=deleteColumn("Delete this position?", $r["id"])?>
+			<td><a href="position.php?id=<?php echo $r["id"]?>"><?php echo $r["title"]?></a></td>
+			<td><?php echo $r["office"]?></td>
+			<td align="right"><?php echo format_date($r["updatedOn"])?></td>
+			<?php echo deleteColumn("Delete this position?", $r["id"])?>
 		</tr>
-		<? }?>
+		<?php }?>
 </table>
 
 <a name="bottom"></a>
 
-<? if ($isAdmin && !$printing) {
+<?php if ($isAdmin && !$printing) {
 	$form = new intranet_form;
 	if ($isAdmin) $form->addUser("createdBy",  "Posted By" , $user["id"], false, true);
 	$form->addRow("itext",  "Title" , "title", "", "", true);

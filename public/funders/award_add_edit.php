@@ -1,4 +1,4 @@
-<?  include("../include.php");
+<?php  include("../include.php");
 
 if (!empty($_POST)) { 
 	//format variables
@@ -122,26 +122,26 @@ if (isset($_GET["funderID"])) { //adding
 </script>
 
 <table class="left" cellspacing="1">
-	<form name="frmAward" method="post" action="<?=$_josh["request"]["path_query"]?>" onsubmit="javascript:return validate(this);">
-	<? if ($adding) {
+	<form name="frmAward" method="post" action="<?php echo $_josh["request"]["path_query"]?>" onsubmit="javascript:return validate(this);">
+	<?php if ($adding) {
 		echo drawHeaderRow("Add an Award", 2);
 	} else {
 		echo drawHeaderRow("Edit Award", 2);
 	}?>
 	<tr>
 		<td class="left">Award Name</td>
-		<td><input type="text" value="<?=@$r["awardTitle"]?>" name="txtAwardTitle" maxlength="50" size="30" class="field"></td>
+		<td><input type="text" value="<?php echo @$r["awardTitle"]?>" name="txtAwardTitle" maxlength="50" size="30" class="field"></td>
 	</tr>
 	<tr>
 		<td class="left">Filing Number</td>
-		<td><input type="text" value="<?=@$r["awardFilingNumber"]?>" name="txtAwardFilingNumber" maxlength="50" size="7" class="field"></td>
+		<td><input type="text" value="<?php echo @$r["awardFilingNumber"]?>" name="txtAwardFilingNumber" maxlength="50" size="7" class="field"></td>
 	</tr>
 	<tr>
 		<td class="left">Funder</td>
 		<td>
-			<? if (isset($_GET["funderID"])) {?>
-				<a href="funder_view.php?id=<?=$_GET["funderID"]?>"><b><?=@$r["name"]?></b></a>
-			<? } else {
+			<?php if (isset($_GET["funderID"])) {?>
+				<a href="funder_view.php?id=<?php echo $_GET["funderID"]?>"><b><?php echo @$r["name"]?></b></a>
+			<?php } else {
 				error_reporting(E_ALL);
 				echo draw_form_select("cboFunder", "SELECT funderID, name from resources_funders order by name", @$r["funderID"], 60);
 			}?>
@@ -150,56 +150,56 @@ if (isset($_GET["funderID"])) { //adding
 	<tr>
 		<td class="left">Term Start Date</td>
 		<td><nobr><select name="cboStartMonth" class="field">
-			<? for ($i = 1; $i < 13; $i++) {
+			<?php for ($i = 1; $i < 13; $i++) {
 				$selected = ($i == $startMonth) ? " selected" : "";
 					?>
-			<option value="<?=$i?>"<?=$selected?>><?=$months[$i-1]?></option>
-			<? }?>
+			<option value="<?php echo $i?>"<?php echo $selected?>><?php echo $months[$i-1]?></option>
+			<?php }?>
 		</select>
 		<select name="cboStartYear" class="field">
-			<? for ($i = 1990; $i < 2020; $i++) {
+			<?php for ($i = 1990; $i < 2020; $i++) {
 				$selected = ($i == $startYear) ? " selected" : "";
 					?>
-			<option value="<?=$i?>"<?=$selected?>><?=$i?></option>
-			<?}?>
+			<option value="<?php echo $i?>"<?php echo $selected?>><?php echo $i?></option>
+			<?php }?>
 		</select></nobr></td>
 	</tr>
 	<tr>
 		<td class="left">Term End Date</td>
 		<td><nobr><select name="cboEndMonth" class="field">
-			<? for ($i = 1; $i < 13; $i++) {
+			<?php for ($i = 1; $i < 13; $i++) {
 				$selected = ($i == $endMonth) ? " selected" : "";
 				?>
-			<option value="<?=$i?>"<?=$selected?>><?=$months[$i-1]?></option>
-			<? }?>
+			<option value="<?php echo $i?>"<?php echo $selected?>><?php echo $months[$i-1]?></option>
+			<?php }?>
 		</select>
 		<select name="cboEndYear" class="field">
-			<? for ($i = 1990; $i < 2020; $i++) {
+			<?php for ($i = 1990; $i < 2020; $i++) {
 					$selected = ($i == $endYear) ? " selected" : "";
 					?>
-				<option value="<?=$i?>"<?=$selected?>><?=$i?></option>
-				<? }?>
+				<option value="<?php echo $i?>"<?php echo $selected?>><?php echo $i?></option>
+				<?php }?>
 		</select></nobr></td>
 	</tr>
 	<tr>
 		<td class="left">Type</td>
-		<td><?=draw_form_select("cboAwardType","SELECT awardTypeID, awardTypeDesc FROM resources_awards_types ORDER BY awardTypeDesc", @$r["awardTypeID"]);?></td>
+		<td><?php echo draw_form_select("cboAwardType","SELECT awardTypeID, awardTypeDesc FROM resources_awards_types ORDER BY awardTypeDesc", @$r["awardTypeID"]);?></td>
 	</tr>
 	<tr>
 		<td class="left">Status</td>
-		<td><?=draw_form_select("cboAwardStatus","SELECT awardStatusID, awardStatusDesc FROM resources_awards_statuses", @$r["awardStatusID"]);?></td>
+		<td><?php echo draw_form_select("cboAwardStatus","SELECT awardStatusID, awardStatusDesc FROM resources_awards_statuses", @$r["awardStatusID"]);?></td>
 	</tr>
 	<tr>
 		<td class="left">Program</td>
-		<td><?=draw_form_select("cboProgram","SELECT programID, programDesc FROM intranet_programs ORDER BY programDesc",@$r["awardProgramID"]);?></td>
+		<td><?php echo draw_form_select("cboProgram","SELECT programID, programDesc FROM intranet_programs ORDER BY programDesc",@$r["awardProgramID"]);?></td>
 	</tr>
 	<tr>
 		<td class="left">Cross List</td>
 		<td>
 			<table cellpadding="0" cellspacing="0" border="0" class="small">
 				<tr>
-					<td><?=draw_form_select("cboProgram2","SELECT programID, programDesc FROM intranet_programs ORDER BY programDesc",@$r["awardProgramID2"]);?></td>
-					<td>&nbsp;<?=draw_form_checkbox("noCrossList", @!@$r["awardProgramID2"]);?></td>
+					<td><?php echo draw_form_select("cboProgram2","SELECT programID, programDesc FROM intranet_programs ORDER BY programDesc",@$r["awardProgramID2"]);?></td>
+					<td>&nbsp;<?php echo draw_form_checkbox("noCrossList", @!@$r["awardProgramID2"]);?></td>
 					<td>&nbsp;(no cross-listing)</td>
 				</tr>
 			</table>
@@ -207,21 +207,21 @@ if (isset($_GET["funderID"])) { //adding
 	</tr>
 	<tr>
 		<td class="left">Amount <div style="float:right">$</span></td>
-		<td><input type="text" size="11" class="field" name="txtAmount" value="<?=@$r["awardAmount"]?>"></td>
+		<td><input type="text" size="11" class="field" name="txtAmount" value="<?php echo @$r["awardAmount"]?>"></td>
 	</tr>
 	<tr>
 		<td class="left">Project Description</td>
-		<td><textarea name="tarDescription" cols="62" rows="8" class="field"><?=@$r["awardNotes"]?></textarea></td>
+		<td><textarea name="tarDescription" cols="62" rows="8" class="field"><?php echo @$r["awardNotes"]?></textarea></td>
 	</tr>
 	<tr>
 		<td class="left"><nobr>Award Contact:</nobr></td>
 		<td width="99%">
-			<?=drawSelectUser("cboStaff", @$r["staffID"]);?>
+			<?php echo drawSelectUser("cboStaff", @$r["staffID"]);?>
 		</td>
 	</tr>
 	<tr>
-		<td class="bottom" colspan="2"><?=draw_form_submit($button);?></td>
+		<td class="bottom" colspan="2"><?php echo draw_form_submit($button);?></td>
 	</tr>
 	</form>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

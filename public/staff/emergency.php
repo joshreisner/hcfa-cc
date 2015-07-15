@@ -1,4 +1,5 @@
-<?	include("include.php");
+<?php
+include("include.php");
 
 drawTop();
 echo drawJumpToStaff();
@@ -6,13 +7,13 @@ echo drawJumpToStaff();
 ?>
 
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Emergency Contact Information", 3);?>
+	<?php echo drawHeaderRow("Emergency Contact Information", 3);?>
 	<tr>
 		<th align="left" width="30%">Name</th>
 		<th align="left" width="35%">Personal Info</th>
 		<th align="left" width="35%">Emergency Contacts</th>
 	</tr>
-	<?
+	<?php
 	$result = db_query("SELECT 
 							u.userID,
 							u.firstname first_name,
@@ -41,34 +42,34 @@ echo drawJumpToStaff();
 						ORDER BY u.lastname, u.firstname");
 	while ($r = db_fetch($result)) {?>
 		<tr>
-			<td rowspan="2"><a href="/staff/view.php?id=<?=$r["userID"]?>"><?=$r["last_name"]?>, <?=$r["first_name"]?></a></td>
+			<td rowspan="2"><a href="/staff/view.php?id=<?php echo $r["userID"]?>"><?php echo $r["last_name"]?>, <?php echo $r["first_name"]?></a></td>
 			<td rowspan="2">
-				<?=$r["homeAddress1"]?><br>
-				<?if ($r["homeAddress2"]) {?><?=$r["homeAddress2"]?><br><?}?>
-				<?if ($r["homeCity"]) {?><?=$r["homeCity"]?>, <?=$r["homeState"]?> <?=$r["homeZIP"]?><br><?}?>
-				<?if ($r["homePhone"]) {?><?=$r["homePhone"]?> (Home)<br><?}?>
-				<?if ($r["homeCell"]) {?><?=$r["homeCell"]?> (Cell)<br><?}?>
-				<a href="mailto:<?=$r["homeEmail"]?>"><?=$r["homeEmail"]?></a>
+				<?php echo $r["homeAddress1"]?><br>
+				<?php if ($r["homeAddress2"]) {?><?php echo $r["homeAddress2"]?><br><?php }?>
+				<?php if ($r["homeCity"]) {?><?php echo $r["homeCity"]?>, <?php echo $r["homeState"]?> <?php echo $r["homeZIP"]?><br><?php }?>
+				<?php if ($r["homePhone"]) {?><?php echo $r["homePhone"]?> (Home)<br><?php }?>
+				<?php if ($r["homeCell"]) {?><?php echo $r["homeCell"]?> (Cell)<br><?php }?>
+				<a href="mailto:<?php echo $r["homeEmail"]?>"><?php echo $r["homeEmail"]?></a>
 			</td>
 			<td>
-				<?if ($r["emerCont1Name"]) {?><?=$r["emerCont1Name"]?> (<?=$r["emerCont1Relationship"]?>)<br><?}?>
-				<?if ($r["emerCont1Phone"]) {?><?=$r["emerCont1Phone"]?><?}?> 
-				<?if ($r["emerCont1Phone"] && $r["emerCont1Cell"]) {?> / <?}?>
-				<?if ($r["emerCont1Cell"]) {?><?=$r["emerCont1Cell"]?><?}?>
-				<?if ($r["emerCont1Phone"] || $r["emerCont1Cell"]) {?><br><?}?>
-				<a href="mailto:<?=$r["emerCont1Email"]?>"><?=$r["emerCont1Email"]?></a>
+				<?php if ($r["emerCont1Name"]) {?><?php echo $r["emerCont1Name"]?> (<?php echo $r["emerCont1Relationship"]?>)<br><?php }?>
+				<?php if ($r["emerCont1Phone"]) {?><?php echo $r["emerCont1Phone"]?><?php }?> 
+				<?php if ($r["emerCont1Phone"] && $r["emerCont1Cell"]) {?> / <?php }?>
+				<?php if ($r["emerCont1Cell"]) {?><?php echo $r["emerCont1Cell"]?><?php }?>
+				<?php if ($r["emerCont1Phone"] || $r["emerCont1Cell"]) {?><br><?php }?>
+				<a href="mailto:<?php echo $r["emerCont1Email"]?>"><?php echo $r["emerCont1Email"]?></a>
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<?if ($r["emerCont2Name"]) {?><?=$r["emerCont2Name"]?> (<?=$r["emerCont2Relationship"]?>)<br><?}?>
-				<?if ($r["emerCont2Phone"]) {?><?=$r["emerCont2Phone"]?><?}?> 
-				<?if ($r["emerCont2Phone"] && $r["emerCont2Cell"]) {?> / <?}?>
-				<?if ($r["emerCont2Cell"]) {?><?=$r["emerCont2Cell"]?><?}?>
-				<?if ($r["emerCont2Phone"] || $r["emerCont2Cell"]) {?><br><?}?>
-				<a href="mailto:<?=$r["emerCont2Email"]?>"><?=$r["emerCont2Email"]?></a>
+				<?php if ($r["emerCont2Name"]) {?><?php echo $r["emerCont2Name"]?> (<?php echo $r["emerCont2Relationship"]?>)<br><?php }?>
+				<?php if ($r["emerCont2Phone"]) {?><?php echo $r["emerCont2Phone"]?><?php }?> 
+				<?php if ($r["emerCont2Phone"] && $r["emerCont2Cell"]) {?> / <?php }?>
+				<?php if ($r["emerCont2Cell"]) {?><?php echo $r["emerCont2Cell"]?><?php }?>
+				<?php if ($r["emerCont2Phone"] || $r["emerCont2Cell"]) {?><br><?php }?>
+				<a href="mailto:<?php echo $r["emerCont2Email"]?>"><?php echo $r["emerCont2Email"]?></a>
 			</td>
 		</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

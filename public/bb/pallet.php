@@ -1,4 +1,4 @@
-<?
+<?php
 $result = db_query("SELECT
 		t.id,
 		t.title,
@@ -13,8 +13,8 @@ $result = db_query("SELECT
 while ($r = db_fetch($result)) { 
 	if ($r["isAdmin"]) $r["replies"] = "-";
 	?>
-	<tr height="20"<? if ($r["isAdmin"]) {?> style="background-color:#fffce0;"<? }?>>
-		<td width="90%"><a href="<?=$module["url"]?>topic.php?id=<?=$r["id"]?>"><?=format_text_shorten($r["title"], 41)?></a></td>
-		<td width="10%" align="center"><?=$r["replies"]?></td>
+	<tr height="20"<?php if ($r["isAdmin"]) {?> style="background-color:#fffce0;"<?php }?>>
+		<td width="90%"><a href="<?php echo $module["url"]?>topic.php?id=<?php echo $r["id"]?>"><?php echo format_text_shorten($r["title"], 41)?></a></td>
+		<td width="10%" align="center"><?php echo $r["replies"]?></td>
 	</tr>
-<? }?>
+<?php }?>

@@ -1,17 +1,17 @@
-<?
+<?php
 include("../include.php");
 
 drawTop();
 
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Open Positions", 3);?>
+	<?php echo drawHeaderRow("Open Positions", 3);?>
 	<tr>
 		<th align="left" width="50%">Title</th>
 		<th align="left" width="40%">Area</th>
 		<th align="right" width="10%"><nobr>Last Update</nobr></th>
 	</tr>
-	<?
+	<?php
 	$offices = db_query("SELECT
 							id,
 							name
@@ -28,16 +28,16 @@ drawTop();
 							ORDER BY j.title, departmentName");
 		if (db_found($result)) {?>
 			<tr class="group">
-				<td colspan="3"><?=$o["name"]?></td>
+				<td colspan="3"><?php echo $o["name"]?></td>
 			</tr>
-			<? while ($r = db_fetch($result)) {?>
+			<?php while ($r = db_fetch($result)) {?>
 			<tr>
-				<td><a href="position.php?id=<?=$r["id"]?>"><?=$r["title"]?></a></td>
-				<td><?=$r["departmentName"]?></td>
-				<td align="right"><?=format_date($r["updatedOn"])?></td>
+				<td><a href="position.php?id=<?php echo $r["id"]?>"><?php echo $r["title"]?></a></td>
+				<td><?php echo $r["departmentName"]?></td>
+				<td align="right"><?php echo format_date($r["updatedOn"])?></td>
 			</tr>
-			<? }
+			<?php }
 		}
 	}?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

@@ -1,4 +1,4 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 drawTop();
 
@@ -10,8 +10,8 @@ if ($_josh["db"]["language"] == "mssql") {
 }
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Reports", 1);?>
+	<?php echo drawHeaderRow("Reports", 1);?>
 	<tr><td><a href="totals.php">Totals</a></td></tr>
 	<tr><td><a href="percentages.php">Percentages (without Vacation)</a></td></tr>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

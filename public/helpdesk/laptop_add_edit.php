@@ -92,53 +92,53 @@ if (isset($_GET["id"])) {
 
 <a name="closedtickets"></a>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Add Laptop", 2);?>
-	<form method="post" action="<?=$request["path_query"]?>">
+	<?php echo drawHeaderRow("Add Laptop", 2);?>
+	<form method="post" action="<?php echo $request["path_query"]?>">
 	<tr>
 		<td class="left">Laptop Name</td>
-		<td><?=draw_form_text("laptopName", @$r["laptopName"])?></td>
+		<td><?php echo draw_form_text("laptopName", @$r["laptopName"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Model #</td>
-		<td><?=draw_form_text("laptopModel", @$r["laptopModel"])?></td>
+		<td><?php echo draw_form_text("laptopModel", @$r["laptopModel"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Location</td>
-		<td><?=draw_form_select("laptopHomeID", "SELECT id, name FROM it_laptops_homes", @$r["laptopHomeID"])?></td>
+		<td><?php echo draw_form_select("laptopHomeID", "SELECT id, name FROM it_laptops_homes", @$r["laptopHomeID"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Serial #</td>
-		<td><?=draw_form_text("laptopSerial", @$r["laptopSerial"])?></td>
+		<td><?php echo draw_form_text("laptopSerial", @$r["laptopSerial"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Express Service Code</td>
-		<td><?=draw_form_text("laptopExpressServiceCode", @$r["laptopExpressServiceCode"])?></td>
+		<td><?php echo draw_form_text("laptopExpressServiceCode", @$r["laptopExpressServiceCode"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Service Tag #</td>
-		<td><?=draw_form_text("laptopServiceTag", @$r["laptopServiceTag"])?></td>
+		<td><?php echo draw_form_text("laptopServiceTag", @$r["laptopServiceTag"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Windows Version</td>
-		<td><?=draw_form_text("laptopOS", @$r["laptopOS"])?></td>
+		<td><?php echo draw_form_text("laptopOS", @$r["laptopOS"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Office Version</td>
-		<td><?=draw_form_text("laptopOffice", @$r["laptopOffice"])?></td>
+		<td><?php echo draw_form_text("laptopOffice", @$r["laptopOffice"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Wireless?</td>
-		<td><?=draw_form_checkbox("laptopIsWireless", @$r["laptopIsWireless"])?> (check if yes)</td>
+		<td><?php echo draw_form_checkbox("laptopIsWireless", @$r["laptopIsWireless"])?> (check if yes)</td>
 	</tr>
 	<tr>
 		<td class="left">MAC Address</td>
-		<td><?=draw_form_text("laptopMACAddress", @$r["laptopMACAddress"])?></td>
+		<td><?php echo draw_form_text("laptopMACAddress", @$r["laptopMACAddress"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Accessories</td>
 		<td>
 			<table class="nospacing">
-				<?
+				<?php
 				if (isset($_GET["id"])) {
 					$accessories = db_query("SELECT 
 					a.id, 
@@ -153,20 +153,20 @@ if (isset($_GET["id"])) {
 				}
 				while ($a = db_fetch($accessories)) {?>
 				<tr>
-					<td><?=draw_form_checkbox("chkacc_" . $a["id"], @$a["checked"])?></td>
-					<td><?=$a["name"]?></td>
+					<td><?php echo draw_form_checkbox("chkacc_" . $a["id"], @$a["checked"])?></td>
+					<td><?php echo $a["name"]?></td>
 				</tr>
-				<?}?>
+				<?php }?>
 			</table>
 		</td>
 	</tr>
 	<tr>
 		<td class="left">Notes</td>
-		<td><?=draw_form_textarea("laptopPurpose", @$r["laptopPurpose"]);?></td>
+		<td><?php echo draw_form_textarea("laptopPurpose", @$r["laptopPurpose"]);?></td>
 	</tr>
 	<tr>
 		<td class="bottom" colspan="2">
-			<?
+			<?php
 			if (isset($_GET["id"])) {
 				echo draw_form_submit("save changes");
 			} else {
@@ -177,4 +177,4 @@ if (isset($_GET["id"])) {
 	</tr>
 	</form>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

@@ -1,4 +1,4 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 url_query_require();
 

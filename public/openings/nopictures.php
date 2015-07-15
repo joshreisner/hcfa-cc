@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 drawTop();
@@ -17,18 +17,18 @@ $result = db_query("SELECT
 				ORDER BY o.name, u.lastname, u.firstname");
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Staff Without Pictures", 3)?>
+	<?php echo drawHeaderRow("Staff Without Pictures", 3)?>
 	<tr>
 		<th align="left" width="33%">Name</th>
 		<th align="left" width="33%">Title</th>
 		<th align="left" width="33%">Office</th>
 	</tr>
-	<? while ($r = db_fetch($result)) {?>
+	<?php while ($r = db_fetch($result)) {?>
 	<tr>
-		<td width="33%"><a href="/staff/view.php?id=<?=$r["userID"]?>"><?=$r["lastname"]?>, <?=$r["firstname"]?></a></td>
-		<td width="33%"><?=$r["title"]?></td>
-		<td width="33%"><?=$r["office"]?></td>
+		<td width="33%"><a href="/staff/view.php?id=<?php echo $r["userID"]?>"><?php echo $r["lastname"]?>, <?php echo $r["firstname"]?></a></td>
+		<td width="33%"><?php echo $r["title"]?></td>
+		<td width="33%"><?php echo $r["office"]?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

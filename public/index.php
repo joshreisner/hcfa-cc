@@ -21,4 +21,3 @@ if (isset($_GET["logout"])) {
 }
 if ($redirect) url_change($redirect);
 include($root . $locale . "login.php");
-?>

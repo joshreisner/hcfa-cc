@@ -1,4 +1,5 @@
-<?	include("../include.php");
+<?php
+include('../include.php');
 
 if ($_POST) {
 	//clean up values
@@ -130,7 +131,7 @@ if (isset($_GET["id"])) {
 		if (!form.varchar_02.value.length) errors[errors.length] = "Last Name is empty";
 		if (!form.varchar_06.value.length) errors[errors.length] = "Address 1 is empty";
 		if (!form.numeric_01.value.length) errors[errors.length] = "Postal Code is empty";
-		<?
+		<?php
 			$values = db_query("SELECT id FROM intranet_tags WHERE typeID = 15 AND isActive = 1");
 			$checkboxes = array();
 			while ($v = db_fetch($values)) $checkboxes[] = "!form.tag_multiple_" . $v["id"] . ".checked";
@@ -139,74 +140,74 @@ if (isset($_GET["id"])) {
 	}
 	//-->
 	
-	<!-- if (<?=implode(" && ", $checkboxes);?>) errors[errors.length] = "Contact Department must be checked"; -->
+	<!-- if (<?php echo implode(" && ", $checkboxes);?>) errors[errors.length] = "Contact Department must be checked"; -->
 </script>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("View Contact", 2);?>
-	<form method="post" action="<?=$request["path_query"]?>" onsubmit="javascript:return validate(this);">
-	<?=draw_form_hidden("objectID", @$_GET["id"])?>
+	<?php echo drawHeaderRow("View Contact", 2);?>
+	<form method="post" action="<?php echo $request["path_query"]?>" onsubmit="javascript:return validate(this);">
+	<?php echo draw_form_hidden("objectID", @$_GET["id"])?>
 	<tr>
 		<td class="left">Courtesy Title</td>
 		<td>
-			<?=draw_form_select("tag_single_10", "SELECT id, tag FROM intranet_tags WHERE typeID = 10 AND isActive = 1 ORDER BY tag", @$i["salutation"])?>
+			<?php echo draw_form_select("tag_single_10", "SELECT id, tag FROM intranet_tags WHERE typeID = 10 AND isActive = 1 ORDER BY tag", @$i["salutation"])?>
 		</td>
 	</tr>
 	<tr>
 		<td class="left">Name</td>
 		<td width="82%">
-			<?=draw_form_text("varchar_01", @$i["first"], "", 255, "width:150px;")?>
-			(<?=draw_form_text("varchar_03", @$i["nickname"], false, 255, "width:100px;")?>)
-			<?=draw_form_text("varchar_02", @$i["last"], "", 255, "width:150px;")?>
+			<?php echo draw_form_text("varchar_01", @$i["first"], "", 255, "width:150px;")?>
+			(<?php echo draw_form_text("varchar_03", @$i["nickname"], false, 255, "width:100px;")?>)
+			<?php echo draw_form_text("varchar_02", @$i["last"], "", 255, "width:150px;")?>
 		</td>
 	</tr>
 	<tr>
 		<td class="left">Suffix</td>
-		<td><?=draw_form_select("tag_single_11", "SELECT id, tag FROM intranet_tags WHERE typeID = 11 ORDER BY precedence", @$i["suffix"], false, false, true)?></td>
+		<td><?php echo draw_form_select("tag_single_11", "SELECT id, tag FROM intranet_tags WHERE typeID = 11 ORDER BY precedence", @$i["suffix"], false, false, true)?></td>
 	</tr>
 	<tr>
 		<td class="left">Company</td>
-		<td><?=draw_form_text("varchar_04", @$i["org"])?></td>
+		<td><?php echo draw_form_text("varchar_04", @$i["org"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Job Title</td>
-		<td><?=draw_form_text("varchar_05", @$i["title"])?></td>
+		<td><?php echo draw_form_text("varchar_05", @$i["title"])?></td>
 	</tr>
 	<tr valign="top">
 		<td class="left">Address 1</td>
-		<td><?=draw_form_text("varchar_06", @$i["address1"], false, 255, "width:250px;")?> <i>eg 915 Broadway</i></td>
+		<td><?php echo draw_form_text("varchar_06", @$i["address1"], false, 255, "width:250px;")?> <i>eg 915 Broadway</i></td>
 	</tr>
 	<tr valign="top">
 		<td class="left">Address 2</td>
-		<td><?=draw_form_text("varchar_07", @$i["address2"], false, 255, "width:250px;")?> <i>eg 17th Floor</i></td>
+		<td><?php echo draw_form_text("varchar_07", @$i["address2"], false, 255, "width:250px;")?> <i>eg 17th Floor</i></td>
 	</tr>
 	<tr valign="top">
 		<td class="left">Postal Code</td>
-		<td><?=draw_form_text("numeric_01", @$i["zip"], false, 5, "width:80px;")?></td>
+		<td><?php echo draw_form_text("numeric_01", @$i["zip"], false, 5, "width:80px;")?></td>
 	</tr>
 	<tr>
 		<td class="left">Phone</td>
-		<td><?=draw_form_text("varchar_08", @$i["phone"], false, 14, "width:120px;")?> <i>format (212) 473-0255</i></td>
+		<td><?php echo draw_form_text("varchar_08", @$i["phone"], false, 14, "width:120px;")?> <i>format (212) 473-0255</i></td>
 	</tr>
 	<tr>
 		<td class="left">Fax</td>
-		<td><?=draw_form_text("varchar_09", @$i["fax"], false, 14, "width:120px;")?></td>
+		<td><?php echo draw_form_text("varchar_09", @$i["fax"], false, 14, "width:120px;")?></td>
 	</tr>
 	<tr>
 		<td class="left">Cell</td>
-		<td><?=draw_form_text("varchar_10", @$i["cell"], false, 14, "width:120px;")?></td>
+		<td><?php echo draw_form_text("varchar_10", @$i["cell"], false, 14, "width:120px;")?></td>
 	</tr>
 	<tr>
 		<td class="left">E-mail Address</td>
-		<td><?=draw_form_text("varchar_11", @$i["email"], false, 255, "width:250px;")?></td>
+		<td><?php echo draw_form_text("varchar_11", @$i["email"], false, 255, "width:250px;")?></td>
 	</tr>
 	<tr valign="top">
 		<td class="left">Notes</td>
-		<td><?=draw_form_textarea("text_01", @$i["notes"])?></td>
+		<td><?php echo draw_form_textarea("text_01", @$i["notes"])?></td>
 	</tr>
 	<tr class="group">
 		<td colspan="2"><br>Tags</td>
 	</tr>
-	<?
+	<?php
 	$tags = db_query("select 
 					f.tagTypeID,
 					f.name,
@@ -218,16 +219,16 @@ if (isset($_GET["id"])) {
 				order by f.precedence");
 	while ($t = db_fetch($tags)) {?>
 	<tr valign="top">
-		<td bgcolor="#<?if($t["isRequired"]){?>FFDDDD<?}else{?>F6F6F6<?}?>" width="18%"><?=$t["name"]?></td>
+		<td bgcolor="#<?php if($t["isRequired"]){?>FFDDDD<?php }else{?>F6F6F6<?php }?>" width="18%"><?php echo $t["name"]?></td>
 		<td>
-			<? if ($t["fieldTypeID"] == 4) {
+			<?php if ($t["fieldTypeID"] == 4) {
 				if (isset($_GET["id"])) $v = db_grab("SELECT i2t.tagID FROM intranet_instances_to_tags i2t JOIN intranet_tags t ON i2t.tagID = t.id WHERE i2t.instanceID = {$i["id"]} and t.typeID = {$t["tagTypeID"]} AND t.isActive = 1");
 				echo draw_form_select("tag_single_" . $t["tagTypeID"], "SELECT id, tag FROM intranet_tags WHERE typeID = {$t["tagTypeID"]} AND isActive = 1 ORDER BY precedence", @$v["tagID"], false, false, !$t["isRequired"]);
 			} elseif ($t["fieldTypeID"] == 5) {?>
 				<table class="nospacing">
 				<tr valign="top">
 					<td width="40%"><table cellpadding="0" cellspacing="0" border="0">
-				<?
+				<?php
 				if (isset($_GET["id"])) {
 				$values = db_query("SELECT 
 										t.id, 
@@ -250,24 +251,24 @@ if (isset($_GET["id"])) {
 				$oneFound = false;
 				while ($v = db_fetch($values)) {?>
 					<tr>
-						<td><input type="checkbox" name="tag_multiple_<?=$v["id"]?>"<? if ($v["selected"]) {?> checked<?}?>></td>
-						<td class="input"><?=$v["tag"]?></td>
+						<td><input type="checkbox" name="tag_multiple_<?php echo $v["id"]?>"<?php if ($v["selected"]) {?> checked<?php }?>></td>
+						<td class="input"><?php echo $v["tag"]?></td>
 					</tr>
-					<? if (isset($v["selected"]) && $v["selected"]) $oneFound = true;
+					<?php if (isset($v["selected"]) && $v["selected"]) $oneFound = true;
 				}?>
 				</table>
 					</td>
-					<td class="input" width="60%"><font color="#D8282D"><? if ($t["isRequired"] && !$oneFound) {?>&nbsp;&#187; new required value!<?}?></td>
+					<td class="input" width="60%"><font color="#D8282D"><?php if ($t["isRequired"] && !$oneFound) {?>&nbsp;&#187; new required value!<?php }?></td>
 				</tr>
 			</table>
 
-			<?}?>
+			<?php }?>
 		</td>
 	</tr>
-	<?}?>
+	<?php }?>
 	<tr>
 		<td colspan="2" align="center" class="gray">
-			<? if (isset($_GET["id"])) {
+			<?php if (isset($_GET["id"])) {
 				echo draw_form_submit("  save changes  ");
 			} else {
 				echo draw_form_submit("  add contact  ");
@@ -276,4 +277,4 @@ if (isset($_GET["id"])) {
 	</form>
 </table>
 
-<? drawBottom();?>
+<?php drawBottom();?>

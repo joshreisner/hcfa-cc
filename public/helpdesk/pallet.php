@@ -8,10 +8,10 @@ foreach ($helpdeskOptions as $option) {
 }
 ?>
 <tr>
-	<td width="50%"><?=$item[0]?></td>
-	<td width="50%"><?=$item[1]?></td>
+	<td width="50%"><?php echo $item[0]?></td>
+	<td width="50%"><?php echo $item[1]?></td>
 </tr>
 <tr>
-	<td width="50%"><?=$item[2]?></td>
-	<td width="50%"><?=$item[3]?></td>
+	<td width="50%"><?php echo $item[2]?></td>
+	<td width="50%"><?php echo $item[3]?></td>
 </tr>

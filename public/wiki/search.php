@@ -6,7 +6,7 @@ drawTop();
 
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Search", 2);?>
+	<?php echo drawHeaderRow("Search", 2);?>
 </table>
 
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

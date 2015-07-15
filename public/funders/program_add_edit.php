@@ -1,4 +1,4 @@
-<?  
+<?php  
 include("../include.php");
 
 if ($posting) {
@@ -20,15 +20,15 @@ if ($editing) {
 }
 ?>
 <table class="left" cellspacing="1">
-	<form method="post" action="<?=$_josh["request"]["path_query"]?>">
-	<?=drawHeaderRow($title, 2);?>
+	<form method="post" action="<?php echo $_josh["request"]["path_query"]?>">
+	<?php echo drawHeaderRow($title, 2);?>
 	<tr>
 		<td class="left">Name</td>
-		<td><?=draw_form_text("programDesc", @$program)?></td>
+		<td><?php echo draw_form_text("programDesc", @$program)?></td>
 	</tr>
 	<tr>
-		<td class="bottom" colspan="2"><?=draw_form_submit("save changes")?></td>
+		<td class="bottom" colspan="2"><?php echo draw_form_submit("save changes")?></td>
 	</tr>
 	</form>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

@@ -1,4 +1,4 @@
-<? include("include.php");
+<?php include("include.php");
 
 if ($posting) {
 	format_post_html("message");
@@ -25,14 +25,14 @@ function validate(form) {
 //-->
 </script>
 <table class="left" cellspacing="1">
-	<form action="<?=$request["path_query"]?>" method="post" onSubmit="javascript:return validate(this);">
-	<?=drawHeaderRow("Update Status Message");?>
+	<form action="<?php echo $request["path_query"]?>" method="post" onSubmit="javascript:return validate(this);">
+	<?php echo drawHeaderRow("Update Status Message");?>
 	<tr>
-		<td><?=draw_form_textarea("message", $helpdeskStatus, "mceEditor full", false);?></td>
+		<td><?php echo draw_form_textarea("message", $helpdeskStatus, "mceEditor full", false);?></td>
 	</tr>
 	<tr>
-		<td class="bottom"><?=draw_form_submit("update message");?></td>
+		<td class="bottom"><?php echo draw_form_submit("update message");?></td>
 	</tr>
 	</form>
 </table>
-<?=drawBottom();?>
+<?php echo drawBottom();?>

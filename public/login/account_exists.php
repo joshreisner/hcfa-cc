@@ -1,15 +1,15 @@
-<? include("../include.php");?>
+<?php include("../include.php");?>
 <html>
 	<head>
 		<title>Request an Account</title>
-		<link rel="stylesheet" type="text/css" href="<?=$locale?>style.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style.css" />
 	</head>
 	<body>
 <br>
 <table width="600" align="center">
 	<tr>
 		<td>
-<?
+<?php
 echo drawServerMessage("<h1>Account Already Exists</h1>  The email you entered already belongs to an active account on the system.  Would you
 like to <a href='password_reset.php'>reset your password</a>?");
 ?>

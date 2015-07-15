@@ -1,15 +1,15 @@
-<? include("../include.php");
+<?php include("../include.php");
 drawTop();
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Recent Activity", 4);?>
+	<?php echo drawHeaderRow("Recent Activity", 4);?>
 	<tr>
 		<th width="40%" align="left">Contact Record</th>
 		<th width="20%" align="left">Action</th>
 		<th width="20%">Done By</th>
 		<th width="20%" align="right">When</th>
 	</tr>
-	<?
+	<?php
 	$result = db_query("SELECT
 			o.id,
 			o.isActive,
@@ -25,12 +25,12 @@ drawTop();
 		INNER JOIN intranet_users		u ON i.createdBy = u.userID
 		ORDER BY i.createdOn DESC", 40);
 	while ($r = db_fetch($result)) {?>
-	<tr class="<?if(!$r["isActive"]){?>-deleted<? }?>">
-		<td><a href="contact.php?id=<?=$r["id"]?>"><?=$r["varchar_02"]?>, <?=$r["varchar_01"]?></a></td>
-		<td><?if ($r["occurrences"] == 1) {?>New Contact<?} else {?>Update<?}?></td>
-		<td align="center"><a href="/staff/view.php?id=<?=$r["createdBy"]?>"><?=$r["updatename"]?></a></td>
-		<td align="right"><?=format_date($r["createdOn"])?></td>
+	<tr class="<?php if(!$r["isActive"]){?>-deleted<?php }?>">
+		<td><a href="contact.php?id=<?php echo $r["id"]?>"><?php echo $r["varchar_02"]?>, <?php echo $r["varchar_01"]?></a></td>
+		<td><?php if ($r["occurrences"] == 1) {?>New Contact<?php } else {?>Update<?php }?></td>
+		<td align="center"><a href="/staff/view.php?id=<?php echo $r["createdBy"]?>"><?php echo $r["updatename"]?></a></td>
+		<td align="right"><?php echo format_date($r["createdOn"])?></td>
 	</tr>
-	<? } ?>
+	<?php } ?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

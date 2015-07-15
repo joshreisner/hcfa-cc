@@ -5,13 +5,13 @@ drawTop();
 echo drawTicketFilter();
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("All Active Users", 3);?>
+	<?php echo drawHeaderRow("All Active Users", 3);?>
 	<tr>
 		<th align="left">Name</td>
 		<th align="right" width="50">#</td>
 		<th align="right" width="50">%</td>
 	</tr>
-	<?
+	<?php
 	$result = db_query("SELECT
 							u.userID,
 							ISNULL(u.nickname, u.firstname) first,
@@ -27,11 +27,11 @@ echo drawTicketFilter();
 		$counter++;
 	?>
 	<tr>
-		<td><a href="user.php?id=<?=$r["userID"]?><? if ($filtered) {?>&month=<?=$_GET["month"]?>&year=<?=$_GET["year"]?><? }?>"><?=$r["first"]?> <?=$r["last"]?></a></td>
-		<td align="right"><?=number_format($r["tickets"])?></td>
-		<td align="right"><?=@round($r["minutes"] / $total["minutes"] * 100)?></td>
+		<td><a href="user.php?id=<?php echo $r["userID"]?><?php if ($filtered) {?>&month=<?php echo $_GET["month"]?>&year=<?php echo $_GET["year"]?><?php }?>"><?php echo $r["first"]?> <?php echo $r["last"]?></a></td>
+		<td align="right"><?php echo number_format($r["tickets"])?></td>
+		<td align="right"><?php echo @round($r["minutes"] / $total["minutes"] * 100)?></td>
 	</tr>
-	<? }
+	<?php }
 	if (!$counter) {
 		if ($filtered) {
 			echo drawEmptyResult("No tickets in this month / year.", 3);
@@ -41,4 +41,4 @@ echo drawTicketFilter();
 	}
 	?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

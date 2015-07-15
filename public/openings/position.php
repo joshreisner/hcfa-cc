@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 drawTop();
 
@@ -30,43 +30,43 @@ $r = db_grab("SELECT
 	$r["deletedBy"] = ($r["deletedByFirst"]) ? $r["deletedByFirst"] . " " . $r["deletedByLast"] : false;
 ?>
 <table class="left" cellspacing="1">
-	<? if ($isAdmin) {
+	<?php if ($isAdmin) {
 		echo drawHeaderRow("View Position", 2, "edit", "position_edit.php?id=" . $_GET["id"]);
 	} else {
 		echo drawHeaderRow("View Position", 2);
 	}?>
 	<tr>
 		<td class="left">Organization</td>
-		<td><?=$r["corporationName"]?></td>
+		<td><?php echo $r["corporationName"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Location</td>
-		<td><?=$r["office"]?></td>
+		<td><?php echo $r["office"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Position</td>
 		<td class="text">
-			<h1><?=$r["title"]?></h1>
-			<?=$r["description"]?>
+			<h1><?php echo $r["title"]?></h1>
+			<?php echo $r["description"]?>
 		</td>
 	</tr>
-	<? if ($r["createdOn"]) {?>
+	<?php if ($r["createdOn"]) {?>
 	<tr>
 		<td class="left">Posted</td>
-		<td><?=format_date($r["createdOn"])?> by <?=$r["createdBy"]?></td>
+		<td><?php echo format_date($r["createdOn"])?> by <?php echo $r["createdBy"]?></td>
 	</tr>
-	<? }
+	<?php }
 	if ($r["updatedOn"]) {?>
 	<tr>
 		<td class="left">Updated</td>
-		<td><?=format_date($r["updatedOn"])?> by <?=$r["updatedBy"]?></td>
+		<td><?php echo format_date($r["updatedOn"])?> by <?php echo $r["updatedBy"]?></td>
 	</tr>
-	<? }
+	<?php }
 	if ($r["deletedOn"]) {?>
 	<tr>
 		<td class="left">Deleted</td>
-		<td><?=format_date($r["deletedOn"])?> by <?=$r["deletedBy"]?></td>
+		<td><?php echo format_date($r["deletedOn"])?> by <?php echo $r["deletedBy"]?></td>
 	</tr>
-	<? } ?>
+	<?php } ?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

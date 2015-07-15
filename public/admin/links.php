@@ -17,18 +17,18 @@ echo drawHeaderRow(false, 5, "new", "#bottom");?>
 	<th style="width:16px;"></th>
 	<th style="width:16px;"></th>
 </tr>
-<?
+<?php
 $links = db_query("SELECT id, text, url FROM links ORDER BY precedence");
 if ($max = db_found($links)) {
 while ($l = db_fetch($links)) {?>
 	<tr>
-		<td><?=$l["text"]?></td>
-		<td><?=$l["url"]?></td>
+		<td><?php echo $l["text"]?></td>
+		<td><?php echo $l["url"]?></td>
 		<td><img src="/images/icons/moveup.gif" width="16" height="16" border="0"></td>
 		<td><img src="/images/icons/movedown.gif" width="16" height="16" border="0"></td>
-		<?=deleteColumn();?>
+		<?php echo deleteColumn();?>
 	</tr>
-<? }
+<?php }
 } else {
 	echo drawEmptyResult("No links entered in the system yet!");
 }

@@ -1,4 +1,4 @@
-<?
+<?php
 include("include.php");
 
 //delete user handled by include
@@ -94,7 +94,7 @@ if (!$r["isActive"]) {
 }
 ?>
 <table class="left" cellspacing="1">
-	<? if ($isAdmin) {
+	<?php if ($isAdmin) {
 		if ($r["isActive"]) {
 			echo drawHeaderRow("View Staff Info", 3, "edit", "add_edit.php?id=" . $_GET["id"], "deactivate", deleteLink("Deactivate this staff member?"));
 		} else {
@@ -107,94 +107,94 @@ if (!$r["isActive"]) {
 	} ?>
 	<tr>
 		<td class="left">Name</td>
-		<td width="99%" class="big"><?=$r["firstname"]?> <? if ($r["nickname"]) {?>(<?=$r["nickname"]?>) <? }?><?=$r["lastname"]?></td>
-		<td rowspan="8" style="width:271px; text-align:center; vertical-align:middle;"><?=$img?></td>
+		<td width="99%" class="big"><?php echo $r["firstname"]?> <?php if ($r["nickname"]) {?>(<?php echo $r["nickname"]?>) <?php }?><?php echo $r["lastname"]?></td>
+		<td rowspan="8" style="width:271px; text-align:center; vertical-align:middle;"><?php echo $img?></td>
 	</tr>
 	<tr>
 		<td class="left">Organization</td>
-		<td><?=$r["corporationName"]?></td>
+		<td><?php echo $r["corporationName"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Title</td>
-		<td><?=$r["title"]?></td>
+		<td><?php echo $r["title"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Department</td>
-		<td><?=$r["departmentName"]?></td>
+		<td><?php echo $r["departmentName"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Office</td>
-		<td><?=$r["office"]?></td>
+		<td><?php echo $r["office"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Phone</td>
-		<td><?=format_phone($r["phone"])?></td>
+		<td><?php echo format_phone($r["phone"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Email</td>
-		<td><a href="mailto:<?=$r["email"]?>"><?=$r["email"]?></a></td>
+		<td><a href="mailto:<?php echo $r["email"]?>"><?php echo $r["email"]?></a></td>
 	</tr>
 	<tr>
 		<td class="left">Last Login</td>
-		<td><?=format_date_time($r["lastlogin"], " ")?></td>
+		<td><?php echo format_date_time($r["lastlogin"], " ")?></td>
 	</tr>
 	<tr>
 		<td class="left">Bio</td>
-		<td colspan="2" height="167" class="text"><?=nl2br($r["bio"])?></td>
+		<td colspan="2" height="167" class="text"><?php echo nl2br($r["bio"])?></td>
 	</tr>
-	<? if ($isAdmin || ($_GET["id"] == $user["id"])) {?>
+	<?php if ($isAdmin || ($_GET["id"] == $user["id"])) {?>
 	<tr class="group">
 		<td colspan="3">Intranet</td>
 	</tr>
-	<? if ($r["longDistanceCode"]) {?>
+	<?php if ($r["longDistanceCode"]) {?>
 	<tr>
 		<td class="left">Telephone Code</td>
-		<td colspan="2" class="bigger"><?=$r["longDistanceCode"]?></td>
+		<td colspan="2" class="bigger"><?php echo $r["longDistanceCode"]?></td>
 	</tr>
-	<? }
+	<?php }
 	if ($r["startDate"]) {?>
 	<tr>
 		<td class="left">Start Date</td>
-		<td colspan="2"><?=format_date($r["startDate"])?></td>
+		<td colspan="2"><?php echo format_date($r["startDate"])?></td>
 	</tr>
-	<? }
+	<?php }
 	if ($r["endDate"]) {?>
 	<tr>
 		<td class="left">End Date</td>
-		<td colspan="2"><?=format_date($r["endDate"])?></td>
+		<td colspan="2"><?php echo format_date($r["endDate"])?></td>
 	</tr>
-	<? }
+	<?php }
 	if ($_GET["id"] == $user["id"]) {
 		?>
 		<tr>
 			<td class="left">Password</td>
-			<td colspan="2"><a href="<?=deleteLink("Reset password?", $_GET["id"], "passwd")?>" class="button" style="line-height:13px;">change your password</a></td>
+			<td colspan="2"><a href="<?php echo deleteLink("Reset password?", $_GET["id"], "passwd")?>" class="button" style="line-height:13px;">change your password</a></td>
 		</tr>
-		<? } elseif ($isAdmin) {?>
+		<?php } elseif ($isAdmin) {?>
 		<tr>
 			<td class="left">Password</td>
 			<td colspan="2">
-				<? if ($r["password"]){?>
+				<?php if ($r["password"]){?>
 					<i>password is reset</i>
-				<? } else {?>
-					<a href="<?=deleteLink("Reset password?", $_GET["id"], "passwd")?>" class="button" style="line-height:13px;">reset password</a>
-				<? }?>
+				<?php } else {?>
+					<a href="<?php echo deleteLink("Reset password?", $_GET["id"], "passwd")?>" class="button" style="line-height:13px;">reset password</a>
+				<?php }?>
 			</td>
 		</tr>
-	<? }?>
-	<? if ($isAdmin) {?>
+	<?php }?>
+	<?php if ($isAdmin) {?>
 	<tr>
 		<td class="left">Invite</td>
-		<td colspan="2"><a href="<?=deleteLink("Send email invite?", $_GET["id"], "invite")?>" class="button" style="line-height:13px;">re-invite user</a></td>
+		<td colspan="2"><a href="<?php echo deleteLink("Send email invite?", $_GET["id"], "invite")?>" class="button" style="line-height:13px;">re-invite user</a></td>
 	</tr>
 	<tr>
 		<td class="left">Rank</td>
-		<td colspan="2"><?=$r["rank"]?></td>
+		<td colspan="2"><?php echo $r["rank"]?></td>
 	</tr>
 	<tr>
 		<td class="left">Permissions</td>
 		<td colspan="2">
-		<?
+		<?php
 		$hasPermission = false;
 		$permissions = db_query("SELECT 
 			m.name,
@@ -218,50 +218,50 @@ if (!$r["isActive"]) {
 			
 		</td>
 	</tr>
-	<? }?>
+	<?php }?>
 	<tr class="group">
 		<td colspan="3">Home Contact Information [private]</td>
 	</tr>
 	<tr>
 		<td class="left">Home Address</nobr></td>
-		<td colspan="2"><?=$r["homeAddress1"]?><br>
-			<? if ($r["homeAddress2"]) {?><?=$r["homeAddress2"]?><br><? }?>
-			<?=$r["homeCity"]?>, <?=$r["stateAbbrev"]?> <?=$r["homeZIP"]?>
+		<td colspan="2"><?php echo $r["homeAddress1"]?><br>
+			<?php if ($r["homeAddress2"]) {?><?php echo $r["homeAddress2"]?><br><?php }?>
+			<?php echo $r["homeCity"]?>, <?php echo $r["stateAbbrev"]?> <?php echo $r["homeZIP"]?>
 		</td>
 	</tr>
 	<tr>
 		<td class="left">Home Phone</nobr></td>
-		<td colspan="2"><?=format_phone($r["homePhone"])?></td>
+		<td colspan="2"><?php echo format_phone($r["homePhone"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Cell Phone</td>
-		<td colspan="2"><?=format_phone($r["homeCell"])?></td>
+		<td colspan="2"><?php echo format_phone($r["homeCell"])?></td>
 	</tr>
 	<tr>
 		<td class="left">Personal Email</td>
-		<td colspan="2"><a href="mailto:<?=$r["homeEmail"]?>"><?=$r["homeEmail"]?></a></td>
+		<td colspan="2"><a href="mailto:<?php echo $r["homeEmail"]?>"><?php echo $r["homeEmail"]?></a></td>
 	</tr>
 	<tr class="group">
 		<td colspan="3">Emergency Contact Information [private]</td>
 	</tr>
 	<tr>
-		<td class="left"><?=$r["emerCont1Relationship"]?></td>
+		<td class="left"><?php echo $r["emerCont1Relationship"]?></td>
 		<td colspan="2">
-			<b><?=$r["emerCont1Name"]?></b><br>
-			<? if($r["emerCont1Phone"]) {?><?=format_phone($r["emerCont1Phone"])?><br><? }?>
-			<? if($r["emerCont1Cell"]) {?><?=format_phone($r["emerCont1Cell"])?><br><? }?>
-			<?=$r["emerCont1Email"]?>
+			<b><?php echo $r["emerCont1Name"]?></b><br>
+			<?php if($r["emerCont1Phone"]) {?><?php echo format_phone($r["emerCont1Phone"])?><br><?php }?>
+			<?php if($r["emerCont1Cell"]) {?><?php echo format_phone($r["emerCont1Cell"])?><br><?php }?>
+			<?php echo $r["emerCont1Email"]?>
 		</td>
 	</tr>
 	<tr>
-		<td class="left"><?=$r["emerCont2Relationship"]?></td>
+		<td class="left"><?php echo $r["emerCont2Relationship"]?></td>
 		<td colspan="2">
-			<b><?=$r["emerCont2Name"]?></b><br>
-			<? if($r["emerCont2Phone"]) {?><?=format_phone($r["emerCont2Phone"])?><br><? }?>
-			<? if($r["emerCont2Cell"]) {?><?=format_phone($r["emerCont2Cell"])?><br><? }?>
-			<?=$r["emerCont2Email"]?>
+			<b><?php echo $r["emerCont2Name"]?></b><br>
+			<?php if($r["emerCont2Phone"]) {?><?php echo format_phone($r["emerCont2Phone"])?><br><?php }?>
+			<?php if($r["emerCont2Cell"]) {?><?php echo format_phone($r["emerCont2Cell"])?><br><?php }?>
+			<?php echo $r["emerCont2Email"]?>
 		</td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

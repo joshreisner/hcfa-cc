@@ -29,7 +29,7 @@ $result = db_query("SELECT
 echo drawTicketFilter();
 ?>
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	echo drawHeaderRow("<a href='offices.php' class='white'>Offices</a> &gt; " . db_grab("SELECT name FROM intranet_offices WHERE id = " . $_GET["id"]) . " (" . db_found($result) . ")", 5);
 	if (db_found($result)) {
 		echo drawTicketHeader();
@@ -42,4 +42,4 @@ echo drawTicketFilter();
 		}
 	}?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

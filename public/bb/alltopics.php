@@ -1,4 +1,5 @@
-<?	include("../include.php");
+<?php
+include('../include.php');
 
 if ($posting) {
 	format_post_bits("isAdmin");
@@ -49,14 +50,14 @@ drawTop();
 drawSyndicateLink("bb");
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("All Topics", 4, "add new topic", "#bottom")?>
+	<?php echo drawHeaderRow("All Topics", 4, "add new topic", "#bottom")?>
 	<tr>
 		<th align="left" width="320">Topic</td>
 		<th align="left" width="120">Starter</td>
 		<th>Replies</td>
 		<th align="right">Last Post</td>
 	</tr>
-<?
+<?php
 //get bulletin board topics
 $result = db_query("SELECT 
 		t.id,
@@ -73,19 +74,19 @@ $result = db_query("SELECT
 
 while ($r = db_fetch($result)) {
 	if ($r["isAdmin"]) $r["replies"] = "-";?>
-	<tr class="thread"<? if ($r["isAdmin"]) {?> style="background-color:<?=$colors["yellow"]?>""<?}?>
-			onclick		= "location.href='topic.php?id=<?=$r["id"]?>';"
-			onmouseover	= "javascript:aOver('id<?=$r["id"]?>')"
-			onmouseout	= "javascript:aOut('id<?=$r["id"]?>')">
-		<td class="input"><a href="topic.php?id=<?=$r["id"]?>" id="id<?=$r["id"]?>"><?=$r["title"]?></a></td>
-		<td><?=$r["firstname"]?> <?=$r["lastname"]?></td>
-		<td align="center"><?=$r["replies"]?></td>
-		<td align="right"><?=format_date($r["threadDate"])?></td>
+	<tr class="thread"<?php if ($r["isAdmin"]) {?> style="background-color:<?php echo $colors["yellow"]?>""<?php }?>
+			onclick		= "location.href='topic.php?id=<?php echo $r["id"]?>';"
+			onmouseover	= "javascript:aOver('id<?php echo $r["id"]?>')"
+			onmouseout	= "javascript:aOut('id<?php echo $r["id"]?>')">
+		<td class="input"><a href="topic.php?id=<?php echo $r["id"]?>" id="id<?php echo $r["id"]?>"><?php echo $r["title"]?></a></td>
+		<td><?php echo $r["firstname"]?> <?php echo $r["lastname"]?></td>
+		<td align="center"><?php echo $r["replies"]?></td>
+		<td align="right"><?php echo format_date($r["threadDate"])?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
 <a name="bottom"></a>
-<?
+<?php
 if (!$printing) {
 	$form = new intranet_form;
 	if ($isAdmin) {

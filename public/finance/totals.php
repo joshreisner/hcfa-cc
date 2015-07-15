@@ -90,19 +90,19 @@ if ($_POST) {
 drawTop();
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Totals Report", 2);?>
-	<form method="post" action="<?=$_josh["request"]["path_query"]?>">
+	<?php echo drawHeaderRow("Totals Report", 2);?>
+	<form method="post" action="<?php echo $_josh["request"]["path_query"]?>">
 	<tr>
 		<td class="gray">Start Date</td>
-		<td><?=draw_form_select_month("start", "1/2005", false, false, "field", false, true);?></td>
+		<td><?php echo draw_form_select_month("start", "1/2005", false, false, "field", false, true);?></td>
 	</tr>
 	<tr>
 		<td class="gray">End Date</nobr></td>
-		<td><?=draw_form_select_month("end", "1/2005", false, false, "field", false, true);?></td>
+		<td><?php echo draw_form_select_month("end", "1/2005", false, false, "field", false, true);?></td>
 	</tr>
 	<tr>
-		<td colspan="2" class="bottom"><?=draw_form_submit("run report")?></td>
+		<td colspan="2" class="bottom"><?php echo draw_form_submit("run report")?></td>
 	</tr>
 	</form>
 </table>	
-<? drawBottom();?>
+<?php drawBottom();?>

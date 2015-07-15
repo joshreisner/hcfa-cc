@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 if (!isset($_GET["id"])) $_GET["id"] = "a";
@@ -11,14 +11,14 @@ $r = db_grab("SELECT tt.name, t.typeID, t.tag FROM intranet_tags t INNER JOIN in
 
 ?>
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow($r["tag"], 4)?>
+	<?php echo drawHeaderRow($r["tag"], 4)?>
 	<tr>
 		<th width="16"></th>
 		<th width="27%" align="left">Name</th>
 		<th width="48%" align="left">Company</th>
 		<th width="25%" align="left">Phone</th>
 	</tr>
-	<?
+	<?php
 	$contacts = db_query("SELECT
 						o.id,
 						o.isActive,
@@ -35,12 +35,12 @@ $r = db_grab("SELECT tt.name, t.typeID, t.tag FROM intranet_tags t INNER JOIN in
 	while ($c = db_fetch($contacts)) {
 		if (strlen($c["organization"]) > 40) $c["organization"] = substr($c["organization"], 0, 39) . "...";
 		?>
-	<tr <? if (!$c["isActive"]) {?> class="deleted"<? }?>>
+	<tr <?php if (!$c["isActive"]) {?> class="deleted"<?php }?>>
 		<td><input type="checkbox"></td>
-		<td><a href="contact.php?id=<?=$c["id"]?>"><?=$c["lastname"]?>, <?=$c["firstname"]?></a></td>
-		<td><?=$c["organization"]?></td>
-		<td><?=$c["phone"]?><!--<br><?=$c["email"]?>--></td>
+		<td><a href="contact.php?id=<?php echo $c["id"]?>"><?php echo $c["lastname"]?>, <?php echo $c["firstname"]?></a></td>
+		<td><?php echo $c["organization"]?></td>
+		<td><?php echo $c["phone"]?><!--<br><?php echo $c["email"]?>--></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

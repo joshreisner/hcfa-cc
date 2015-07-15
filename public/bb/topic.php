@@ -1,4 +1,4 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 if ($posting) {
 	$_POST["description"] = format_html($_POST["message"]);
@@ -65,10 +65,10 @@ if ($r["isAdmin"]) echo drawServerMessage("<b>Note</b>: This is an Administratio
 <script language="javascript">
 	<!--
 	function checkDelete() {
-		if (confirm("Are you sure you want to delete this topic?")) location.href="<?=$_josh["request"]["path_query"]?>&delete=true";
+		if (confirm("Are you sure you want to delete this topic?")) location.href="<?php echo $_josh["request"]["path_query"]?>&delete=true";
 	}
 	function checkDeleteFollowup(id) {
-		if (confirm("Are you sure you want to delete this followup?")) location.href="<?=$_josh["request"]["path_query"]?>&deleteFollowupID=" + id;
+		if (confirm("Are you sure you want to delete this followup?")) location.href="<?php echo $_josh["request"]["path_query"]?>&deleteFollowupID=" + id;
 	}
 	function validateComment(form) {
 		if (!form.description.value.length || (form.description.value == '<p>&nbsp;</p>')) return false;

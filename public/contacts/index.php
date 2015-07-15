@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 //empty query is confusing
@@ -19,11 +19,11 @@ function formatArrayForText($array) {
 <table class="message">
 	<form method="get" action="./" name="mainsearchform">
 	<tr>
-		<td class="gray">Look for <input type="text" value="<?=@$_GET["q"]?>" name="q" class="field" size="34"></td>
+		<td class="gray">Look for <input type="text" value="<?php echo @$_GET["q"]?>" name="q" class="field" size="34"></td>
 	</tr>
 	</form>
 </table>
-<?
+<?php
 if (isset($_GET["q"])) {
 	//assemble where clause
 	$searchTerms = explode(" ", $_GET["q"]);
@@ -74,7 +74,7 @@ if (isset($_GET["q"])) {
 								i.varchar_01"); 
 								?>
 		<table class="left" cellspacing="1">
-			<?
+			<?php
 			if (db_found($result)) {
 				echo drawHeaderRow("Contacts containing <i>" . formatArrayForText($terms) . "</i>", 4);?>
 			<tr>
@@ -82,17 +82,17 @@ if (isset($_GET["q"])) {
 				<th>Company</th>
 				<th>Phone</th>
 			</tr>
-			<? while ($c = db_fetch($result)) {
+			<?php while ($c = db_fetch($result)) {
 					$c["firstname"]  = preg_replace("/($needle)/i","<font style='background-color:#FFFFBB;padding:1px;'><b>\\0</b></font>", $c["firstname"]);
 					$c["lastname"]  = preg_replace("/($needle)/i","<font style='background-color:#FFFFBB;padding:1px;'><b>\\0</b></font>", $c["lastname"]);
 					$c["organization"] = preg_replace("/($needle)/i","<font style='background-color:#FFFFBB;padding:1px;'><b>\\0</b></font>", $c["organization"]);
 					?>
-				<tr <?if(!$c["isActive"]){?>class="deleted"<?}?>>
-					<td><a href="contact.php?id=<?=$c["id"]?>"><?=$c["lastname"]?>, <?=$c["firstname"]?></a></td>
-					<td><?=$c["organization"]?></td>
-					<td><?=$c["phone"]?></td>
+				<tr <?php if(!$c["isActive"]){?>class="deleted"<?php }?>>
+					<td><a href="contact.php?id=<?php echo $c["id"]?>"><?php echo $c["lastname"]?>, <?php echo $c["firstname"]?></a></td>
+					<td><?php echo $c["organization"]?></td>
+					<td><?php echo $c["phone"]?></td>
 				</tr>
-				<? } 
+				<?php } 
 			} else {
 				echo drawHeaderRow("Empty Result", 4);
 				echo drawEmptyResult("No contact records contain <i>" . formatArrayForText($terms) . "</i>.");
@@ -100,15 +100,15 @@ if (isset($_GET["q"])) {
 			?>
 		<tr>
 			<td class="bottom" colspan="4">
-				<?=draw_form_button("Add a new contact", "contact_edit.php")?>
+				<?php echo draw_form_button("Add a new contact", "contact_edit.php")?>
 			</td>
 		</tr>
 	</table>
-	<? }
+	<?php }
 }?>
 <script>
 	<!--
 	document.mainsearchform.q.focus();
 	//-->
 </script>
-<? drawBottom();?>
+<?php drawBottom();?>

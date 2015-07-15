@@ -6,7 +6,7 @@ echo drawTicketFilter();
 ?>
 
 <table class="left" cellspacing="1">
-	<?
+	<?php
 	$result = db_query("SELECT
 						t.title,
 						t.statusID,
@@ -42,4 +42,4 @@ echo drawTicketFilter();
 	}
 	?>
 </table>
-<? drawBottom(); ?>
+<?php drawBottom(); ?>

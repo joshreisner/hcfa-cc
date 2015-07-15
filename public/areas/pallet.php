@@ -1,4 +1,4 @@
-<?
+<?php
 $left = true;
 foreach ($areas as $a) {
 	if (!$modules[$a]["isPublic"] && !$modules[$a]["isAdmin"]) continue;

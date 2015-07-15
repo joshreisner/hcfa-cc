@@ -85,12 +85,12 @@ if ($posting) {
 <html>
 	<head>
 		<title>Request an Account</title>
-		<link rel="stylesheet" type="text/css" href="<?=$locale?>style.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style.css" />
 			<script language="javascript" type="text/javascript" src="/javascript.js"></script>
-			<script language="javascript" type="text/javascript" src="<?=$locale?>tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+			<script language="javascript" type="text/javascript" src="<?php echo $locale?>tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 			<script language="javascript">
 				<!--
-				initTinyMCE("<?=$locale?>style-textarea.css");
+				initTinyMCE("<?php echo $locale?>style-textarea.css");
 				//-->
 			</script>
 	</head>
@@ -99,7 +99,7 @@ if ($posting) {
 <table width="600" align="center">
 	<tr>
 		<td>
-<?
+<?php
 echo drawServerMessage("<h1>Welcome!</h1>  To request an account, please fill out the fields below.  Your login information will be emailed to you once your request is approved.");
 $form = new intranet_form;
 $form->addRow("itext",			"First Name",	"firstname", '', "", true, 20);

@@ -37,7 +37,7 @@ $month5amt = 0;
 	</tr>
 	</form>
 </table>
-<?
+<?php
 $result = db_query("SELECT 
 						u.userID,
 						ISNULL(u.nickname, u.firstname) name,
@@ -52,25 +52,25 @@ $result = db_query("SELECT
 					ORDER BY ISNULL(u.nickname, u.firstname)");
 ?>
 <table class="left" cellspacing="1">
-	<?= drawHeaderRow("History View", 6);?>
+	<?php echo  drawHeaderRow("History View", 6);?>
 	<tr>
 		<th align="left" width="25%">Name</td>
-		<th align="right" width="15%"><?=substr($months[$month1 - 1], 0, 3)?> <?=$year1?></td>
-		<th align="right" width="15%"><?=substr($months[$month2 - 1], 0, 3)?> <?=$year2?></td>
-		<th align="right" width="15%"><?=substr($months[$month3 - 1], 0, 3)?> <?=$year3?></td>
-		<th align="right" width="15%"><?=substr($months[$month4 - 1], 0, 3)?> <?=$year4?></td>
-		<th align="right" width="15%"><?=substr($months[$month5 - 1], 0, 3)?> <?=$year5?></td>
+		<th align="right" width="15%"><?php echo substr($months[$month1 - 1], 0, 3)?> <?php echo $year1?></td>
+		<th align="right" width="15%"><?php echo substr($months[$month2 - 1], 0, 3)?> <?php echo $year2?></td>
+		<th align="right" width="15%"><?php echo substr($months[$month3 - 1], 0, 3)?> <?php echo $year3?></td>
+		<th align="right" width="15%"><?php echo substr($months[$month4 - 1], 0, 3)?> <?php echo $year4?></td>
+		<th align="right" width="15%"><?php echo substr($months[$month5 - 1], 0, 3)?> <?php echo $year5?></td>
 	</tr>
-	<? while ($r = db_fetch($result)) {?>
+	<?php while ($r = db_fetch($result)) {?>
 		<tr>
-			<td><a href="administrator_tickets.php?userID=<?=$r["userID"]?>"><?=$r["name"]?></a></td>
-			<td align="right"><?if ($r["month1total"]) {?><a href="administrator_tickets.php?userID=<?=$r["userID"]?>&month=<?=$month1?>&year=<?=$year1?>"><?}?><?=$r["month1total"]?></a></td>
-			<td align="right"><?if ($r["month2total"]) {?><a href="administrator_tickets.php?userID=<?=$r["userID"]?>&month=<?=$month2?>&year=<?=$year2?>"><?}?><?=$r["month2total"]?></a></td>
-			<td align="right"><?if ($r["month3total"]) {?><a href="administrator_tickets.php?userID=<?=$r["userID"]?>&month=<?=$month3?>&year=<?=$year3?>"><?}?><?=$r["month3total"]?></a></td>
-			<td align="right"><?if ($r["month4total"]) {?><a href="administrator_tickets.php?userID=<?=$r["userID"]?>&month=<?=$month4?>&year=<?=$year4?>"><?}?><?=$r["month4total"]?></a></td>
-			<td align="right"><?if ($r["month5total"]) {?><a href="administrator_tickets.php?userID=<?=$r["userID"]?>&month=<?=$month5?>&year=<?=$year5?>"><?}?><?=$r["month5total"]?></a></td>
+			<td><a href="administrator_tickets.php?userID=<?php echo $r["userID"]?>"><?php echo $r["name"]?></a></td>
+			<td align="right"><?php if ($r["month1total"]) {?><a href="administrator_tickets.php?userID=<?php echo $r["userID"]?>&month=<?php echo $month1?>&year=<?php echo $year1?>"><?php }?><?php echo $r["month1total"]?></a></td>
+			<td align="right"><?php if ($r["month2total"]) {?><a href="administrator_tickets.php?userID=<?php echo $r["userID"]?>&month=<?php echo $month2?>&year=<?php echo $year2?>"><?php }?><?php echo $r["month2total"]?></a></td>
+			<td align="right"><?php if ($r["month3total"]) {?><a href="administrator_tickets.php?userID=<?php echo $r["userID"]?>&month=<?php echo $month3?>&year=<?php echo $year3?>"><?php }?><?php echo $r["month3total"]?></a></td>
+			<td align="right"><?php if ($r["month4total"]) {?><a href="administrator_tickets.php?userID=<?php echo $r["userID"]?>&month=<?php echo $month4?>&year=<?php echo $year4?>"><?php }?><?php echo $r["month4total"]?></a></td>
+			<td align="right"><?php if ($r["month5total"]) {?><a href="administrator_tickets.php?userID=<?php echo $r["userID"]?>&month=<?php echo $month5?>&year=<?php echo $year5?>"><?php }?><?php echo $r["month5total"]?></a></td>
 		</tr>
-		<?
+		<?php
 		$month1amt += $r["month1total"];
 		$month2amt += $r["month2total"];
 		$month3amt += $r["month3total"];
@@ -78,11 +78,11 @@ $result = db_query("SELECT
 		$month5amt += $r["month1total"];
 	}?>
 	<tr class="total">
-		<td colspan="2"><?=$month1amt?></td>
-		<td><?=$month2amt?></td>
-		<td><?=$month3amt?></td>
-		<td><?=$month4amt?></td>
-		<td><?=$month5amt?></td>
+		<td colspan="2"><?php echo $month1amt?></td>
+		<td><?php echo $month2amt?></td>
+		<td><?php echo $month3amt?></td>
+		<td><?php echo $month4amt?></td>
+		<td><?php echo $month5amt?></td>
 	</tr>
 </table>
-<? drawBottom();?>
+<?php drawBottom();?>

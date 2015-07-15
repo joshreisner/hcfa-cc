@@ -1,4 +1,4 @@
-<?
+<?php
 include("../include.php");
 
 $d = db_grab("SELECT 

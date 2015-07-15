@@ -1,4 +1,4 @@
-<?  
+<?php  
 include("../include.php");
 
 drawTop();
@@ -6,14 +6,14 @@ drawTop();
 ?>
 
 <table class="left" cellspacing="1">
-	<?=drawHeaderRow("Staff", 4)?>
+	<?php echo drawHeaderRow("Staff", 4)?>
 	<tr>
 		<th width="40%" align="left">Staff Name</th>
 		<th width="20%" align="right"># active</th>
 		<th width="20%" align="right"># proposals</th>
 		<th width="20%" align="right"># strategies</th>
 	</tr>
-<?
+<?php
 $result = db_query("SELECT 
 						ISNULL(u.nickname, u.firstname) first,
 						u.lastname last,
@@ -28,12 +28,12 @@ $result = db_query("SELECT
 					");
 while ($r = db_fetch($result)) {?>
 	<tr>
-		<td><?=$r["first"]?> <?=$r["last"]?></td>
-		<td align="right"><a href="staffawards.php?statusID=1&staffID=<?=$r["userID"]?>"><?=$r["active"]?></a></td>
-		<td align="right"><a href="staffawards.php?statusID=2&staffID=<?=$r["userID"]?>"><?=$r["proposals"]?></a></td>
-		<td align="right"><a href="staffawards.php?statusID=5&staffID=<?=$r["userID"]?>"><?=$r["strategies"]?></a></td>
+		<td><?php echo $r["first"]?> <?php echo $r["last"]?></td>
+		<td align="right"><a href="staffawards.php?statusID=1&staffID=<?php echo $r["userID"]?>"><?php echo $r["active"]?></a></td>
+		<td align="right"><a href="staffawards.php?statusID=2&staffID=<?php echo $r["userID"]?>"><?php echo $r["proposals"]?></a></td>
+		<td align="right"><a href="staffawards.php?statusID=5&staffID=<?php echo $r["userID"]?>"><?php echo $r["strategies"]?></a></td>
 	</tr>
-<? }?>
+<?php }?>
 </table>
 
-<? drawBottom();?>
+<?php drawBottom();?>

@@ -112,7 +112,7 @@
 			url_change("/login/password_update.php");
 		}
 	}
-		
+	
 
 //special pages that don't belong to a module still need info
 
@@ -125,6 +125,7 @@
 		$modules[$page["moduleID"]]["name"]		= "Intranet";
 		$modules[$page["moduleID"]]["isAdmin"]	= false;
 	}
+
 
 //get helpdesk pages
 $helpdeskOptions = db_table("SELECT 
@@ -146,16 +147,13 @@ $helpdeskStatus = db_grab("SELECT message FROM it_system_status");
 //done!
 error_debug("done processing include!");
 	
-	
 //custom functions - miscellaneous
 	function includeLibrary() {
 		global $_SERVER, $_josh;
 		$possibilities = array(
-			"D:\Sites\joshlib\index.php", //seedco-web-srv
-			"/home/hcfacc/www/joshlib/index.php", //icd 2
-			"/Users/josh/Sites/joshlib/trunk/index.php",  //dora mac mini
-			"/Users/joshreisner/Sites/joshlib/trunk/index.php", //macbook
-			"/home/joshreisner/www/joshlib/index.php" //icdsoft
+			"/home/hcfacc/www/joshlib/index.php", //production
+			"/home/forge/hcfa-cc.joshreisner.com/joshlib/index.php", //staging
+			"/Users/joshreisner/Sites/hcfa-cc/joshlib/index.php", //local
 		);
 		if ($_SERVER["HTTP_HOST"] == "dev-intranet.seedco.org") array_unshift($possibilities, "D:\Sites\joshlib-dev\index.php");
 		foreach ($possibilities as $p) if (@include($p)) return $_josh;
@@ -514,22 +512,22 @@ error_debug("done processing include!");
 			<!--
 				function validate(form) {
 					var errors = new Array();
-					<?=$js;?>
+					<?php echo $js;?>
 					return showErrors(errors);
 				}
 			//-->
 			</script>
-			<? }?>
+			<?php }?>
 			<a name="bottom"></a>
 			<table class="left" cellspacing="1">
 				<tr>
-					<td class="head <?=$location?>" colspan="2"><?=$pageTitle?></td>
+					<td class="head <?php echo $location?>" colspan="2"><?php echo $pageTitle?></td>
 				</tr>
-				<form method="post" action="<?=$_josh["request"]["path_query"]?>" enctype="multipart/form-data" onsubmit="javascript:return validate(this);">
-				<?=$rows;?>
+				<form method="post" action="<?php echo $_josh["request"]["path_query"]?>" enctype="multipart/form-data" onsubmit="javascript:return validate(this);">
+				<?php echo $rows;?>
 				</form>
 			</table>
-			<?
+			<?php
 		}
 	}
 
@@ -837,23 +835,23 @@ error_debug("done processing include!");
 		$title = $page["module"] . " > " . $page["name"];
 	?><html>
 		<head>
-			<title><?=$title?></title>
-			<link rel="stylesheet" type="text/css" href="<?=$locale?>style.css" />
+			<title><?php echo $title?></title>
+			<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style.css" />
 			<!--[if IE]>
-			<link rel="stylesheet" type="text/css" href="<?=$locale?>style-ie.css" />
+			<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style-ie.css" />
 			<![endif]--> 
 			<script language="javascript" type="text/javascript" src="/javascript.js"></script>
-			<script language="javascript" type="text/javascript" src="<?=$locale?>tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+			<script language="javascript" type="text/javascript" src="<?php echo $locale?>tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 			<script language="javascript">
 				<!--
-				initTinyMCE("<?=$locale?>style-textarea.css");
+				initTinyMCE("<?php echo $locale?>style-textarea.css");
 				//-->
 			</script>
 		</head>
 		<body>
-		<? if (!$printing) {?>
+		<?php if (!$printing) {?>
 			<div id="container">
-				<div id="banner"><?
+				<div id="banner"><?php
 				if ($banner = draw_img($locale . "banner.png", $user["homepage"])) {
 					echo $banner;
 				} else {
@@ -863,20 +861,20 @@ error_debug("done processing include!");
 				?></div>
 				<div id="left">
 					<div id="help">
-					<a class="button left" href="<?=$user["homepage"]?>">Home</a>
-					<a class="button right" href="<?=url_query_add(array("toggleMenuPref"=>"isOpenHelp"), false)?>">Show Help</a>
-				<? if ($user["isOpenHelp"]) {
+					<a class="button left" href="<?php echo $user["homepage"]?>">Home</a>
+					<a class="button right" href="<?php echo url_query_add(array("toggleMenuPref"=>"isOpenHelp"), false)?>">Show Help</a>
+				<?php if ($user["isOpenHelp"]) {
 					if ($user["isAdmin"]) {?>
-						<a class="button right" href="/admin/edit-help.php?id=<?=$page["id"]?>&returnTo=<?=urlencode($_josh["request"]["path_query"])?>">Edit Page Info</a>
-					<? }?>
+						<a class="button right" href="/admin/edit-help.php?id=<?php echo $page["id"]?>&returnTo=<?php echo urlencode($_josh["request"]["path_query"])?>">Edit Page Info</a>
+					<?php }?>
 					<div class="text">
-					<?
+					<?php
 					echo ($page["helpText"]) ? $page["helpText"] : "No help is available for this page.";
 					?>
 					</div>
-				<? }?>
+				<?php }?>
 					</div>
-		<? }
+		<?php }
 		if ($_josh["request"]["folder"] == "helpdesk") echo drawNavigationHelpdesk();
 		echo drawNavigation();
 		$_josh["drawn"]["top"] = true;
@@ -892,15 +890,15 @@ error_debug("done processing include!");
 				<div id="right">
 					<div id="tools">
 						<a class="right button" href="/index.php?logout=true">Log Out</a>
-						Hello <b><a href="/staff/view.php?id=<?=$user["id"]?>"><?=$user["first_name"]?> <?=$user["last_name"]?></b></a>.
+						Hello <b><a href="/staff/view.php?id=<?php echo $user["id"]?>"><?php echo $user["first_name"]?> <?php echo $user["last_name"]?></b></a>.
 
 						<form name="search" method="get" action="/staff/search.php" onSubmit="javascript:return doSearch(this);">
 			            <input type="text" name="q" value="Search Staff" onfocus="searchFocus(this.value)" onblur="searchBlur(this.value)">
 						</form>
 						
 						<table class="links">
-							<? if ($user["isAdmin"]) {?><tr><td colspan="2" style="padding:6px 6px 0px 0px;"><a class="right button" href="/admin/links.php">Edit Links</a></td></tr><? } ?>
-		<?
+							<?php if ($user["isAdmin"]) {?><tr><td colspan="2" style="padding:6px 6px 0px 0px;"><a class="right button" href="/admin/links.php">Edit Links</a></td></tr><?php } ?>
+		<?php
 		$side = "left";
 		$links = db_query("SELECT url, text FROM links ORDER BY precedence");
 		while ($l = db_fetch($links)) {
@@ -912,7 +910,7 @@ error_debug("done processing include!");
 		?>
 						</table>
 					</div>
-		<? 
+		<?php 
 			            
 		foreach ($modules as $module) {
 			if ($module["pallet"]) {
@@ -930,21 +928,21 @@ error_debug("done processing include!");
 			?>
 			<table class="right" cellspacing="1">
 				<tr>
-					<td colspan="2" class="head <?=str_replace("/", "", $module["url"])?>">
-						<div class="head-left"><a href="<?=$module["url"]?>"><?=$module["name"]?></a></div>
-						<a style="float:right; margin-top:1px;" href="<?=url_query_add(array("toggleMenuPref"=>$index), false)?>"><img src="<?=$module["url"]?>arrow-<? if ($user["isOpenStaff"]) {?>down<? } else {?>up<? }?>.gif" width="26" height="14" border="0"></a>
+					<td colspan="2" class="head <?php echo str_replace("/", "", $module["url"])?>">
+						<div class="head-left"><a href="<?php echo $module["url"]?>"><?php echo $module["name"]?></a></div>
+						<a style="float:right; margin-top:1px;" href="<?php echo url_query_add(array("toggleMenuPref"=>$index), false)?>"><img src="<?php echo $module["url"]?>arrow-<?php if ($user["isOpenStaff"]) {?>down<?php } else {?>up<?php }?>.gif" width="26" height="14" border="0"></a>
 					</td>
 				</tr>
-				<? if ($user[$index]) include($_josh["root"] . $module["pallet"]);?>
+				<?php if ($user[$index]) include($_josh["root"] . $module["pallet"]);?>
 			</table>
-			<? }
+			<?php }
 		}?>
 				</div>
-				<div id="footer">page rendered in <?=format_time_exec()?></div>
+				<div id="footer">page rendered in <?php echo format_time_exec()?></div>
 			</div>
 		</body>
 	</html>
-	<? 
+	<?php 
 	}
 	db_close();
-} ?>
+}

@@ -1,10 +1,10 @@
-<? include("../include.php");
+<?php include("../include.php");
 
 drawTop();
 ?>
 <table class="left">
-	<?=drawHeaderRow("Long Distance Codes", 1)?>
-	<?
+	<?php echo drawHeaderRow("Long Distance Codes", 1)?>
+	<?php
 	$codes = db_query("SELECT
 	l.code
 FROM ldcodes l
@@ -12,9 +12,9 @@ WHERE (SELECT COUNT(*) FROM intranet_users u WHERE u.isactive = 1 AND u.officeID
 ORDER BY NEWID()");
 	while ($c = db_fetch($codes)) {?>
 	<tr>
-		<td><?=sprintf("%04s", $c["code"]);?></td>
+		<td><?php echo sprintf("%04s", $c["code"]);?></td>
 	</tr>
-	<? }?>
+	<?php }?>
 </table>
 
-<? drawBottom();?>
+<?php drawBottom();?>
