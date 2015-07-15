@@ -662,10 +662,7 @@ error_debug("done processing include!");
 	
 	function drawServerMessage($str, $align="left") {
 		if (empty($str) || !format_html_text($str)) return false;
-		$message  = '<table class="message">';
-		$message .= '<tr><td class="yellow" align="' . $align . '">' . $str . '</td>';
-		$message .= '</tr></table>';
-		return $message;
+		return '<div class="alert alert-warning" align="' . $align . '">' . $str . '</div>';
 	}
 							
 	function drawNavigation() {
@@ -835,7 +832,8 @@ error_debug("done processing include!");
 	?><html>
 		<head>
 			<title><?php echo $title?></title>
-			<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style.css" />
+			<link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/dist/css/bootstrap.min.css">
+			<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 			<!--[if IE]>
 			<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style-ie.css" />
 			<![endif]--> 
@@ -849,22 +847,35 @@ error_debug("done processing include!");
 		</head>
 		<body>
 		<?php if (!$printing) {?>
-			<div id="container">
-				<div id="banner"><?php
-				if ($banner = draw_img($locale . "banner.png", $user["homepage"])) {
-					echo $banner;
-				} else {
-					echo draw_img($locale . "banner.jpg", $user["homepage"]);
-				}
-				
-				?></div>
-				<div id="left">
+			<div class="container">
+				<div class="row banner">
+					<div class="col-md-4">
+						<img src="/assets/img/logo-cc.png" width="240" height="86" class="img-responsive">
+					</div>
+					<div class="col-md-4">
+						<img src="/assets/img/logo-hla.png" width="330" height="64" class="img-responsive">
+					</div>
+					<div class="col-md-4">
+						<img src="/assets/img/logo-hcfa.png" width="186" height="102" class="img-responsive">
+					</div>
+				</div>
+				<div class="row">
+				<div id="left" class="col-md-8">
 					<div id="help">
-					<a class="button left" href="<?php echo $user["homepage"]?>">Home</a>
-					<a class="button right" href="<?php echo url_query_add(array("toggleMenuPref"=>"isOpenHelp"), false)?>">Show Help</a>
+					<a class="button left" href="<?php echo $user["homepage"]?>">
+						<i class="glyphicon glyphicon-home"></i>
+						Home
+					</a>
+					<a class="button right" href="<?php echo url_query_add(array("toggleMenuPref"=>"isOpenHelp"), false)?>">
+						<i class="glyphicon glyphicon-info-sign"></i>
+						Show Help
+					</a>
 				<?php if ($user["isOpenHelp"]) {
 					if ($user["isAdmin"]) {?>
-						<a class="button right" href="/admin/edit-help.php?id=<?php echo $page["id"]?>&returnTo=<?php echo urlencode($_josh["request"]["path_query"])?>">Edit Page Info</a>
+						<a class="button right" href="/admin/edit-help.php?id=<?php echo $page["id"]?>&returnTo=<?php echo urlencode($_josh["request"]["path_query"])?>">
+							<i class="glyphicon glyphicon-edit"></i>
+							Edit Page Info
+						</a>
 					<?php }?>
 					<div class="text">
 					<?php
@@ -872,7 +883,7 @@ error_debug("done processing include!");
 					?>
 					</div>
 				<?php }?>
-					</div>
+				</div>
 		<?php }
 		if ($_josh["request"]["folder"] == "helpdesk") echo drawNavigationHelpdesk();
 		echo drawNavigation();
@@ -886,28 +897,24 @@ error_debug("done processing include!");
 			
 		?>
 				</div>
-				<div id="right">
+				<div id="right" class="col-md-4">
 					<div id="tools">
-						<a class="right button" href="/index.php?logout=true">Log Out</a>
-						Hello <b><a href="/staff/view.php?id=<?php echo $user["id"]?>"><?php echo $user["first_name"]?> <?php echo $user["last_name"]?></b></a>.
-
 						<form name="search" method="get" action="/staff/search.php" onSubmit="javascript:return doSearch(this);">
-			            <input type="text" name="q" value="Search Staff" onfocus="searchFocus(this.value)" onblur="searchBlur(this.value)">
+						<a class="right button" href="/index.php?logout=true">
+							<i class="glyphicon glyphicon-log-out"></i> Log Out
+						</a>
+						Hello <b><a href="/staff/view.php?id=<?php echo $user["id"]?>"><?php echo $user["first_name"]?> <?php echo $user["last_name"]?></b></a>.
+			            <input type="text" class="form-control" name="q" placeholder="Search Staff">
 						</form>
 						
-						<table class="links">
-							<?php if ($user["isAdmin"]) {?><tr><td colspan="2" style="padding:6px 6px 0px 0px;"><a class="right button" href="/admin/links.php">Edit Links</a></td></tr><?php } ?>
+						<ul class="links">
 		<?php
-		$side = "left";
-		$links = db_query("SELECT url, text FROM links ORDER BY precedence");
+		$links = db_query('SELECT url, text FROM links ORDER BY precedence');
 		while ($l = db_fetch($links)) {
-			if ($side == "left") echo "<tr>";
-			echo '<td width="50%"><a href="' . $l["url"] . '">' . $l["text"] . '</a></td>';
-			if ($side == "right") echo "</tr>";
-			$side = ($side == "left") ? "right" : "left";
+			echo '<li><a href="' . $l["url"] . '">' . $l["text"] . '</a></li>';
 		}
 		?>
-						</table>
+						</ul>
 					</div>
 		<?php 
 			            
@@ -936,8 +943,9 @@ error_debug("done processing include!");
 			</table>
 			<?php }
 		}?>
-				</div>
 				<div id="footer">page rendered in <?php echo format_time_exec()?></div>
+				</div>
+			</div>
 			</div>
 		</body>
 	</html>

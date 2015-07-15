@@ -1,7 +1,8 @@
-<?php  include("../include.php");
-	drawTop();
+<?php  
+include("../include.php");
+drawTop();
 ?>
-<table class="left" cellspacing="1">
+<table class="left">
 	<?php
 	echo drawHeaderRow("", 1);
 	foreach ($areas as $a) {

@@ -1,0 +1,21 @@
+{
+  "name": "hcfa-cc",
+  "directory": "public/vendor",
+  "version": "0.0.0",
+  "homepage": "https://github.com/joshreisner/hcfa-cc",
+  "authors": [
+    "Josh Reisner <josh@joshreisner.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "tinymce": "~4.2.1"
+  }
+}
