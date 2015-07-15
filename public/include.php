@@ -149,13 +149,12 @@ error_debug("done processing include!");
 	
 //custom functions - miscellaneous
 	function includeLibrary() {
-		global $_SERVER, $_josh;
+		global $_josh;
 		$possibilities = array(
 			"/home/hcfacc/www/joshlib/index.php", //production
 			"/home/forge/hcfa-cc.joshreisner.com/joshlib/index.php", //staging
 			"/Users/joshreisner/Sites/hcfa-cc/joshlib/index.php", //local
 		);
-		if ($_SERVER["HTTP_HOST"] == "dev-intranet.seedco.org") array_unshift($possibilities, "D:\Sites\joshlib-dev\index.php");
 		foreach ($possibilities as $p) if (@include($p)) return $_josh;
 		return false;
 	}

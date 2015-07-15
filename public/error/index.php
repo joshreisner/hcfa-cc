@@ -3,8 +3,8 @@ include("../include.php");
 
 //autocorrect
 $target		= false;
-$req		= (isset($_SERVER["REDIRECT_URL"])) ? strToLower($_SERVER["REDIRECT_URL"]) : false;
-$referrer	= (isset($_SERVER["HTTP_REFERER"])) ? strToLower($_SERVER["HTTP_REFERER"]) : false;
+$req		= (isset($_SERVER["REDIRECT_URL"])) ? strtolower($_SERVER["REDIRECT_URL"]) : false;
+$referrer	= (isset($_SERVER["HTTP_REFERER"])) ? strtolower($_SERVER["HTTP_REFERER"]) : false;
 
 if (!$req) {
 	//var_dump($_SERVER);

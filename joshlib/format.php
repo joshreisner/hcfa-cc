@@ -55,7 +55,7 @@ function format_date($timestamp, $error="", $format="M d, Y", $todaytime=true, $
 	
 	//reject or convert
 	if (empty($timestamp) || ($timestamp == "Jan 1 1900 12:00AM")) return $error;
-	if (!is_int($timestamp)) $timestamp = strToTime($timestamp);
+	if (!is_int($timestamp)) $timestamp = strtotime($timestamp);
 	
 	//get timestamp for today
 	$todaysdate = mktime(0, 0, 1, $_josh["month"], $_josh["today"], $_josh["year"]);
@@ -91,13 +91,13 @@ function format_date($timestamp, $error="", $format="M d, Y", $todaytime=true, $
 function format_date_iso8601($timestamp=false) {
 	//this looks like DATE_W3C http://www.php.net/manual/en/datetime.constants.php
 	if (!$timestamp) $timestamp = time();
-	if (!is_int($timestamp)) $timestamp = strToTime($timestamp);
+	if (!is_int($timestamp)) $timestamp = strtotime($timestamp);
 	return date("Y-m-d", $timestamp) . "T" . date("H:i:s", $timestamp) . "-07:00";
 }
 
 function format_date_rss($timestamp=false) {
 	if (!$timestamp) $timestamp = time();
-	if (!is_int($timestamp)) $timestamp = strToTime($timestamp);
+	if (!is_int($timestamp)) $timestamp = strtotime($timestamp);
 	return date(DATE_RSS, $timestamp);
 }
 
@@ -119,17 +119,17 @@ function format_date_time($timestamp, $error="", $separator="&nbsp;", $suppressM
 }
 
 function format_date_excel($timestamp) {
-	if (!empty($timestamp)) return @date("n/j/Y", strToTime($timestamp));
+	if (!empty($timestamp)) return @date("n/j/Y", strtotime($timestamp));
 }
 
 function format_date_xml($timestamp=false) {
 	if (!$timestamp) $timestamp = "now";
-	if (!empty($timestamp) && $timestamp) return @date("Y-m-d", strToTime($timestamp)) . "T00:00:00.000";
+	if (!empty($timestamp) && $timestamp) return @date("Y-m-d", strtotime($timestamp)) . "T00:00:00.000";
 }
 
 function format_email($address) {
 	//simple patch to prevent email form hijacking
-	$address = strToLower(trim($address));
+	$address = strtolower(trim($address));
 	$address = str_replace("'", "", $address);
 	$address = str_replace('"', "", $address);
 	$address = preg_replace("/\r/", "", $address);
@@ -405,7 +405,7 @@ function format_string($str, $len=30, $tail="&hellip;") {
 }
 
 function format_text_code($str) {
-	$return = strToLower($str);
+	$return = strtolower($str);
 	$return = str_replace("/",	"_",	$return);
 	$return = str_replace(" ",	"_",	$return);
 	$return = str_replace("&",	"and",	$return);
@@ -413,12 +413,12 @@ function format_text_code($str) {
 }
 
 function format_text_ends($needle, $haystack) {
-	if (strToLower(substr($haystack, (0 - strlen($needle)))) == strToLower($needle)) return true;
+	if (strtolower(substr($haystack, (0 - strlen($needle)))) == strtolower($needle)) return true;
 	return false;
 }
 
 function format_text_human($str, $convertdashes=true) {
-	$return = str_replace("_", " ", strToLower($str));
+	$return = str_replace("_", " ", strtolower($str));
 	if ($convertdashes) $return = str_replace("-", " ", $return);
 	return format_title($return);
 }
@@ -430,7 +430,7 @@ function format_text_shorten($text, $length=30, $append="&#8230;", $appendlength
 }
 
 function format_text_starts($needle, $haystack) {
-	if (strToLower(substr($haystack, 0, strlen($needle))) == strToLower($needle)) return true;
+	if (strtolower(substr($haystack, 0, strlen($needle))) == strtolower($needle)) return true;
 	return false;
 }
 
@@ -439,17 +439,17 @@ function format_time($timestamp=false, $error="") {
 		$timestamp = time();
 	} else {
 		if (empty($timestamp) || ($timestamp == "Jan 1 1900 12:00AM")) return $error;
-		if (!is_int($timestamp)) $timestamp = strToTime($timestamp);
+		if (!is_int($timestamp)) $timestamp = strtotime($timestamp);
 	}
 	return date("g:ia", $timestamp);
 }
 
 function format_time_business($start, $end=false) {
-	$start = strToTime($start);
+	$start = strtotime($start);
 	if (empty($end) || !$end) {
 		$end = date("U");
 	} else {
-		$end = strToTime($end);
+		$end = strtotime($end);
 	}
 	$age = $end - $start;
 	
@@ -537,16 +537,16 @@ function format_title($str) {
 	$lower = array("a", "an", "and", "but", "for", "from", "if", "in", "nor", "of", "on", "or", "so", "the", "to", "via", "with");
 	$mixed = array("iPhone", "iPhones", "IPs", "SSNs", "TinyMCE", "URLs", "WordPress");
 	$upper = array("ADA", "ASAP", "BIF", "CCT", "CSS", "DB", "EBO", "FSS", "FTP", "HTML", "IP", "NHP", "NVN", "OMG", "ONYC", "OS", "PC", "PHP", "PLC", "RSS", "SF", "SFS","SQL", "SSN", "URL", "WTF", "XML");
-	$words = explode(" ", ucwords(strToLower(trim($str))));
+	$words = explode(" ", ucwords(strtolower(trim($str))));
 	$counter = 1;
 	$max = count($words);
 	foreach ($words as $word) {
-		if (in_array(strToLower($word), $lower) && ($counter != 1) && ($counter != $max)) {
-			$return[] = strToLower($word);
+		if (in_array(strtolower($word), $lower) && ($counter != 1) && ($counter != $max)) {
+			$return[] = strtolower($word);
 		} elseif (in_array(strToUpper($word), $upper)) {
 			$return[] = strToUpper($word);
 		} elseif (!empty($word)) {
-			$index = array_search(strToLower($word), array_to_lower($mixed));
+			$index = array_search(strtolower($word), array_to_lower($mixed));
 			if ($index !== false) { //could return 0, which would be valid
 				$return[] = $mixed[$index];
 			} else {
