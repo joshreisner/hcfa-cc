@@ -187,7 +187,10 @@ table.left {
 	td.bottom { text-align:center; background-color:#ededed; }
 	tr.group td { vertical-align:bottom; font-weight:bold; height:50px; }
 	th { font-weight:normal; color:#999; background-color:#ededed; height:16px; padding:5px 2px 3px 2px; }
-	td.text { padding:10px; font-size:13px; line-height:20px; }
+	td.text { 
+		padding:10px; font-size:13px; line-height:20px; 
+		img, video, embed { max-width: 100%; height: auto; }
+	}
 	tr.thread { height: 40px; vertical-align:middle; font-size:13px; }
 	tr.thread:hover { background-color:#f0f0f0; cursor:hand; cursor:pointer; }
 	tr.total { background-color:#f3f3f3; text-align:right; }
@@ -237,7 +240,7 @@ table.right {
 	border-spacing:1px; 
 	margin:14px 0px 0px 0px;
 	tr { background-color:#fff; }
-	td { padding: 6px 3px; }
+	td { padding: 5px 3px; }
 	td.head { padding:2px 2px 0px 3px; vertical-align:middle; height:13px; font-size:12px; color:#fff; line-height:8px; }
 	td.head img { margin:2px 2px 0px 0px; }
 	select { width: 100%; }

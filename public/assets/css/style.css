@@ -391,6 +391,9 @@ table.left {
     padding: 10px;
     font-size: 13px;
     line-height: 20px; }
+    table.left td.text img, table.left td.text video, table.left td.text embed {
+      max-width: 100%;
+      height: auto; }
   table.left tr.thread {
     height: 40px;
     vertical-align: middle;
@@ -460,7 +463,7 @@ table.right {
   table.right tr {
     background-color: #fff; }
   table.right td {
-    padding: 6px 3px; }
+    padding: 5px 3px; }
   table.right td.head {
     padding: 2px 2px 0px 3px;
     vertical-align: middle;
