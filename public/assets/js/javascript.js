@@ -18,14 +18,8 @@ $(function(){
 //init tinymce
 tinyMCE.init({
 	mode : "textareas",
-	theme : "advanced",
-	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,separator,undo,redo,separator,link,unlink,image,|,code",
-	theme_advanced_buttons2 : "",
-	theme_advanced_buttons3 : "",
-	theme_advanced_toolbar_location : "top",
-	theme_advanced_toolbar_align : "center",
 	extended_valid_elements : "a[href|target],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[align|style],p[align]",
-	content_css : '/_hcfa-cc/style-textarea.css' + new Date().getTime(),
+	content_css : '/_hcfa-cc/style-textarea.css?' + new Date().getTime(),
 	editor_selector : "mceEditor",
 	editor_deselector : "mceNoEditor"
 });

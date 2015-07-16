@@ -78,9 +78,7 @@ if (db_found($topics)) {
 		$r["lastname"] = htmlentities($r["lastname"]); //see http://work.joshreisner.com/request/?id=477
 		if ($r["isAdmin"]) $r["replies"] = "-";?>
 		<tr class="thread"<?php if ($r["isAdmin"]) {?> style="background-color:#fffce0;"<?php }?>
-			onclick		= "location.href='topic.php?id=<?php echo $r["id"]?>';"
-			onmouseover	= "javascript:aOver('id<?php echo $r["id"]?>')"
-			onmouseout	= "javascript:aOut('id<?php echo $r["id"]?>')">
+			onclick = "location.href='topic.php?id=<?php echo $r["id"]?>';">
 			<td class="input"><a href="topic.php?id=<?php echo $r["id"]?>" id="id<?php echo $r["id"]?>"><?php echo $r["title"]?></a></td>
 			<td><?php echo $r["firstname"]?> <?php echo $r["lastname"]?></td>
 			<td align="center"><?php echo $r["replies"]?></td>
