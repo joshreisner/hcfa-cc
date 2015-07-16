@@ -125,17 +125,6 @@
 		$modules[$page["moduleID"]]["isAdmin"]	= false;
 	}
 
-
-//get helpdesk pages
-$helpdeskOptions = db_table("SELECT 
-		d.departmentID id, 
-		d.shortName name, 
-		(SELECT COUNT(*) FROM helpdesk_tickets t WHERE t.departmentID = d.departmentID AND t.statusID <> 9) num_open
-	FROM intranet_departments d
-	WHERE isHelpdesk = 1
-	ORDER BY d.shortName");
-$helpdeskStatus = db_grab("SELECT message FROM it_system_status");
-
 //handle switch updates
 	//side menu pref
 	if (isset($_GET["toggleMenuPref"])) {
