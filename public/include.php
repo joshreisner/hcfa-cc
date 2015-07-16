@@ -249,7 +249,7 @@ error_debug("done processing include!");
 	function deleteColumn($prompt=false, $id=false, $action="delete", $adminOnly=true) {
 		global $isAdmin, $printing, $locale;
 		if ($printing || ($adminOnly && !$isAdmin)) return false;
-		return '<td width="16">' . draw_img($locale . "images/icons/delete.gif", deleteLink($prompt, $id, $action)) . '</td>';
+		return '<td class="delete"><a href="' . deleteLink($prompt, $id, $action) . '"><i class="glyphicon glyphicon-remove"></i></a></td>';
 	}
 
 	function drawCheckboxText($chkname, $description) {
@@ -822,6 +822,16 @@ error_debug("done processing include!");
 		</body></html>';
 	}
 	
+	//used by drawBottom, also link reorder ajax
+	function drawLinks() {
+		$links = db_query('SELECT url, text FROM links ORDER BY precedence');
+		$return = '';
+		while ($l = db_fetch($links)) {
+			$return .= '<li><a href="' . $l["url"] . '">' . $l["text"] . '</a></li>';
+		}		
+		return $return;
+	}
+	
 	function drawTop() {
 		global $_GET, $user, $_josh, $page, $isAdmin, $printing, $locale;
 		error_debug("starting top");
@@ -890,26 +900,21 @@ error_debug("done processing include!");
 		if (!$printing) {
 			
 		?>
+			</div>
+			<div id="right" class="col-md-4">
+				<div id="tools">
+					<form name="search" method="get" action="/staff/search.php" onSubmit="javascript:return doSearch(this);">
+					<a class="right button" href="/index.php?logout=true">
+						<i class="glyphicon glyphicon-log-out"></i> Log Out
+					</a>
+					Hello <b><a href="/staff/view.php?id=<?php echo $user["id"]?>"><?php echo $user["first_name"]?> <?php echo $user["last_name"]?></b></a>.
+		            <input type="text" class="form-control" name="q" placeholder="Search Staff">
+					</form>
+					
+					<ul class="links">
+						<?php echo drawLinks() ?>
+					</ul>
 				</div>
-				<div id="right" class="col-md-4">
-					<div id="tools">
-						<form name="search" method="get" action="/staff/search.php" onSubmit="javascript:return doSearch(this);">
-						<a class="right button" href="/index.php?logout=true">
-							<i class="glyphicon glyphicon-log-out"></i> Log Out
-						</a>
-						Hello <b><a href="/staff/view.php?id=<?php echo $user["id"]?>"><?php echo $user["first_name"]?> <?php echo $user["last_name"]?></b></a>.
-			            <input type="text" class="form-control" name="q" placeholder="Search Staff">
-						</form>
-						
-						<ul class="links">
-		<?php
-		$links = db_query('SELECT url, text FROM links ORDER BY precedence');
-		while ($l = db_fetch($links)) {
-			echo '<li><a href="' . $l["url"] . '">' . $l["text"] . '</a></li>';
-		}
-		?>
-						</ul>
-					</div>
 		<?php 
 			            
 		foreach ($modules as $module) {
@@ -937,17 +942,14 @@ error_debug("done processing include!");
 			</table>
 			<?php }
 		}?>
-				<div id="footer">page rendered in <?php echo format_time_exec()?></div>
+						<div id="footer">page rendered in <?php echo format_time_exec()?></div>
+					</div>
 				</div>
 			</div>
-			</div>
-			<script language="javascript" type="text/javascript" src="/javascript.js"></script>
-			<script language="javascript" type="text/javascript" src="<?php echo $locale?>tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-			<script language="javascript">
-				<!--
-				initTinyMCE("<?php echo $locale?>style-textarea.css");
-				//-->
-			</script>
+			<script src="/assets/vendor/jquery/dist/jquery.min.js"></script>
+			<script src="/assets/vendor/TableDnD/dist/jquery.tablednd.min.js"></script>
+			<script src="/assets/vendor/tinymce/tinymce.jquery.min.js"></script>
+			<script src="/assets/js/javascript.js"></script>
 		</body>
 	</html>
 	<?php 

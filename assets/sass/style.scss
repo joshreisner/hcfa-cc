@@ -210,6 +210,11 @@ table.left {
 		width: 20px;
 		a { color: $red; }
 	}
+	tr.dragging { opacity: .5; }
+	th.reorder, td.reorder {
+		width: 20px;
+		i { cursor: row-resize; }
+	}
 	td.profile_image {
 		width: 320px;
 		text-align:center;

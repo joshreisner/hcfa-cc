@@ -422,6 +422,12 @@ table.left {
     width: 20px; }
     table.left th.delete a, table.left td.delete a {
       color: #D8282D; }
+  table.left tr.dragging {
+    opacity: .5; }
+  table.left th.reorder, table.left td.reorder {
+    width: 20px; }
+    table.left th.reorder i, table.left td.reorder i {
+      cursor: row-resize; }
   table.left td.profile_image {
     width: 320px;
     text-align: center;

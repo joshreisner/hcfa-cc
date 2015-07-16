@@ -1,9 +1,8 @@
 <?php
 error_debug("~ including url.php");
 
+//matches possible $_GET["action"] values
 function url_action($matches, $key="action") {
-	//don't know whether this is any good.  matches possible $_GET["action"] values
-	global $_GET;
 	if (isset($_GET[$key])) {
 		$matches = explode(",", $matches);
 		foreach ($matches as $m) if ($_GET[$key] == trim($m)) return true;
@@ -200,7 +199,7 @@ function url_query_drop($deletes=false, $go=true) {
 	//called by: lots of pages on the intranet, eg /staff/view.php
 	//accepts: $deletes is a one-dimensional array of keys, eg array("id", "action", "chicken"), $go is boolean
 	//deletes could also be a comma-separated list
-	global $_josh, $_GET;
+	global $_josh;
 	$get = $_GET;
 	$target = url_base() . $_josh["request"]["path"];
 	if ($deletes) {

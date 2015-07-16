@@ -1,18 +1,34 @@
-function initTinyMCE(cssLocation) {
-	tinyMCE.init({
-		mode : "textareas",
-		theme : "advanced",
-		theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,separator,undo,redo,separator,link,unlink,image,|,code",
-		theme_advanced_buttons2 : "",
-		theme_advanced_buttons3 : "",
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "center",
-		extended_valid_elements : "a[href|target],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[align|style],p[align]",
-		content_css : cssLocation + "?" + new Date().getTime(),
-		editor_selector : "mceEditor",
-		editor_deselector : "mceNoEditor"
+$(function(){
+	$('table.draggable').tableDnD({
+		dragHandle: '.reorder',
+	    onDragClass: 'dragging',
+	    onDrop: function(table, row) {
+            var rows = table.tBodies[0].rows;
+            var order = [];
+            for (var i = 0; i < rows.length; i++) {
+				if (rows[i].id) order[order.length] = rows[i].id;
+            }
+	        $.post(location.href, { reorder: true, order: order }, function(data) {
+		        $('ul.links').html(data);
+	        });
+	    }
 	});
-}
+});
+
+//init tinymce
+tinyMCE.init({
+	mode : "textareas",
+	theme : "advanced",
+	theme_advanced_buttons1 : "bold,italic,underline,strikethrough,separator,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,separator,undo,redo,separator,link,unlink,image,|,code",
+	theme_advanced_buttons2 : "",
+	theme_advanced_buttons3 : "",
+	theme_advanced_toolbar_location : "top",
+	theme_advanced_toolbar_align : "center",
+	extended_valid_elements : "a[href|target],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[align|style],p[align]",
+	content_css : '/_hcfa-cc/style-textarea.css' + new Date().getTime(),
+	editor_selector : "mceEditor",
+	editor_deselector : "mceNoEditor"
+});
 
 function promptRedirect(url, question) {
 	if (question) {

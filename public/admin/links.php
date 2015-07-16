@@ -2,39 +2,54 @@
 include("../include.php");
 
 if ($posting) {
-	db_enter("links", "text url precedence");
-	url_change();
+	if (isset($_POST['reorder'])) {
+		$counter = 1;
+		foreach ($_POST['order'] as $link_id) {
+			db_query('UPDATE links SET precedence = ' . $counter . ' WHERE id = ' . $link_id);
+			$counter++;
+		}
+		die(drawLinks()); //for ajax to update links area in sidebar
+	} else {
+		db_enter("links", "text url precedence");
+		url_change();
+	}
+} elseif (!empty($_GET['id']) && url_action('delete')) {
+	db_query('DELETE FROM links WHERE id = ' . $_GET['id']);
+	url_query_drop('action,id');
 }
 
 drawTop();
+?>
+<table cellspacing="1" class="left draggable">
+	<thead>
+		<?php echo drawHeaderRow(false, 4, "new", "#bottom")?>
+		<tr>
+			<th class="reorder"></th>
+			<th>Link</th>
+			<th>Address</th>
+			<th class="delete"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php
+		$links = db_query("SELECT id, text, url FROM links ORDER BY precedence");
+		if ($max = db_found($links)) {
+		while ($l = db_fetch($links)) {?>
+			<tr id="<?php echo $l['id']?>">
+				<td class="reorder"><i class="glyphicon glyphicon-menu-hamburger"></i></td>
+				<td><?php echo $l["text"]?></td>
+				<td><?php echo $l["url"]?></td>
+				<?php echo deleteColumn('Are you sure?', $l['id']);?>
+			</tr>
+		<?php }
+		} else {
+			echo drawEmptyResult("No links entered in the system yet!");
+		}?>
+	</tbody>
+</table>
 
-echo drawTableStart();
-echo drawHeaderRow(false, 5, "new", "#bottom");?>
-<tr>
-	<th style="text-align:left;">Link</th>
-	<th style="text-align:left;">Address</th>
-	<th style="width:16px;"></th>
-	<th style="width:16px;"></th>
-	<th style="width:16px;"></th>
-</tr>
+<a name="bottom"></a>
 <?php
-$links = db_query("SELECT id, text, url FROM links ORDER BY precedence");
-if ($max = db_found($links)) {
-while ($l = db_fetch($links)) {?>
-	<tr>
-		<td><?php echo $l["text"]?></td>
-		<td><?php echo $l["url"]?></td>
-		<td><img src="/images/icons/moveup.gif" width="16" height="16" border="0"></td>
-		<td><img src="/images/icons/movedown.gif" width="16" height="16" border="0"></td>
-		<?php echo deleteColumn();?>
-	</tr>
-<?php }
-} else {
-	echo drawEmptyResult("No links entered in the system yet!");
-}
-echo drawTableEnd();
-
-echo '<a name="bottom"></a>';
 $form = new intranet_form;
 $form->addRow("hidden", "", "precedence", ($max + 1));
 $form->addRow("itext",  "Link" , "text", "", "", true);
