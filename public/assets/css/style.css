@@ -236,10 +236,10 @@ div.user {
 #help {
   border: 1px solid #bbb;
   background-color: #ededed;
-  min-height: 18px;
+  min-height: 35px;
   font-size: 12px;
   line-height: 20px;
-  padding: 9px 11px 0 11px;
+  padding: 9px 11px 0;
   margin-bottom: 15px; }
   #help div.text {
     padding: 13px 0px;

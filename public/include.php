@@ -862,7 +862,7 @@ error_debug("done processing include!");
 					</a>
 					<a class="button right" href="<?php echo url_query_add(array("toggleMenuPref"=>"isOpenHelp"), false)?>">
 						<i class="glyphicon glyphicon-info-sign"></i>
-						Show Help
+						<?php if ($user["isOpenHelp"]) { ?>Hide<?php } else {?>Show<?php }?> Help
 					</a>
 				<?php if ($user["isOpenHelp"]) {
 					if ($user["isAdmin"]) {?>
