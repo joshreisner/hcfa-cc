@@ -26,4 +26,3 @@ $form->addRow("submit"  , "edit topic");
 $form->draw("Edit Bulletin Board Topic");
 
 drawBottom();
-?>

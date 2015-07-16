@@ -1,3 +1,5 @@
+/* colors */
+/* tags */
 body {
   background-color: #fff;
   margin: 3px 0px 20px 0px;
@@ -5,31 +7,6 @@ body {
   line-height: 16px;
   color: #444; }
 
-.banner {
-  margin-top: 20px;
-  margin-bottom: 20px; }
-  .banner div {
-    text-align: center; }
-    .banner div img {
-      display: inline-block;
-      margin-top: 18px; }
-    .banner div:first-child {
-      text-align: left; }
-      .banner div:first-child img {
-        margin-top: 8px; }
-    .banner div:last-child {
-      text-align: right; }
-      .banner div:last-child img {
-        margin-top: 0; }
-
-#footer {
-  font-size: 10px;
-  color: #ccc;
-  float: right;
-  padding-top: 10px;
-  clear: right; }
-
-/* tag-specific */
 form {
   margin: 0px;
   padding: 0px; }
@@ -178,6 +155,16 @@ a.button:hover {
   padding: 1px 3px 1px 3px;
   text-decoration: none; }
 
+div.user {
+  position: relative;
+  padding-left: 55px; }
+  div.user a {
+    display: block; }
+    div.user a.image {
+      position: absolute;
+      left: 0;
+      top: 3px; }
+
 /* modules */
 .areas {
   background-color: #D8282D; }
@@ -221,7 +208,31 @@ a.button:hover {
 .helpdesk-hilite {
   background-color: #efdfcf; }
 
-/* help */
+/* template */
+.banner {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+  .banner div {
+    text-align: center; }
+    .banner div img {
+      display: inline-block;
+      margin-top: 18px; }
+    .banner div:first-child {
+      text-align: left; }
+      .banner div:first-child img {
+        margin-top: 8px; }
+    .banner div:last-child {
+      text-align: right; }
+      .banner div:last-child img {
+        margin-top: 0; }
+
+#footer {
+  font-size: 10px;
+  color: #ccc;
+  float: right;
+  padding-top: 10px;
+  clear: right; }
+
 #help {
   border: 1px solid #bbb;
   background-color: #ededed;
@@ -234,7 +245,6 @@ a.button:hover {
     padding: 13px 0px;
     clear: both; }
 
-/* tools */
 #tools {
   font-size: 11px;
   border: 1px solid #bbb;
@@ -346,7 +356,7 @@ table.left {
   background-color: #ddd;
   border-width: 0px;
   border-spacing: 1px;
-  margin: 15px 0px 0px 0px; }
+  margin: 15px 0px; }
   table.left tr {
     background-color: #fff;
     vertical-align: top; }
@@ -392,6 +402,32 @@ table.left {
   table.left tr.total {
     background-color: #f3f3f3;
     text-align: right; }
+  table.left tr.calendar {
+    background-color: transparent;
+    font-size: 9px; }
+  table.left th.image, table.left td.image {
+    width: 72px;
+    padding: 0; }
+    table.left th.image img, table.left td.image img {
+      max-width: 100%;
+      height: auto;
+      max-height: 72px;
+      width: auto;
+      margin: 0 auto;
+      display: block; }
+  table.left th.delete, table.left td.delete {
+    width: 20px; }
+    table.left th.delete a, table.left td.delete a {
+      color: #D8282D; }
+  table.left td.profile_image {
+    width: 320px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0; }
+    table.left td.profile_image img {
+      width: 320px;
+      height: auto;
+      display: block; }
 
 tr.deleted {
   text-decoration: line-through; }
@@ -451,18 +487,13 @@ table.navigation {
     font-weight: bold; }
 
 table.message {
-  width: 594px;
+  width: 100%;
   border: 1px solid #bbb;
   border-spacing: 0px;
   font-size: 13px;
   line-height: 18px;
   margin: 14px 0px 0px 0px; }
-
-table.message td.gray {
-  text-align: center;
-  padding: 10px;
-  background-color: #ededed; }
-
-table.left tr.calendar {
-  background-color: transparent;
-  font-size: 9px; }
+  table.message td.gray {
+    text-align: center;
+    padding: 10px;
+    background-color: #ededed; }

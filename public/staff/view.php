@@ -108,7 +108,7 @@ if (!$r["isActive"]) {
 	<tr>
 		<td class="left">Name</td>
 		<td width="99%" class="big"><?php echo $r["firstname"]?> <?php if ($r["nickname"]) {?>(<?php echo $r["nickname"]?>) <?php }?><?php echo $r["lastname"]?></td>
-		<td rowspan="8" style="width:271px; text-align:center; vertical-align:middle;"><?php echo $img?></td>
+		<td rowspan="8" class="profile_image"><?php echo $img?></td>
 	</tr>
 	<tr>
 		<td class="left">Organization</td>

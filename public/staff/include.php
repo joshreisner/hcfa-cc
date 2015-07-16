@@ -46,35 +46,35 @@ function drawStaffList($where, $searchterms=false) {
 		$return .= drawHeaderRow(false, $colspan);
 	}
 	$return .= '<tr>
-		<th style="width:50px;"></th>
-		<th style="text-align:left">Name / Office</th>
-		<th style="text-align:left">Title / Department</th>
-		<th style="text-align:left">Phone</th>';
+		<th class="image"></th>
+		<th>Name / Office</th>
+		<th>Title / Department</th>
+		<th class="r">Phone</th>';
 	if ($isAdmin) $return .= '<th></th>';
 	$return .= '</tr>';
 	
 	$result = db_query("SELECT 
-							u.userID, 
-							u.lastname,
-							ISNULL(u.nickname, u.firstname) firstname, 
-							u.bio, 
-							u.phone,
-							c.description corporationName,
-							u.corporationID,
-							o.name office, 
-							o.isMain,
-							u.title, 
-							d.departmentName,
-							u.imageID,
-							m.height,
-							m.width
-						FROM intranet_users u
-						LEFT JOIN intranet_departments d	ON d.departmentID = u.departmentID 
-						LEFT JOIN organizations c			ON u.corporationID = c.id
-						LEFT JOIN intranet_offices o		ON o.id = u.officeID
-						LEFT JOIN intranet_images m			ON u.imageID = m.imageID
-						WHERE " . $where . "
-						ORDER BY u.lastname, ISNULL(u.nickname, u.firstname)");
+			u.userID, 
+			u.lastname,
+			ISNULL(u.nickname, u.firstname) firstname, 
+			u.bio, 
+			u.phone,
+			c.description corporationName,
+			u.corporationID,
+			o.name office, 
+			o.isMain,
+			u.title, 
+			d.departmentName,
+			u.imageID,
+			m.height,
+			m.width
+		FROM intranet_users u
+		LEFT JOIN intranet_departments d	ON d.departmentID = u.departmentID 
+		LEFT JOIN organizations c			ON u.corporationID = c.id
+		LEFT JOIN intranet_offices o		ON o.id = u.officeID
+		LEFT JOIN intranet_images m			ON u.imageID = m.imageID
+		WHERE " . $where . "
+		ORDER BY u.lastname, ISNULL(u.nickname, u.firstname)");
 	$count = db_found($result);
 	if ($count) { 
 		if (($count == 1) && $searchterms) {
@@ -102,12 +102,9 @@ function drawStaffRow($r, $searchterms=false) {
 	$return  = '<tr height="38">';
 	if ($r["imageID"]) {
 		verifyImage($r["imageID"]);
-		$factor      = @(31 / $r["height"]);
-		$r["width"]  = $r["width"]  * $factor;
-		$r["height"] = $r["height"] * $factor;
-		$return .= '<td width="47" align="center"><a href="/staff/view.php?id=' . $r["userID"] . '"><img src="' . $locale . 'staff/' . $r["imageID"] . '.jpg" width="' . $r["width"] . '" height="' . $r["height"] . '" border="0"></a></td>';
+		$return .= '<td class="image"><a href="/staff/view.php?id=' . $r["userID"] . '"><img src="' . $locale . 'staff/' . $r["imageID"] . '.jpg" width="' . $r["width"] . '" height="' . $r["height"] . '"></a></td>';
 	} else {
-		$return .= '<td>&nbsp;</td>';
+		$return .= '<td class="image">&nbsp;</td>';
 	}
 	$return .= '<td><nobr><a href="view.php?id=' . $r["userID"] . '">' . $r["lastname"] . ', ' . $r["firstname"] . '</a>';
 	if (!$r["isMain"]) $return .= "<br>" . $r["office"];
@@ -116,11 +113,8 @@ function drawStaffRow($r, $searchterms=false) {
 	if ($r["departmentName"]) $return .= '<i>' . $r["departmentName"] . '</i><br>';
 	if ($r["corporationName"]) $return .= '<a href="/staff/organizations.php?id=' . $r["corporationID"] . '">' . $r["corporationName"] . '</a>';
 	$return .= '</td>
-		<td align="right"><nobr>' . format_phone($r["phone"]) . '</nobr></td>
+		<td class="r"><nobr>' . format_phone($r["phone"]) . '</nobr></td>
 		';
-		if ($isAdmin) $return .= '<td><a href="javascript:promptRedirect(\'' . url_query_add(array("action"=>"delete", "staffID"=>$r["userID"]), false) . '\', \'Delete this staff member?\');"><img src="' . $locale . 'images/icons/delete.gif" width="16" height="16" border="0"></td>';
+		if ($isAdmin) $return .= '<td class="delete"><a href="javascript:promptRedirect(\'' . url_query_add(array("action"=>"delete", "staffID"=>$r["userID"]), false) . '\', \'Delete this staff member?\');"><i class="glyphicon glyphicon-remove"></i></a></td>';
 	return $return . '</tr>';
 }
-
-
-?>

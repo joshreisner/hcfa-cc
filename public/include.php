@@ -3,8 +3,7 @@
 	$_josh["styles"]			= array("field"=>"field", "checkbox"=>"checkbox", "select"=>"select", "button"=>"button", "textarea"=>"mceEditor");
 	$_josh["basedblanguage"]	= "mssql";
 	@extract(includeLibrary()) or die("Can't locate library! " . $_SERVER["DOCUMENT_ROOT"]);
-	$locale = "/_" . $request["domainname"] . "/";
-	//$_josh["debug"]	= true;
+	$locale = "/_hcfa-cc/";
 
 //determine location & scenario
 	//get page info
@@ -725,21 +724,19 @@ error_debug("done processing include!");
 		global $_josh, $locale;
 		$date = ($date) ? format_date_time($date, "", $separator) : false;
 		if ($imageID) {
-			$factor    = @(31 / $imgheight);
+			$factor    = @(50 / $imgwidth);
 			$imgheight = $imgheight * $factor;
 			$imgwidth  = $imgwidth * $factor;
 			verifyImage($imageID);
-			$img = '<a href="http://' . $_josh["request"]["host"] . '/staff/view.php?id=' . $userID . '"><img src="http://' . $_josh["request"]["host"] . $locale . 'staff/' . $imageID . '.jpg" width="' . $imgwidth . '" height="' . $imgheight . '"></a>';
+			$img = '<a href="http://' . $_josh["request"]["host"] . '/staff/view.php?id=' . $userID . '" class="image"><img src="http://' . $_josh["request"]["host"] . $locale . 'staff/' . $imageID . '.jpg" width="' . $imgwidth . '" height="' . $imgheight . '"></a>';
 		} else {
 			$img = "";
 		}
 		return '
-		<table cellpadding="0" cellspacing="0" border="0" width="144">
-			<tr valign="top" style="background-color:transparent;">
-				<td width="46" height="37" align="center">' . $img . '</td>
-				<td><a href="http://' . $_josh["request"]["host"] . '/staff/view.php?id=' . $userID . '">' . format_string($name, 20) . '</a><br>' . $date . '</td>
-			</tr>
-		</table>';
+		<div class="user">
+			' . $img . '
+			<a href="http://' . $_josh["request"]["host"] . '/staff/view.php?id=' . $userID . '">' . format_string($name, 20) . '</a>' . $date . '
+		</div>';
 	}
 	
 //custom functions - form functions
@@ -829,21 +826,18 @@ error_debug("done processing include!");
 		global $_GET, $user, $_josh, $page, $isAdmin, $printing, $locale;
 		error_debug("starting top");
 		$title = $page["module"] . " > " . $page["name"];
-	?><html>
+	?><!DOCTYPE html>
+		<html lang="en">
 		<head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
 			<title><?php echo $title?></title>
 			<link rel="stylesheet" type="text/css" href="/assets/vendor/bootstrap/dist/css/bootstrap.min.css">
 			<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 			<!--[if IE]>
 			<link rel="stylesheet" type="text/css" href="<?php echo $locale?>style-ie.css" />
 			<![endif]--> 
-			<script language="javascript" type="text/javascript" src="/javascript.js"></script>
-			<script language="javascript" type="text/javascript" src="<?php echo $locale?>tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-			<script language="javascript">
-				<!--
-				initTinyMCE("<?php echo $locale?>style-textarea.css");
-				//-->
-			</script>
 		</head>
 		<body>
 		<?php if (!$printing) {?>
@@ -947,6 +941,13 @@ error_debug("done processing include!");
 				</div>
 			</div>
 			</div>
+			<script language="javascript" type="text/javascript" src="/javascript.js"></script>
+			<script language="javascript" type="text/javascript" src="<?php echo $locale?>tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+			<script language="javascript">
+				<!--
+				initTinyMCE("<?php echo $locale?>style-textarea.css");
+				//-->
+			</script>
 		</body>
 	</html>
 	<?php 
