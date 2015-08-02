@@ -60,5 +60,3 @@ function error_handle_php($number, $str, $file, $line) {
 	$message = "<span class='josh_code'>$str</span> in <b>$file</b> on line <b>$line</b>";
 	error_handle("PHP Error", $message, false);
 }
-
-?>

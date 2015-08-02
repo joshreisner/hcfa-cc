@@ -49,5 +49,7 @@ if ($_GET["id"] == 1) {
 				u.lastname like 'y%' or 
 				u.lastname like 'z%'";
 }
+
 echo drawStaffList("u.isactive = 1 and (" . $letters . ")");
-drawBottom();?>
+
+drawBottom();

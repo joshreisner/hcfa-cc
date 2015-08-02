@@ -1,5 +1,6 @@
 <?php
 //joshlib & localize
+	date_default_timezone_set('America/New_York');
 	$_josh["styles"]			= array("field"=>"field", "checkbox"=>"checkbox", "select"=>"select", "button"=>"button", "textarea"=>"mceEditor");
 	$_josh["basedblanguage"]	= "mssql";
 	@extract(includeLibrary()) or die("Can't locate library! " . $_SERVER["DOCUMENT_ROOT"]);
@@ -10,7 +11,7 @@
 	$page = getPage();
 	if (!isset($page["id"])) { //if page doesn't exist, create it
 		error_debug("creating page");
-		db_query("INSERT INTO pages ( url, name ) VALUES ( '{$_josh["request"]["path"]}', 'Untitled Page' )");
+		db_query("INSERT INTO pages ( url, name, isSecure ) VALUES ( '{$_josh["request"]["path"]}', 'Untitled Page', 1 )");
 		$page = getPage();
 	}
 	$location	= $_josh["request"]["folder"];
@@ -530,7 +531,7 @@ error_debug("done processing include!");
 	}
 
 	function db_enter($table, $fields, $index="id") {
-		global $_POST, $_GET, $editing, $language, $user;
+		global $editing, $language, $user;
 		
 		$fields = explode(" ", $fields);
 		foreach ($fields as $field) {
@@ -591,9 +592,9 @@ error_debug("done processing include!");
 				$_POST[$field] = trim($_POST[$field]);
 				$_POST[$field] = (empty($_POST[$field])) ? "NULL" : "'" . $_POST[$field] . "'";
 				if ($editing) {
-					$query1[] = $field . " = " . $_POST[$field];
+					$query1[] = $table . '.' . $field . " = " . $_POST[$field];
 				} else {
-					$query1[] = $field;
+					$query1[] = $table . '.' . $field;
 					$query2[] = $_POST[$field];
 				}
 			}
