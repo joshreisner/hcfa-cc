@@ -21,7 +21,9 @@ tinyMCE.init({
 	extended_valid_elements : "a[href|target],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[align|style],p[align]",
 	content_css : '/_hcfa-cc/style-textarea.css?' + new Date().getTime(),
 	editor_selector : "mceEditor",
-	editor_deselector : "mceNoEditor"
+	editor_deselector : "mceNoEditor",
+	statusbar: false,
+	menubar: false
 });
 
 //delete buttons
