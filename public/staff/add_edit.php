@@ -20,11 +20,6 @@ if ($posting) {
 		
 		//if new user, reset password, delete request, and send invite
 		if (!isset($_GET["id"])) {
-			if ($locale == "/_seedco/") {
-				email("jreisner@seedco.org,pchoi@seedco.org", 
-					"<a href='http://intranet.seedco.org/staff/view.php?id=" . $id . "'>" . $_POST["firstname"] . " " . $_POST["lastname"] . "</a> was just added to the Seedco Intranet.", 
-					"Intranet: New Staff Added");
-			}
 			db_query("UPDATE intranet_users SET password = PWDENCRYPT('') WHERE userID = " . $id);
 			if (isset($_GET["requestID"])) db_query("DELETE FROM users_requests WHERE id = " . $_GET["requestID"]);
 			//send invitation
@@ -33,6 +28,7 @@ if ($posting) {
 		}
 		//update permissions
 		db_checkboxes("permissions", "administrators", "userID", "moduleID", $id);
+		db_checkboxes("skills", "users_to_skills", "user_id", "skill_id", $id);
 
 		//check long distance code
 		if (($locale == "/_seedco/") && ($_POST["officeID"] == "1")) {
@@ -165,6 +161,7 @@ $form->addRow("department", "Department", "departmentID", "", @$r["departmentID"
 $form->addRow("select", "Location", "officeID", "SELECT id, name from intranet_offices order by name", @$r["officeID"], true);
 $form->addRow("phone",  "Phone", "phone", @format_phone($r["phone"]), "", true, 14);
 $form->addRow("textarea-plain", "Bio", "bio", @$r["bio"]);
+$form->addCheckboxes('skills', 'Skills', 'skills', 'users_to_skills', 'user_id', 'skill_id', $_GET['id']);
 
 if ($isAdmin) { //some fields are admin-only (we don't want people editing the staff page on the website)
 	$form->addGroup("Administrative Information [public, but not editable by staff]");

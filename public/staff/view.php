@@ -142,7 +142,19 @@ if (!$r["isActive"]) {
 		<td class="left">Bio</td>
 		<td colspan="2" height="167" class="text"><?php echo nl2br($r["bio"])?></td>
 	</tr>
-	<?php if ($isAdmin || ($_GET["id"] == $user["id"])) {?>
+	<?php if ($skills = db_table('SELECT s.id, s.title FROM users_to_skills u2s JOIN skills s ON u2s.skill_id = s.id WHERE u2s.user_id = ' . $_GET['id'] . ' ORDER BY s.title')) {?>
+	<tr>
+		<td class="left">Skills</td>
+		<td colspan="2">
+			<ul class="nospacing">
+			<?php foreach ($skills as $skill) {?>
+			<li><?php echo $skill['title']?></li>
+			<?php }?>
+			</ul>
+		</td>
+	</tr>
+	<?php }
+	if ($isAdmin || ($_GET["id"] == $user["id"])) {?>
 	<tr class="group">
 		<td colspan="3">Intranet</td>
 	</tr>
@@ -191,12 +203,8 @@ if (!$r["isActive"]) {
 		<td class="left">Rank</td>
 		<td colspan="2"><?php echo $r["rank"]?></td>
 	</tr>
-	<tr>
-		<td class="left">Permissions</td>
-		<td colspan="2">
-		<?php
-		$hasPermission = false;
-		$permissions = db_query("SELECT 
+	<?php
+	if ($permissions = db_table("SELECT 
 			m.name,
 			m.isPublic,
 			p.url
@@ -204,21 +212,27 @@ if (!$r["isActive"]) {
 			JOIN pages p ON m.homePageID = p.id
 			JOIN administrators a ON m.id = a.moduleID
 			WHERE a.userID = {$_GET["id"]}
-			ORDER BY m.name");
-		while ($p = db_fetch($permissions)) {
-			$hasPermission = true;
-			echo "&#183;&nbsp;";
-			if ($p["isPublic"]) echo "<a href='" . $p["url"] . "'>";
-			echo $p["name"];
-			if ($p["isPublic"]) echo "</a>";
-			echo "<br>";
-		}
-		if (!$hasPermission) echo "None";
-		?>
-			
+			ORDER BY m.name")) {?>
+	<tr>
+		<td class="left">Permissions</td>
+		<td colspan="2">
+			<ul>
+		<?php foreach ($permissions as $p) {?>
+			<li>
+			<?php
+			if ($p["isPublic"]) {
+				echo "<a href='" . $p["url"] . "'>" . $p["name"] . '</a>';
+			} else {
+				echo $p["name"];			
+			}
+			?>
+			</li>
+		<?php }?>
+			</ul>		
 		</td>
 	</tr>
-	<?php }?>
+	<?php }
+	}?>
 	<tr class="group">
 		<td colspan="3">Home Contact Information [private]</td>
 	</tr>

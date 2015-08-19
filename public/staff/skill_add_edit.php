@@ -3,7 +3,11 @@ include('include.php');
 
 if ($posting) {
 	$id = db_enter('skills', 'title group');
-	url_change('skills.php');	
+	if ($editing) {
+		url_change('skill.php?id=' . url_id());
+	} else {
+		url_change('skills.php');		
+	}
 }
 
 echo drawTop();

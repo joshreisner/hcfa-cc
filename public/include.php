@@ -327,8 +327,14 @@ error_debug("done processing include!");
 			$rows .= '<tr';
 			if ($admin) $rows .= ' class="admin"';
 			
-			//special exception for modules table
-			$description = ($table == "modules") ? "name" : "description";
+			//special exceptions (this is terrible)
+			if ($table == "modules") {
+				$description = "name";
+			} elseif ($table == 'skills') {
+				$description = 'title';
+			} else {
+				$description = "description";
+			}
 			
 			$rows .= '>
 				<td class="left">' . $desc . '</td>

@@ -38,7 +38,7 @@ foreach ($skills as $skill) {
 		$lastGroup = $skill['group'];
 	}
 	echo '<tr>
-		<td><a href="skill_add_edit.php?id=' . $skill['id'] . '">' . $skill['title'] . '</a></td>
+		<td><a href="skill.php?id=' . $skill['id'] . '">' . $skill['title'] . '</a></td>
 		<td class="r">' . number_format($skill['count']) . '</td>
 		' . deleteColumn('Are You Sure?', $skill['id']) . '
 	</tr>';

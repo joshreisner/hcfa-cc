@@ -64,6 +64,8 @@ $purple: #6a476a;
 		}
 	}
 	
+	.alert { margin: 14px 0 0; }
+	
 /* modules */
 	.areas { background-color: $red; }
 	.areas-hilite { background-color:#ffdddd; }
@@ -221,6 +223,12 @@ table.left {
 		vertical-align:middle;
 		padding: 0;
 		img { width: 320px; height: auto; display: block; }	
+	}
+	td {
+		ul:first-child:last-child {
+			margin: 0;
+			padding: 0 20px;
+		}
 	}
 }
 
