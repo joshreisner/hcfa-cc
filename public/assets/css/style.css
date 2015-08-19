@@ -401,10 +401,15 @@ table.left {
     height: 40px;
     vertical-align: middle;
     font-size: 13px; }
-  table.left tr.thread:hover {
-    background-color: #f0f0f0;
-    cursor: hand;
-    cursor: pointer; }
+    table.left tr.thread:hover {
+      background-color: #f0f0f0;
+      cursor: hand;
+      cursor: pointer; }
+      table.left tr.thread:hover a {
+        color: #d8282d;
+        text-decoration: underline; }
+    table.left tr.thread.admin {
+      background-color: #fffce0; }
   table.left tr.total {
     background-color: #f3f3f3;
     text-align: right; }

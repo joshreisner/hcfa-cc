@@ -193,8 +193,16 @@ table.left {
 		padding:10px; font-size:13px; line-height:20px; 
 		img, video, embed { max-width: 100%; height: auto; }
 	}
-	tr.thread { height: 40px; vertical-align:middle; font-size:13px; }
-	tr.thread:hover { background-color:#f0f0f0; cursor:hand; cursor:pointer; }
+	tr.thread {
+		height: 40px; vertical-align:middle; font-size:13px;
+		&:hover { 
+			background-color:#f0f0f0; cursor:hand; cursor:pointer; 
+			a { color: #d8282d; text-decoration: underline; }
+		}
+		&.admin { 
+			background-color: #fffce0;
+		}
+	}
 	tr.total { background-color:#f3f3f3; text-align:right; }
 	tr.calendar { background-color:transparent; font-size:9px; }
 	th.image, td.image { 

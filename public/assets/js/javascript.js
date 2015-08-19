@@ -24,6 +24,7 @@ tinyMCE.init({
 	editor_deselector : "mceNoEditor"
 });
 
+//delete buttons
 function promptRedirect(url, question) {
 	if (question) {
 		if (confirm(question)) location.href=url;
@@ -32,47 +33,29 @@ function promptRedirect(url, question) {
 	}
 }
 
-function aOver(objID) {
-	document.getElementById(objID).className = 'over';
+//bulletin board
+$('table#bb').on('click', 'tr.thread', function(){
+	location.href = $(this).find('a').first().attr('href');
+});
+
+if ($('table#bb').size()) window.setTimeout(update, 10000);
+
+function update() {
+	$.ajax({
+		type: 'GET',
+		url: '/bb/ajax.php',
+		timeout: 2000,
+		data: { count: $('table#bb tbody tr.thread').size() },
+		success: function(data) {
+			//console.log('success');
+			$('table#bb tbody').html(data);
+			window.setTimeout(update, 10000);
+		}
+	});
 }
 
-function aOut(objID) {
-	document.getElementById(objID).className = 'out';
-}
 
-function searchFocus(msg) {
-	if (msg == "Search Staff") document.search.q.value = "";
-}
-
-function searchBlur(msg) {
-	if (msg == "") document.search.q.value = "Search Staff";
-}
 				
-function browser() {
-	var browser = (window.navigator.userAgent);
-	if (browser.indexOf("MSIE")) {
-		return "IE";
-	} else if (browser.indexOf("Firefox")) {
-		return "Firefox";
-	} else {
-		return false;
-	}
-}
-
-function changeCursor(state) {
-	var isIE = (browser() == "IE");
-	if (state == "hand") {
-		this.style.cursor = (isIE) ? 'hand' : 'pointer';
-	} else {
-		this.style.cursor = 'default';
-	}
-}
-
-
-function changeDept(id, userID) {
-	location.href='<?php echo $request["path_query"]?>&newDeptID=' + id + '&contactID=' + userID;
-}
-
 function toggleCheckbox(which) {
 	document.getElementById(which).checked = !document.getElementById(which).checked;
 }

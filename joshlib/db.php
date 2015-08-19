@@ -225,7 +225,7 @@ function db_pwdcompare($string, $field) {
 	}
 }
 
-function db_query($query, $limit=false, $suppress_error=false) {
+function db_query($query, $limit=false, $suppress_error=false, $offset=false) {
 	global $_josh;
 	db_open();
 	$query = trim($query);
@@ -233,6 +233,7 @@ function db_query($query, $limit=false, $suppress_error=false) {
 	$_josh["queries"][] = $query;
 	if ($_josh["db"]["language"] == "mysql") {
 		if ($limit) $query .= " LIMIT " . $limit;
+		if ($offset) $query .= " OFFSET " . $offset;
 		if ($result = @mysql_query($query, $_josh["db"]["pointer"])) {
 			error_debug("<b>db_query</b> <i>" . $query . "</i>, " . db_found($result) . " results returned");
 			if (format_text_starts("insert", $query)) return db_id();
@@ -269,9 +270,9 @@ function db_switch($target=false) {
 	$_josh["db"]["switched"] = ($target == $_josh["db"]["database"]) ? false : true;
 }
 
-function db_table($sql, $limit=false, $suppress_error=false) {
+function db_table($sql, $limit=false, $suppress_error=false, $offset=false) {
 	$return = array();
-	$result = db_query($sql, $limit, $suppress_error);
+	$result = db_query($sql, $limit, $suppress_error, $offset);
 	while ($r = db_fetch($result)) $return[] = $r;
 	return $return;
 }

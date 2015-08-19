@@ -49,7 +49,7 @@ if ($posting) {
 drawTop();
 drawSyndicateLink("bb");
 ?>
-<table class="left" cellspacing="1">
+<table class="left" id="bb" cellspacing="1">
 	<?php echo drawHeaderRow("All Topics", 4, "add new topic", "#bottom")?>
 	<tr>
 		<th align="left" width="320">Topic</td>

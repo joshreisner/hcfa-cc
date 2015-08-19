@@ -47,10 +47,10 @@ if ($posting) {
 }
 
 drawTop();
+echo drawSyndicateLink("bb");
 ?>
-<meta http-equiv="refresh" content="300">
-<?php echo drawSyndicateLink("bb")?>
-<table class="left" cellspacing="1">
+<table class="left" id="bb">
+	<thead>
 	<?php echo drawHeaderRow("", 4, "new", "#bottom")?>
 	<tr>
 		<th width="320">Topic</th>
@@ -58,38 +58,12 @@ drawTop();
 		<th class="c">Replies</th>
 		<th class="r">Last Post</th>
 	</tr>
-<?php
-error_debug("get bb topix");
-
-$topics = db_query("SELECT 
-		t.id,
-		t.title,
-		t.isAdmin,
-		t.threadDate,
-		(SELECT COUNT(*) FROM bulletin_board_followups f WHERE t.id = f.topicID AND f.isActive = 1) replies,
-		ISNULL(u.nickname, u.firstname) firstname,
-		u.lastname
-	FROM bulletin_board_topics t
-	JOIN intranet_users u ON u.userID = t.createdBy
-	WHERE t.isActive = 1 
-	ORDER BY t.threadDate DESC", 15);
-if (db_found($topics)) {
-	while ($r = db_fetch($topics)) {
-		$r["lastname"] = htmlentities($r["lastname"]); //see http://work.joshreisner.com/request/?id=477
-		if ($r["isAdmin"]) $r["replies"] = "-";?>
-		<tr class="thread"<?php if ($r["isAdmin"]) {?> style="background-color:#fffce0;"<?php }?>
-			onclick = "location.href='topic.php?id=<?php echo $r["id"]?>';">
-			<td class="input"><a href="topic.php?id=<?php echo $r["id"]?>" id="id<?php echo $r["id"]?>"><?php echo $r["title"]?></a></td>
-			<td><?php echo $r["firstname"]?> <?php echo $r["lastname"]?></td>
-			<td align="center"><?php echo $r["replies"]?></td>
-			<td align="right"><?php echo format_date($r["threadDate"])?></td>
-		</tr>
-	<?php }
-} else {
-	echo drawEmptyResult("No topics have been added yet.  Why not <a href='#bottom'>be the first</a>?", 4);
-}
-
-?>
+	</thead>
+	<tbody>
+	<?php echo drawBBPosts(15,
+		drawEmptyResult("No topics have been added yet.  Why not <a href='#bottom'>be the first</a>?", 4)
+	)?>
+	</tbody>
 </table>
 <a name="bottom"></a>
 <?php
@@ -104,4 +78,3 @@ $form->addRow("submit"  , "add new topic");
 $form->draw("Contribute a New Topic");
 
 drawBottom(); 
-?>

@@ -643,6 +643,36 @@ error_debug("done processing include!");
 
 //custom functions - draw functions
 
+function drawBBPosts($count=15, $error='') {
+	if ($topics = db_table("SELECT 
+			t.id,
+			t.title,
+			t.isAdmin,
+			t.threadDate,
+			(SELECT COUNT(*) FROM bulletin_board_followups f WHERE t.id = f.topicID AND f.isActive = 1) replies,
+			ISNULL(u.nickname, u.firstname) firstname,
+			u.lastname
+		FROM bulletin_board_topics t
+		JOIN intranet_users u ON u.userID = t.createdBy
+		WHERE t.isActive = 1 
+		ORDER BY t.threadDate DESC", $count)) {
+
+		foreach ($topics as &$topic) {
+			if ($topic["isAdmin"]) $topic["replies"] = "-";
+			$topic = '
+			<tr class="thread' . ($topic["isAdmin"] ? ' admin' : '')  . '">
+				<td class="input"><a href="topic.php?id=' . $topic["id"] . '">' . $topic["title"] . '</a></td>
+				<td>' . $topic["firstname"] . ' ' . $topic["lastname"] . '</td>
+				<td align="center">' . $topic["replies"] . '</td>
+				<td align="right">' . format_date($topic["threadDate"]) . '</td>
+			</tr>';
+		}
+		
+		return implode($topics);
+	} else {
+		return $error;
+	}	
+}
 	function drawTableStart() {
 		return '<table cellspacing="1" class="left">';
 	}
