@@ -41,38 +41,13 @@ if ($posting) {
 		$id = db_enter("intranet_users", "firstname nickname lastname email title #corporationID departmentID officeID phone bio homeAddress1 homeAddress2 homeCity homeStateID homeZIP homePhone homeCell homeEmail emerCont1Name emerCont1Relationship emerCont1Phone emerCont1Cell emerCont1Email emerCont2Name emerCont2Relationship emerCont2Phone emerCont2Cell emerCont2Email", "userID");
 	}
 	
-	//notify hr of user update per anne-marie
-	if (isset($_GET["id"])) {
-		$name = db_grab('SELECT CONCAT(firstname, " ", lastname) FROM intranet_users WHERE userID = ' . $_GET['id']);
-		email('ajoyce@communitycatalyst.org', '
-				<a href="' . url_base() . '/staff/view.php?id=' . $_GET['id'] . '">' . $name . '</a>\'s profile was just updated on the Intranet',
-				'User Profile Updated');
-	}
-
-	
-	if ($uploading) { //upload new staff image
-		//debug();
-		//get file type id, size, read file
-		$type	= getDocTypeID($_FILES["userfile"]["name"]);
-		$size	= getimagesize($_FILES["userfile"]["tmp_name"]);
-		$image	= format_binary(file_get($_FILES["userfile"]["tmp_name"]));
-		unlink($_FILES["userfile"]["tmp_name"]);
-		//die($image);
-		//insert into images table
-		$imageID = db_query("INSERT into intranet_images (
-				image,
-				width,
-				height,
-				docTypeID			
-			) VALUES (
-				" . $image . ", 
-				" . $size[0] . ", 
-				" . $size[1] . ",
-				" . $type . "
-			)");
-	
-		//add imageID to user	
-		db_query("UPDATE intranet_users SET imageID = $imageID WHERE userID = " . $id);
+	//upload new staff image
+	if ($uploading && (file_ext($_FILES["userfile"]['name']) == 'jpg')) {
+		define('DIRECTORY_ROOT', $_SERVER['DOCUMENT_ROOT']);
+		define('DIRECTORY_WRITE', '/uploads');
+		$image = format_image($_FILES["userfile"]["tmp_name"], 'jpg');
+		$image = format_image_resize($image, 320, 320);
+		file_put('/uploads/staff/' . $id . '.jpg', $image);
 	}
 
 	url_change("view.php?id=" . $id);
@@ -162,6 +137,7 @@ $form->addRow("select", "Location", "officeID", "SELECT id, name from intranet_o
 $form->addRow("phone",  "Phone", "phone", @format_phone($r["phone"]), "", true, 14);
 $form->addRow("textarea-plain", "Bio", "bio", @$r["bio"]);
 $form->addCheckboxes('skills', 'Skills', 'skills', 'users_to_skills', 'user_id', 'skill_id', $_GET['id']);
+$form->addRow("file", "Image", "userfile");
 
 if ($isAdmin) { //some fields are admin-only (we don't want people editing the staff page on the website)
 	$form->addGroup("Administrative Information [public, but not editable by staff]");
@@ -169,7 +145,6 @@ if ($isAdmin) { //some fields are admin-only (we don't want people editing the s
 	$form->addRow("date", "Start Date", "startDate", @$r["startDate"], "", false);
 	$form->addRow("date", "End Date", "endDate", @$r["endDate"], "", false);
 	$form->addCheckboxes("permissions", "Permissions", "modules", "administrators", "userID", "moduleID", @$_GET["id"]);
-	$form->addRow("file", "Image", "userfile");
 }
 
 $form->addGroup("Home Contact Information [private]");

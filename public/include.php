@@ -55,15 +55,11 @@
 			u.isOpenHelpdesk,
 			u.isOpenDocuments,
 			u.isOpenStaff,
-			u.imageID,
 			u.isActive,
-			u.updatedOn,
-			i.width,
-			i.height
+			u.updatedOn
 		FROM intranet_users u
 		JOIN intranet_departments d ON u.departmentID = d.departmentID
 		JOIN pages p				ON u.homePageID = p.id
-		LEFT JOIN intranet_images i ON u.imageID = i.imageID
 		WHERE email = '{$_COOKIE["last_login"]}' AND u.isActive = 1");
 	
 		//user isn't active or has bad cookie
@@ -632,15 +628,6 @@ error_debug("done processing include!");
 		return $return;
 	}
 	
-	function verifyImage($imageID) {
-		global $_josh, $locale;
-		if (!$imageID) return false;
-		if (!is_file($_josh["root"] . $locale . "staff/" . $imageID . ".jpg")) {
-			$content = db_grab("SELECT image FROM intranet_images WHERE imageID = " . $imageID);
-			file_put($locale . "staff/" . $imageID . ".jpg", $content);
-		}
-	}
-
 //custom functions - draw functions
 
 function drawBBPosts($count=15, $error='') {
@@ -746,23 +733,24 @@ function drawBBPosts($count=15, $error='') {
 		return $header;
 	}
 
-	function drawName($userID, $name, $imageID, $imgwidth, $imgheight, $date=false, $withtime=false, $separator="<br>") {
+	function drawName($userID, $name, $date=false, $withtime=false, $separator="<br>") {
 		global $_josh, $locale;
 		$date = ($date) ? format_date_time($date, "", $separator) : false;
-		if ($imageID) {
-			$factor    = @(50 / $imgwidth);
-			$imgheight = $imgheight * $factor;
-			$imgwidth  = $imgwidth * $factor;
-			verifyImage($imageID);
-			$img = '<a href="http://' . $_josh["request"]["host"] . '/staff/view.php?id=' . $userID . '" class="image"><img src="http://' . $_josh["request"]["host"] . $locale . 'staff/' . $imageID . '.jpg" width="' . $imgwidth . '" height="' . $imgheight . '"></a>';
-		} else {
-			$img = "";
-		}
 		return '
 		<div class="user">
-			' . $img . '
-			<a href="http://' . $_josh["request"]["host"] . '/staff/view.php?id=' . $userID . '">' . format_string($name, 20) . '</a>' . $date . '
+			<a href="http://' . $_josh["request"]["host"] . '/staff/view.php?id=' . $userID . '">' . 
+				drawImg($userID) . 
+				format_string($name, 20) . 
+			'</a>' . $date . '
 		</div>';
+	}
+	
+	//much-simplified image drawing function
+	function drawImg($userID) {
+		global $_josh;
+		$filename = '/uploads/staff/' . $userID . '.jpg';
+		if (!file_exists($_SERVER['DOCUMENT_ROOT'] . $filename)) return '';
+		return '<img src="http://' .  $_josh["request"]["host"] . $filename . '?' . time() . '" width="320" height="320">';
 	}
 	
 //custom functions - form functions
@@ -777,11 +765,11 @@ function drawBBPosts($count=15, $error='') {
 		return draw_form_select($name, $array, $selectedID, !$nullable, $class, $jumpy);
 	}
 	
-	function drawThreadTop($title, $content, $userID, $fullname, $imageID, $imageWidth, $imageHeight, $date, $editurl=false) {
+	function drawThreadTop($title, $content, $userID, $fullname, $date, $editurl=false) {
 		global $_josh;
 		$return  = '<tr>
 				<td height="150" class="left">' . 
-				drawName($userID, $fullname, $imageID, $imageWidth, $imageHeight, $date, true) . 
+				drawName($userID, $fullname, $date, true) . 
 				'</td>
 				<td class="text"><h1>' . $title . '</h1>';
 		if ($editurl) {
@@ -794,10 +782,10 @@ function drawBBPosts($count=15, $error='') {
 		return $return;	
 	}
 	
-	function drawThreadComment($content, $userID, $fullname, $imageID, $imageWidth, $imageHeight, $date, $isAdmin=false) {
+	function drawThreadComment($content, $userID, $fullname, $date, $isAdmin=false) {
 		global $location;
 		$return  = '<tr><td class="left">';
-		$return .= drawName($userID, $fullname, $imageID, $imageWidth, $imageHeight, $date, true) . '</td>';
+		$return .= drawName($userID, $fullname, $date, true) . '</td>';
 		$return .= '<td class="right text ';
 		if ($isAdmin) $return .= $location . "-hilite";
 		$return .= '" height="80">' . $content . '</td></tr>';
@@ -811,7 +799,7 @@ function drawBBPosts($count=15, $error='') {
 			<a name="bottom"></a>
 			<form method="post" action="' . $_josh["request"]["path_query"] . '" onsubmit="javascript:return validate(this);">
 			<tr valign="top">
-				<td class="left">' . drawName($user["id"], $user["full_name"], $user["imageID"], $user["width"], $user["height"], false, true) . '</td>
+				<td class="left">' . drawName($user["id"], $user["full_name"], false, true) . '</td>
 				<td>' . draw_form_textarea("message", "", "mceEditor thread");
 		if ($showAdmin && $isAdmin) {
 			$return .= '

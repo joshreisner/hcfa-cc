@@ -202,6 +202,151 @@ function format_html_text($str) {
 	return $return;
 }
 
+function format_image($path, $type=false) {
+	global $_josh;
+	//function to take any image and return JPG encoded binary.  could send to format image resize at that point
+	//type should be used if you're sending a temp name (eg file upload)
+	//requires the imagemagick convert unix command
+	
+	if (!$file = file_get($path)) return false;
+	
+	if (!$type) $type = file_ext($path);
+	$target_name = DIRECTORY_WRITE . '/temp-target.jpg';
+	
+	$imagick = exec('which convert');
+	if (empty($imagick)) $imagick = '/usr/local/bin/convert'; //not able to get correct path on my mac now
+	
+	if (($type == 'jpg') || ($type == 'jpeg')) {
+		return $file;
+	} elseif (($type == 'gif') || ($type == 'png')) {
+		//convert
+		$cmd = $imagick . ' ' . realpath($path) . ' ' . DIRECTORY_ROOT . $target_name;
+		exec($cmd);
+	} elseif ($type == 'pdf') {
+		//return a screenshot of the first page
+		exec($imagick . ' ' . realpath($path) . '[0] ' . DIRECTORY_ROOT . $target_name);
+	} else {
+		error_handle('unhandled image convert', __function__ . ' ran into a problem converting ' . $path, __file__, __line__);
+		return false;
+	}
+		
+	if ($source = file_get($target_name)) {
+		file_delete($target_name);
+		return $source;
+	} else {
+		error_handle('ImageMagick Not Installed', __function__ . ' requires the <a href="http://www.imagemagick.org/">ImageMagick PHP library</a> to work on the command line.  Please install it and try again.  ', __file__, __line__);
+		return false;
+	}
+}
+
+function format_image_resize($source, $max_width=false, $max_height=false) {
+	if (!function_exists('imagecreatefromjpeg')) error_handle('library missing', 'the GD library needs to be installed to run format_image_resize', __file__, __line__);
+	if (empty($source)) return null;
+
+	if (!function_exists('resize')) {
+		function resize($new_width, $new_height, $source_name, $target_name, $width, $height) {
+			//resize an image and save to the $target_name
+			$tmp = imagecreatetruecolor($new_width, $new_height);
+			if (!$image = imagecreatefromjpeg(DIRECTORY_ROOT . $source_name)) error_handle('could not create image', 'the system could not create an image from ' . $source_name, __file__, __line__);
+			imagecopyresampled($tmp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+			imagejpeg($tmp, DIRECTORY_ROOT . $target_name, 100);
+			imagedestroy($tmp);
+			imagedestroy($image);
+		}
+
+		function crop($new_width, $new_height, $target_name) {
+			//crop an image and save to the $target_name
+			list($width, $height) = getimagesize(DIRECTORY_ROOT . $target_name);
+
+			//by default, crop from center
+			$offsetx = ($width - $new_width) / 2;
+			$offsety = ($height - $new_height) / 2;
+			if ($offsetx < 0) $offsetx = 0;
+			if ($offsety < 0) $offsety = 0;
+
+			//this crops from top-left
+			//$offsetx = $offsety = 0; 
+			
+			$tmp = imagecreatetruecolor($new_width, $new_height);
+			if (!$image = @imagecreatefromjpeg(DIRECTORY_ROOT . $target_name)) error_handle('could not create image', 'the system could not create an image from ' . $source_name, __file__, __line__);
+			imagecopyresized($tmp, $image, 0, 0, $offsetx, $offsety, $new_width, $new_height, $new_width, $new_height);
+			imagejpeg($tmp, DIRECTORY_ROOT . $target_name, 100);
+			imagedestroy($tmp);
+			imagedestroy($image);
+		}
+	}
+
+	//save to file, is file-based operation, unfortunately
+	$source_name = DIRECTORY_WRITE . '/temp-source.jpg';
+	$target_name = DIRECTORY_WRITE . '/temp-target.jpg';
+	file_put($source_name, $source);
+
+	//get source image dimensions
+	list($width, $height) = getimagesize(DIRECTORY_ROOT . $source_name);
+	
+	if(!$width || !$height) {
+		// image is probably corrupt
+		echo draw_page('image corrupt', 'the uploaded image cannot be read, try opening the image in photo editing software, re-saving it, and then try again');
+		exit();
+	}
+	
+	//execute differently depending on target parameters	
+	if ($max_width && $max_height) {
+		//resizing both
+		if (($width == $max_width) && ($height == $max_height)) {
+			//already exact width and height, skip resizing
+			copy(DIRECTORY_ROOT . $source_name, DIRECTORY_ROOT . $target_name);
+		} else {
+			//this was for the scenario where your target was a long landscape and you got a squarish image.
+			//this doesn't work if your target is squarish and you get a long landscape
+			//maybe we need a ratio function?  
+			//square to long scenario: input 400 x 300 (actual 1.3 ratio), target 400 x 100 (target 4) need to resize width then crop target > actual
+			//long to square scenario: input 400 x 100 (actual 4 ratio), target 400 x 300 (target 1.3) need to resize height then crop target < actual
+			$target_ratio = $max_width / $max_height;
+			$actual_ratio = $width / $height;
+			//if ($max_width >= $max_height) {
+			if ($target_ratio >= $actual_ratio) {
+				//landscape or square.  resize width, then crop height
+				$new_height = ($height / $width) * $max_width;
+				resize($max_width, $new_height, $source_name, $target_name, $width, $height);
+			} else {
+				//portrait.  resize height, then crop width
+				$new_width = ($width / $height) * $max_height;
+				resize($new_width, $max_height, $source_name, $target_name, $width, $height);
+			}
+			crop($max_width, $max_height, $target_name);						
+		}
+	} elseif ($max_width) { 
+		//only resizing width
+		if ($width == $max_width) {
+			//already exact width, skip resizing
+			copy(DIRECTORY_ROOT . $source_name, DIRECTORY_ROOT . $target_name);
+		} else {
+			//resize width
+			$new_height = ($height / $width) * $max_width;
+			resize($max_width, $new_height, $source_name, $target_name, $width, $height);
+
+		}
+	} elseif ($max_height) { 
+		//only resizing height	
+		if ($height == $max_height) {
+			//already exact height, skip resizing
+			copy(DIRECTORY_ROOT . $source_name, DIRECTORY_ROOT . $target_name);
+		} else {
+			//resize height
+			$new_width = ($width / $height) * $max_height;
+			resize($new_width, $max_height, $source_name, $target_name, $width, $height);
+		}
+	}
+	$return = file_get($target_name);
+	
+	//clean up
+	file_delete($source_name);
+	file_delete($target_name);
+	
+	return $return;
+}
+
 function format_js_desanitize() {
 	//javascript function for decoding sanitized strings
 	return '

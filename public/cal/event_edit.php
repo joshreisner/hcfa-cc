@@ -6,7 +6,6 @@ if ($posting) {
 	url_change("./event.php?id=" . $_GET["id"]);
 }
 
-
 $e = db_grab("SELECT 
 		e.title, 
 		e.description, 
@@ -17,18 +16,13 @@ $e = db_grab("SELECT
 		e.createdBy,
 		e.createdOn,
 		MONTH(e.startDate) month, 
-		YEAR(e.startDate) year,
-		u.imageID,
-		i.width imgwidth,
-		i.height imgheight
+		YEAR(e.startDate) year
 	FROM calendar_events e
 	JOIN intranet_users u ON e.createdBy = u.userID
-	LEFT JOIN intranet_images i ON u.imageID = i.imageID
 	WHERE e.id = " . $_GET["id"]);
 	
 drawTop();
 echo drawNavigationCal($e["month"], $e["year"], true);
-
 
 $form = new intranet_form;
 if ($isAdmin) $form->addUser("createdBy",  "Posted By" , $user["id"], $e["createdBy"], true);
@@ -39,4 +33,4 @@ $form->addRow("textarea", "Notes" , "description", $e["description"], "", true);
 $form->addRow("submit"  , "save changes");
 $form->draw("Edit Event");
 
-drawBottom();?>
+drawBottom();

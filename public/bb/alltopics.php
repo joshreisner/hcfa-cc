@@ -15,13 +15,9 @@ if ($posting) {
 				u.userID,
 				ISNULL(u.nickname, u.firstname) firstname,
 				u.lastname,
-				u.imageID,
-				m.width,
-				m.height,
 				t.createdOn
 				FROM bulletin_board_topics t
 				JOIN intranet_users u ON t.createdBy = u.userID
-				LEFT JOIN intranet_images m ON u.imageID = m.imageID
 				WHERE t.id = " . $id);
 		
 		//construct email
@@ -29,7 +25,7 @@ if ($posting) {
 		$message .= drawServerMessage("<b>Note</b>: This is an Administration/Human Resources topic from the <a href='http://" . $server . "/bulletin_board/'>Intranet Bulletin Board</a>.  For more information, please contact the <a href='mailto:hrpayroll@seedco.org'>Human Resources Department</a>.");
 		$message .= '<table width="100%" cellpadding="3" cellspacing="1" border="0">';
 		$message .= drawHeaderRow("Email", 2);
-		$message .= drawThreadTop($r["title"], $r["description"], $r["userID"], $r["firstname"] . " " . $r["lastname"], $r["imageID"], $r["width"], $r["height"], $r["createdOn"]);
+		$message .= drawThreadTop($r["title"], $r["description"], $r["userID"], $r["firstname"] . " " . $r["lastname"], $r["createdOn"]);
 		$message .= '</table>' . drawEmailFooter();
 		
 		$headers  = "MIME-Version: 1.0\r\n";
@@ -50,6 +46,7 @@ drawTop();
 drawSyndicateLink("bb");
 ?>
 <table class="left" id="bb" cellspacing="1">
+	<thead>
 	<?php echo drawHeaderRow("All Topics", 4, "add new topic", "#bottom")?>
 	<tr>
 		<th align="left" width="320">Topic</td>
@@ -57,33 +54,12 @@ drawSyndicateLink("bb");
 		<th>Replies</td>
 		<th align="right">Last Post</td>
 	</tr>
-<?php
-//get bulletin board topics
-$result = db_query("SELECT 
-		t.id,
-		t.title,
-		t.isAdmin,
-		t.threadDate,
-		(SELECT COUNT(*) FROM bulletin_board_followups f WHERE t.id = f.topicID AND f.isActive = 1) replies,
-		ISNULL(u.nickname, u.firstname) firstname,
-		u.lastname
-	FROM bulletin_board_topics t
-	JOIN intranet_users u ON u.userID = t.createdBy
-	WHERE t.isActive = 1 
-	ORDER BY t.threadDate DESC");
-
-while ($r = db_fetch($result)) {
-	if ($r["isAdmin"]) $r["replies"] = "-";?>
-	<tr class="thread"<?php if ($r["isAdmin"]) {?> style="background-color:<?php echo $colors["yellow"]?>""<?php }?>
-			onclick		= "location.href='topic.php?id=<?php echo $r["id"]?>';"
-			onmouseover	= "javascript:aOver('id<?php echo $r["id"]?>')"
-			onmouseout	= "javascript:aOut('id<?php echo $r["id"]?>')">
-		<td class="input"><a href="topic.php?id=<?php echo $r["id"]?>" id="id<?php echo $r["id"]?>"><?php echo $r["title"]?></a></td>
-		<td><?php echo $r["firstname"]?> <?php echo $r["lastname"]?></td>
-		<td align="center"><?php echo $r["replies"]?></td>
-		<td align="right"><?php echo format_date($r["threadDate"])?></td>
-	</tr>
-	<?php }?>
+	</thead>
+	<tbody>
+	<?php echo drawBBPosts(false,
+		drawEmptyResult("No topics have been added yet.  Why not <a href='#bottom'>be the first</a>?", 4)
+	)?>
+	</tbody>
 </table>
 <a name="bottom"></a>
 <?php

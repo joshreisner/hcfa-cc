@@ -35,9 +35,6 @@ $r = db_grab("SELECT
 		d.departmentName,
 		u.corporationID,
 		c.description corporationName,
-		u.imageID,
-		m.width,
-		m.height,
 		u.homeAddress1,
 		u.homeAddress2,
 		u.homeCity,
@@ -66,21 +63,12 @@ $r = db_grab("SELECT
 	LEFT  JOIN organizations			c ON u.corporationID = c.id
 	LEFT  JOIN intranet_departments		d ON d.departmentID	= u.departmentID 				
 	LEFT  JOIN intranet_offices    		f ON f.id			= u.officeID 				
-	LEFT  JOIN intranet_images     		m ON u.imageID		= m.imageID
 	LEFT  JOIN intranet_us_states		s ON u.homeStateID	= s.stateID
 	WHERE u.userID = " . $_GET["id"]);
 				
 $r["corporationName"] = (empty($r["corporationName"])) ? '<a href="organizations.php?id=0">Shared</a>' : '<a href="organizations.php?id=' . $r["corporationID"] . '">' . $r["corporationName"] . '</a>';
 
 if (!isset($r["isActive"])) url_change("./");
-
-//get image props
-if (isset($r["imageID"]) && $r["imageID"]) {
-	$img = "<img src=\"" . $locale . "staff/" . $r["imageID"] . ".jpg\" width=\"" . $r["width"] . "\" height=\"" . $r["height"] . "\" border=\"0\">";
-	verifyImage($r["imageID"]);
-} else {
-	$img = "<img src='" . $locale . "images/to-be-taken.png' width='240' height='167' border='0'>";
-}
 
 echo drawJumpToStaff($_GET["id"]);
 
@@ -108,7 +96,7 @@ if (!$r["isActive"]) {
 	<tr>
 		<td class="left">Name</td>
 		<td width="99%" class="big"><?php echo $r["firstname"]?> <?php if ($r["nickname"]) {?>(<?php echo $r["nickname"]?>) <?php }?><?php echo $r["lastname"]?></td>
-		<td rowspan="8" class="profile_image"><?php echo $img?></td>
+		<td rowspan="8" class="profile_image"><?php echo drawImg($_GET['id'])?></td>
 	</tr>
 	<tr>
 		<td class="left">Organization</td>

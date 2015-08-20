@@ -20,6 +20,12 @@ function file_array($content, $filename=false) {
 	return $content;
 }
 
+function file_delete($filename) {
+	if (!file_exists(DIRECTORY_ROOT . $filename)) return false;
+	unlink(DIRECTORY_ROOT . $filename);
+	return true;
+}
+
 function file_download($content, $filename, $extension) {
 	//header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 	//header("Cache-Control: public");
@@ -34,6 +40,15 @@ function file_download($content, $filename, $extension) {
 	header("Content-Disposition: attachment; filename=" . format_file_name($filename, $extension));
 	echo $content;
 	db_close();
+}
+
+function file_ext($filename) {
+	$info = pathinfo(strToLower($filename), PATHINFO_EXTENSION);
+	
+	if ($info == 'htm') return 'html';
+	if ($info == 'jpeg') return 'jpg';
+		
+	return $info;
 }
 
 function file_folder($folder, $types=false) {

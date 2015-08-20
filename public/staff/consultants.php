@@ -42,9 +42,6 @@ drawNavigation();
 							f.name office, 
 							u.title, 
 							d.departmentName,
-							u.imageID,
-							m.height,
-							m.width,
 							r.isPayroll
 						FROM intranet_users u
 						JOIN intranet_ranks r ON u.rankID = r.id
@@ -55,16 +52,7 @@ drawNavigation();
 						ORDER BY u.lastname, ISNULL(u.nickname, u.firstname)");
 	while ($r = db_fetch($result)) {?>
 	<tr height="38">
-		<?php if ($r["imageID"]) {
-			verifyImage($r["imageID"]);
-			$factor      = (31 / $r["height"]);
-			$r["width"]  = $r["width"]  * $factor;
-			$r["height"] = $r["height"] * $factor;
-			?>
-		<td width="47" align="center"><a href="/staff/view.php?id=<?php echo $r["userID"]?>"><img src="/data/staff/<?php echo $r["imageID"]?>.jpg" width="<?php echo $r["width"]?>" height="<?php echo $r["height"]?>" border="0"></a></td>
-		<?php } else {?>
-		<td>&nbsp;</td>
-		<?php }?>
+		<td><?php echo drawImg($r['imageID'])?></td>
 		<td><nobr><a href="view.php?id=<?php echo $r["userID"]?>"><?php echo $r["lastname"]?>, <?php echo $r["firstname"]?></a></nobr></td>
 		<td><?php echo $r["title"]?></td>
 		<td><?php echo $r["office"]?></td>

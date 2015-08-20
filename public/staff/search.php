@@ -1,4 +1,5 @@
-<?php include("include.php");
+<?php
+include("include.php");
 
 drawTop();
 
@@ -11,4 +12,4 @@ foreach ($terms as $t) {
 	}
 }
 echo drawStaffList("u.isactive = 1 and (" . implode(" OR ", $where) . ")", $terms);
-drawBottom();?>
+drawBottom();

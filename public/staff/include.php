@@ -64,15 +64,11 @@ function drawStaffList($where, $searchterms=false) {
 			o.name office, 
 			o.isMain,
 			u.title, 
-			d.departmentName,
-			u.imageID,
-			m.height,
-			m.width
+			d.departmentName
 		FROM intranet_users u
 		LEFT JOIN intranet_departments d	ON d.departmentID = u.departmentID 
 		LEFT JOIN organizations c			ON u.corporationID = c.id
 		LEFT JOIN intranet_offices o		ON o.id = u.officeID
-		LEFT JOIN intranet_images m			ON u.imageID = m.imageID
 		WHERE " . $where . "
 		ORDER BY u.lastname, ISNULL(u.nickname, u.firstname)");
 	$count = db_found($result);
@@ -100,12 +96,7 @@ function drawStaffRow($r, $searchterms=false) {
 	}
 
 	$return  = '<tr height="38">';
-	if ($r["imageID"]) {
-		verifyImage($r["imageID"]);
-		$return .= '<td class="image"><a href="/staff/view.php?id=' . $r["userID"] . '"><img src="' . $locale . 'staff/' . $r["imageID"] . '.jpg" width="' . $r["width"] . '" height="' . $r["height"] . '"></a></td>';
-	} else {
-		$return .= '<td class="image">&nbsp;</td>';
-	}
+		$return .= '<td class="image"><a href="/staff/view.php?id=' . $r["userID"] . '">' . drawImg($r["userID"]) . '</a></td>';
 	$return .= '<td><nobr><a href="view.php?id=' . $r["userID"] . '">' . $r["lastname"] . ', ' . $r["firstname"] . '</a>';
 	if (!$r["isMain"]) $return .= "<br>" . $r["office"];
 	$return .= '</nobr></td><td>';

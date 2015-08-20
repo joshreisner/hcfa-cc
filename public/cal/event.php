@@ -12,14 +12,10 @@ $e = db_grab("SELECT
 		t.color,
 		t.description type,
 		MONTH(e.startDate) month, 
-		YEAR(e.startDate) year,
-		u.imageID,
-		i.width imgwidth,
-		i.height imgheight
+		YEAR(e.startDate) year
 	FROM calendar_events e
 	JOIN intranet_users u ON e.createdBy = u.userID
 	JOIN calendar_events_types t ON e.typeID = t.id
-	LEFT JOIN intranet_images i ON u.imageID = i.imageID
 	WHERE e.id = " . $_GET["id"]);
 	
 if (url_action("delete")) {
@@ -57,7 +53,8 @@ echo drawNavigationCal($e["month"], $e["year"], true)
 	</tr>
 	<tr valign="top">
 		<td class="left">Created</td>
-		<td><?php echo drawName($e["createdBy"], $e["first"] . " " . $e["last"], $e["imageID"], $e["imgwidth"], $e["imgheight"], $e["createdOn"], true);?></td>
+		<td><?php echo drawName($e["createdBy"], $e["first"] . " " . $e["last"], $e["createdOn"], true);?></td>
 	</tr>
 </table>
-<?php drawBottom();?>
+<?php 
+drawBottom();

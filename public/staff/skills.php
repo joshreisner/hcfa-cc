@@ -10,8 +10,10 @@ echo drawTableStart();
 
 if ($isAdmin) {
 	echo drawHeaderRow('', 3, 'Add New', 'skill_add_edit.php');
+	$colspan = 3;
 } else {
-	echo drawHeaderRow('', 2);	
+	echo drawHeaderRow('', 2);
+	$colspan = 2;
 }
 
 $lastGroup = '';
@@ -34,7 +36,7 @@ $skills = db_table('SELECT
 <?php
 foreach ($skills as $skill) {
 	if ($lastGroup != $skill['group']) {
-		echo '<tr class="group"><td colspan="3">' . $skill['group'] . '</td></tr>';
+		echo '<tr class="group"><td colspan="' . $colspan . '">' . $skill['group'] . '</td></tr>';
 		$lastGroup = $skill['group'];
 	}
 	echo '<tr>
