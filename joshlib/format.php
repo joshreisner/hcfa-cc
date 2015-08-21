@@ -434,9 +434,8 @@ function format_pluralize($entity) {
 
 function format_post_bits($fieldnames) {
 	//takes a comma-separated list of POST keys (checkboxes) and sets bit values in their places
-	global $_POST;
 	$fields = array_post_fields($fieldnames);
-	foreach ($fields as $field) $_POST[$field] = (isset($_POST[$field])) ? 1 : 0;
+	foreach ($fields as $field) $_POST[$field] = (!empty($_POST[$field])) ? 1 : 0;
 }
 
 function format_post_date($str) {

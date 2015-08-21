@@ -48,23 +48,32 @@ $('table#bb').on('click', 'tr.thread', function(){
 	location.href = $(this).find('a').first().attr('href');
 });
 
-if ($('table#bb').size()) window.setTimeout(update, 10000);
+if ($('table#bb').size()) {
+	var timerID = window.setTimeout(update, 10000);
 
-function update() {
-	$.ajax({
-		type: 'GET',
-		url: '/bb/ajax.php',
-		timeout: 2000,
-		data: { count: $('table#bb tbody tr.thread').size() },
-		success: function(data) {
-			//console.log('success');
-			$('table#bb tbody').html(data);
-			window.setTimeout(update, 10000);
-		}
+	function update(count) {
+		if (!count) count = $('table#bb tbody tr.thread').size();
+		if (timerID) window.clearTimeout(timerID);
+		$('table#bb tfoot input#more').attr('disabled', true);
+		$.ajax({
+			type: 'GET',
+			url: '/bb/ajax.php',
+			timeout: 2000,
+			data: { count: count },
+			success: function(data) {
+				//console.log('success');
+				$('table#bb tbody').html(data);
+				timerID = window.setTimeout(update, 10000);
+				$('table#bb tfoot input#more').attr('disabled', false).val('Load More');
+			}
+		});
+	}
+	
+	$('table#bb tfoot input#more').click(function(){
+		$('table#bb tfoot input#more').val('Loading More…');
+		update($('table#bb tbody tr.thread').size() + 15);
 	});
 }
-
-
 				
 function toggleCheckbox(which) {
 	document.getElementById(which).checked = !document.getElementById(which).checked;

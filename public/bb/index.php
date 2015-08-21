@@ -3,8 +3,8 @@ include('../include.php');
 
 if ($posting) {
 	error_debug("handling bb post");
-	format_post_bits("isAdmin");
-	$id = db_enter("bulletin_board_topics", "title |description isAdmin");
+	format_post_bits("isAdmin,temporary");
+	$id = db_enter("bulletin_board_topics", "title |description isAdmin temporary");
 	db_query("UPDATE bulletin_board_topics SET threadDate = GETDATE() WHERE id = " . $id);
 	
 	if ($_POST["isAdmin"] == "'1'") { //send admin email
@@ -60,6 +60,13 @@ echo drawSyndicateLink("bb");
 		drawEmptyResult("No topics have been added yet.  Why not <a href='#bottom'>be the first</a>?", 4)
 	)?>
 	</tbody>
+	<tfoot class="more">
+		<tr>
+			<td colspan="4">
+				<input type="button" id="more" value="Load More">
+			</td>
+		</tr>
+	</tfoot>
 </table>
 <a name="bottom"></a>
 <?php
@@ -68,6 +75,7 @@ if ($isAdmin) {
 	$form->addUser("createdBy",  "Posted By" , $user["id"], false, true);
 	$form->addCheckbox("isAdmin",  "Admin Post?", 0, "(check if yes)", true);
 }
+$form->addCheckbox("temporary",  "Lifespan", true, "Would you like your post to be live for 30 days only?");
 $form->addRow("itext",  "Subject" , "title", "", "", true);
 $form->addRow("textarea", "Message" , "description", "", "", true);
 $form->addRow("submit"  , "add new topic");

@@ -1,7 +1,7 @@
 /* colors */
 /* tags */
 body {
-  background-color: #fff;
+  background-color: #ffffff;
   margin: 3px 0px 20px 0px;
   font-family: verdana,sans-serif;
   line-height: 16px;
@@ -28,7 +28,7 @@ table {
 input {
   font-family: verdana,sans-serif;
   font-size: 13px;
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid #ddd;
   padding: 4px;
   width: 100%;
@@ -38,7 +38,7 @@ input {
 input.button {
   border: 0px;
   background-color: #999;
-  color: #fff;
+  color: #ffffff;
   width: auto;
   padding: 2px 20px 2px 20px;
   font-size: 11px;
@@ -56,14 +56,14 @@ input.checkbox {
 select {
   font-family: verdana,sans-serif;
   font-size: 13px;
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid #ddd;
   padding: 2px; }
 
 textarea {
   font-family: verdana,sans-serif;
   font-size: 13px;
-  background-color: #fff;
+  background-color: #ffffff;
   border: 1px solid #ddd;
   padding: 2px;
   width: 100%;
@@ -72,7 +72,7 @@ textarea {
 textarea.thread {
   border-width: 0px;
   width: 100%;
-  background-color: #fff;
+  background-color: #ffffff;
   font-size: 13px;
   line-height: 20px;
   color: #444; }
@@ -107,7 +107,7 @@ p {
 
 /* areas module defaults */
 .head {
-  background-color: #D8282D; }
+  background-color: #d8282d; }
 
 .big {
   font-size: 20px; }
@@ -133,7 +133,7 @@ a.right {
   margin-left: 5px; }
 
 a.button {
-  color: #fff;
+  color: #ffffff;
   background-color: #999;
   text-transform: uppercase;
   font-size: 9px;
@@ -141,17 +141,17 @@ a.button {
   padding: 2px 4px 3px 4px; }
 
 a.button:hover {
-  color: #fff;
+  color: #ffffff;
   background-color: #ccc;
   text-decoration: none; }
 
 .block {
-  color: #fff;
+  color: #ffffff;
   padding: 1px 3px 1px 3px;
   text-decoration: none; }
 
 .block:hover {
-  color: #fff;
+  color: #ffffff;
   padding: 1px 3px 1px 3px;
   text-decoration: none; }
 
@@ -172,7 +172,7 @@ div.user {
 
 /* modules */
 .areas {
-  background-color: #D8282D; }
+  background-color: #d8282d; }
 
 .areas-hilite {
   background-color: #ffdddd; }
@@ -259,7 +259,7 @@ div.user {
   #tools input {
     margin-top: 10px; }
   #tools ul.links {
-    background-color: #fff;
+    background-color: #ffffff;
     list-style-type: none;
     border-top: 1px solid #bbb;
     margin: 0;
@@ -274,10 +274,10 @@ div.user {
 /* header row */
 .head a {
   padding: 0px;
-  color: #fff; }
+  color: #ffffff; }
 
 .head a:hover {
-  color: #fff; }
+  color: #ffffff; }
 
 .head a.right {
   font-size: 9px;
@@ -302,7 +302,7 @@ div.user {
 /*email*/
 body.email {
   text-align: center;
-  background-color: #fff;
+  background-color: #ffffff;
   margin: 20px;
   font-family: verdana,sans-serif;
   font-size: 11px; }
@@ -319,14 +319,14 @@ table.center td {
   padding: 4px 3px; }
 
 table.center tr {
-  background-color: #fff;
+  background-color: #ffffff;
   vertical-align: top; }
 
 table.center td.head {
   padding: 1px 2px 1px 4px;
   height: 24px;
   font-size: 13px;
-  color: #fff;
+  color: #ffffff;
   vertical-align: middle; }
 
 table.center td.text {
@@ -363,7 +363,7 @@ table.left {
   border-spacing: 1px;
   margin: 15px 0px; }
   table.left tr {
-    background-color: #fff;
+    background-color: #ffffff;
     vertical-align: top; }
   table.left td {
     padding: 8px 5px; }
@@ -371,7 +371,7 @@ table.left {
     padding: 1px 2px 1px 4px;
     height: 24px;
     font-size: 13px;
-    color: #fff;
+    color: #ffffff;
     vertical-align: middle; }
   table.left td.left {
     background-color: #ededed;
@@ -430,7 +430,7 @@ table.left {
   table.left th.delete, table.left td.delete {
     width: 20px; }
     table.left th.delete a, table.left td.delete a {
-      color: #D8282D; }
+      color: #d8282d; }
   table.left tr.dragging {
     opacity: .5; }
   table.left th.reorder, table.left td.reorder {
@@ -449,6 +449,14 @@ table.left {
   table.left td ul:first-child:last-child {
     margin: 0;
     padding: 0 20px; }
+  table.left tfoot.more td {
+    padding: 0;
+    height: 40px; }
+  table.left tfoot.more input {
+    border: 0;
+    margin: 0;
+    height: 40px;
+    background-color: #eee; }
 
 tr.deleted {
   text-decoration: line-through; }
@@ -463,15 +471,15 @@ td.empty {
   color: #666; }
 
 table.nospacing {
-  border-spacing: 1px; }
-
-table.nospacing tr {
-  background-color: transparent; }
-
-table.nospacing td {
-  height: 20px;
-  vertical-align: middle;
-  padding: 2px; }
+  border-spacing: 0; }
+  table.nospacing tr {
+    background-color: transparent; }
+    table.nospacing tr td {
+      height: 20px;
+      vertical-align: middle;
+      padding: 0; }
+      table.nospacing tr td.checkbox-spacing {
+        width: 20px; }
 
 table.right {
   background-color: #ddd;
@@ -479,7 +487,7 @@ table.right {
   border-spacing: 1px;
   margin: 14px 0px 0px 0px; }
   table.right tr {
-    background-color: #fff; }
+    background-color: #ffffff; }
   table.right td {
     padding: 5px 3px; }
   table.right td.head {
@@ -487,7 +495,7 @@ table.right {
     vertical-align: middle;
     height: 13px;
     font-size: 12px;
-    color: #fff;
+    color: #ffffff;
     line-height: 8px; }
   table.right td.head img {
     margin: 2px 2px 0px 0px; }
@@ -504,7 +512,7 @@ table.navigation {
   table.navigation td {
     padding: 7px; }
   table.navigation td.selected {
-    background-color: #fff;
+    background-color: #ffffff;
     font-weight: bold; }
 
 table.message {

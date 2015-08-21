@@ -310,7 +310,7 @@ error_debug("done processing include!");
 			if ($admin) $rows .= ' class="admin ' . $location . '-hilite"';
 			$rows .= '><table class="nospacing">
 						<tr>
-							<td>' . draw_form_checkbox($name, $default) . '</td>
+							<td class="checkbox-spacing">' . draw_form_checkbox($name, $default) . '</td>
 							<td>' . drawCheckboxText($name, $additionalText) . '</td>
 						</tr>
 					</table>
@@ -641,7 +641,8 @@ function drawBBPosts($count=15, $error='') {
 			u.lastname
 		FROM bulletin_board_topics t
 		JOIN intranet_users u ON u.userID = t.createdBy
-		WHERE t.isActive = 1 
+		WHERE t.isActive = 1 AND (t.temporary IS NULL OR t.temporary = 0 OR 
+			(t.temporary = 1 AND DATEDIFF(t.createdOn, NOW()) > 30))
 		ORDER BY t.threadDate DESC", $count)) {
 
 		foreach ($topics as &$topic) {
