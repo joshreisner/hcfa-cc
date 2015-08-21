@@ -642,7 +642,7 @@ function drawBBPosts($count=15, $error='') {
 		FROM bulletin_board_topics t
 		JOIN intranet_users u ON u.userID = t.createdBy
 		WHERE t.isActive = 1 AND (t.temporary IS NULL OR t.temporary = 0 OR 
-			(t.temporary = 1 AND DATEDIFF(t.createdOn, NOW()) > 30))
+			(t.temporary = 1 AND DATEDIFF(NOW(), t.createdOn) < 31))
 		ORDER BY t.threadDate DESC", $count)) {
 
 		foreach ($topics as &$topic) {
