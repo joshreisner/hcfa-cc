@@ -124,7 +124,7 @@ $link: #0000ff;
 		ul.links { 
 			background-color: $white;
 			list-style-type: none;
-			border-top:1px solid #bbb; 
+			border-top: 1px solid #bbb; 
 			margin: 0; 
 			padding: 10px 0;
 			display: block;
@@ -132,6 +132,41 @@ $link: #0000ff;
 			li {
 				padding: 2px 10px; width: 50%; float: left;
 			}
+		}
+	}
+	
+	#spotlight {
+		border: 1px solid #bbb;
+		margin-top: 20px;
+		overflow: auto;
+		h1 {
+			background-color: #ededed;
+			border-bottom: 1px solid #bbb; 
+			margin: 0;
+			line-height: 1.2;
+			padding: 7px; 
+			font-size: 13px;
+		}
+		a {
+			color: inherit;
+			display: block;
+			&:hover {
+				h2 { text-decoration: underline; }
+				color: $red;
+			}
+		}
+		img {
+			width: 40%; 
+			height: auto;
+			float: left;
+		}
+		h2 {
+			font-size: 13px;
+			line-height: 1.6;
+			padding: 10px;
+			float: left;
+			width: 60%;
+			margin: 0;
 		}
 	}
 

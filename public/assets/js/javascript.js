@@ -8,8 +8,9 @@ $(function(){
             for (var i = 0; i < rows.length; i++) {
 				if (rows[i].id) order[order.length] = rows[i].id;
             }
-	        $.post(location.href, { reorder: true, order: order }, function(data) {
-		        $('ul.links').html(data);
+            var selector = $(table).hasClass('links') ? 'ul.links' : 'div#spotlight';
+	        $.post(location.href, { order: order }, function(data) {
+		        $(selector).html(data);
 	        });
 	    }
 	});

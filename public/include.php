@@ -847,6 +847,17 @@ function drawBBPosts($count=15, $error='') {
 		return $return;
 	}
 	
+	function drawSpotlight() {
+		$spotlight = db_grab('SELECT url, title FROM spotlight ORDER BY precedence');
+		$return = '
+			<h1>Spotlight</h1>
+			<a href="' . $spotlight['url'] . '">
+				<img src="/assets/img/spotlight-sample.jpg" width="400" height="400">
+				<h2>' . $spotlight['title'] . '</h2>
+			</a>';
+		return $return;
+	}
+	
 	function drawTop() {
 		global $_GET, $user, $_josh, $page, $isAdmin, $printing, $locale;
 		error_debug("starting top");
@@ -911,7 +922,7 @@ function drawBBPosts($count=15, $error='') {
 	}
 			
 	function drawBottom() {
-		global $user, $_GET, $_josh, $modules, $printing, $areas, $locale, $helpdeskOptions, $helpdeskStatus;
+		global $user, $_josh, $modules, $printing, $areas, $locale, $helpdeskOptions, $helpdeskStatus;
 		if (!$printing) {
 			
 		?>
@@ -927,8 +938,12 @@ function drawBBPosts($count=15, $error='') {
 					</form>
 					
 					<ul class="links">
-						<?php echo drawLinks() ?>
+						<?php echo drawLinks(); ?>
 					</ul>
+				</div>
+				
+				<div id="spotlight">
+					<?php echo drawSpotlight(); ?>
 				</div>
 		<?php 
 			            

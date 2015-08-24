@@ -130,7 +130,7 @@ $_josh["time_start"] = microtime(true);	//count processing time -- use format_ti
 	if ($_josh["getting"]) foreach($_GET as $key=>$value) $_GET[$key] = format_quotes($value);
 	
 	$_josh["posting"] = !empty($_POST);
-	if ($_josh["posting"]) foreach($_POST as $key=>$value) $_POST[$key] = format_quotes($value);
+	if ($_josh["posting"]) foreach($_POST as $key=>$value) if (is_string($_POST[$key])) $_POST[$key] = format_quotes($value);
 
 
 //extract for easier accessibility

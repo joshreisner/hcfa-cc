@@ -2,7 +2,7 @@
 include("../include.php");
 
 if ($posting) {
-	if (isset($_POST['reorder'])) {
+	if (isset($_POST['order'])) {
 		$counter = 1;
 		foreach ($_POST['order'] as $link_id) {
 			db_query('UPDATE links SET precedence = ' . $counter . ' WHERE id = ' . $link_id);
@@ -20,7 +20,7 @@ if ($posting) {
 
 drawTop();
 ?>
-<table cellspacing="1" class="left draggable">
+<table cellspacing="1" class="left draggable links">
 	<thead>
 		<?php echo drawHeaderRow(false, 4, "new", "#bottom")?>
 		<tr>
@@ -43,7 +43,7 @@ drawTop();
 			</tr>
 		<?php }
 		} else {
-			echo drawEmptyResult("No links entered in the system yet!");
+			echo drawEmptyResult("No links entered in the system yet!", 4);
 		}?>
 	</tbody>
 </table>
@@ -57,7 +57,4 @@ $form->addRow("itext",  "Address" , "url", "http://", "", true);
 $form->addRow("submit"  , "add new link");
 $form->draw("Add a New Link");
 
-drawBottom(); 
-?>
-
-drawBottom();?>
+drawBottom();
