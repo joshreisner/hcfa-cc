@@ -880,19 +880,19 @@ function drawBBPosts($count=15, $error='') {
 			<div class="container">
 				<div class="row banner">
 					<div class="col-md-4">
-						<img src="/assets/img/logo-cc.png" width="240" height="86" class="img-responsive">
+						<a href="/bb/"><img src="/assets/img/logo-cc.png" width="240" height="86" class="img-responsive"></a>
 					</div>
 					<div class="col-md-4">
-						<img src="/assets/img/logo-hla.png" width="330" height="64" class="img-responsive">
+						<a href="/bb/"><img src="/assets/img/logo-hla.png" width="330" height="64" class="img-responsive"></a>
 					</div>
 					<div class="col-md-4">
-						<img src="/assets/img/logo-hcfa.png" width="186" height="102" class="img-responsive">
+						<a href="/bb/"><img src="/assets/img/logo-hcfa.png" width="186" height="102" class="img-responsive"></a>
 					</div>
 				</div>
 				<div class="row">
 				<div id="left" class="col-md-8">
 					<div id="help">
-					<a class="button left" href="<?php echo $user["homepage"]?>">
+					<a class="button left" href="/bb/">
 						<i class="glyphicon glyphicon-home"></i>
 						Home
 					</a>

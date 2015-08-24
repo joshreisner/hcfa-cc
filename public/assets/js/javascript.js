@@ -50,8 +50,6 @@ $('table#bb').on('click', 'tr.thread', function(){
 });
 
 if ($('table#bb').size()) {
-	var timerID = window.setTimeout(update, 10000);
-
 	function update(count) {
 		if (!count) count = $('table#bb tbody tr.thread').size();
 		if (timerID) window.clearTimeout(timerID);
@@ -69,6 +67,8 @@ if ($('table#bb').size()) {
 			}
 		});
 	}
+
+	var timerID = window.setTimeout(update, 10000);
 	
 	$('table#bb tfoot input#more').click(function(){
 		$('table#bb tfoot input#more').val('Loading More…');
