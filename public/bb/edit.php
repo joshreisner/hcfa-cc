@@ -20,7 +20,7 @@ if ($isAdmin) {
 	$form->addUser("createdBy",  "Posted By" , $t["createdBy"], false, true);
 	$form->addCheckbox("isAdmin",  "Admin Post?", $t["isAdmin"], "(check if yes)", true);
 }
-$form->addCheckbox("temporary",  "Longevity", $t["temporary"], "Would you like your post to be live for 30 days only?");
+$form->addCheckbox("temporary",  "Lifespan", $t['temporary'], "Check Box to Delete Post After 30 Days");
 $form->addRow("itext",  "Subject" , "title", $t["title"], "", true);
 $form->addRow("textarea", "Message" , "description", $t["description"], "", true);
 $form->addRow("submit"  , "edit topic");

@@ -7,9 +7,9 @@
 </tr>
 <tr>
 	<td width="50%"><a href="/staff/locations.php">By Location</a></td>
-	<td width="50%"><a href="/staff/changes.php">Changes</a></td>
+	<td width="50%"><a href="/staff/skills.php">By Skill</a></td>
 </tr>
 <tr>
-	<td width="50%"><a href="/staff/skills.php">Skills</a></td>
+	<td width="50%"><a href="/staff/changes.php">Changes</a></td>
 	<td width="50%">&nbsp;</td>
 </tr>

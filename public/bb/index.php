@@ -75,7 +75,7 @@ if ($isAdmin) {
 	$form->addUser("createdBy",  "Posted By" , $user["id"], false, true);
 	$form->addCheckbox("isAdmin",  "Admin Post?", 0, "(check if yes)", true);
 }
-$form->addCheckbox("temporary",  "Lifespan", true, "Would you like your post to be live for 30 days only?");
+$form->addCheckbox("temporary",  "Lifespan", true, "Check Box to Delete Post After 30 Days");
 $form->addRow("itext",  "Subject" , "title", "", "", true);
 $form->addRow("textarea", "Message" , "description", "", "", true);
 $form->addRow("submit"  , "add new topic");

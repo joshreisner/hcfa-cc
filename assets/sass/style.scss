@@ -136,9 +136,11 @@ $link: #0000ff;
 	}
 	
 	#spotlight {
-		border: 1px solid #bbb;
-		margin-top: 20px;
-		overflow: auto;
+		.inner {
+			border: 1px solid #bbb;
+			margin-top: 20px;
+			overflow: auto;
+		}
 		h1 {
 			background-color: #ededed;
 			border-bottom: 1px solid #bbb; 
@@ -165,7 +167,7 @@ $link: #0000ff;
 			line-height: 1.6;
 			padding: 10px;
 			float: left;
-			width: 60%;
+			&.has_image { width: 60%; }
 			margin: 0;
 		}
 	}
@@ -284,6 +286,13 @@ table.left {
 			margin: 0;
 			height: 40px;
 			background-color: #eee;
+		}
+	}
+	&.spotlight {
+		td.image {
+			width: 100px;
+			padding: 0;
+			img { max-width: 100px; height: auto; }
 		}
 	}
 }

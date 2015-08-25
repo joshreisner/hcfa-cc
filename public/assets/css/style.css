@@ -271,35 +271,40 @@ div.user {
       width: 50%;
       float: left; }
 
-#spotlight {
+#spotlight .inner {
   border: 1px solid #bbb;
   margin-top: 20px;
   overflow: auto; }
-  #spotlight h1 {
-    background-color: #ededed;
-    border-bottom: 1px solid #bbb;
-    margin: 0;
-    line-height: 1.2;
-    padding: 7px;
-    font-size: 13px; }
-  #spotlight a {
-    color: inherit;
-    display: block; }
-    #spotlight a:hover {
-      color: #d8282d; }
-      #spotlight a:hover h2 {
-        text-decoration: underline; }
-  #spotlight img {
-    width: 40%;
-    height: auto;
-    float: left; }
-  #spotlight h2 {
-    font-size: 13px;
-    line-height: 1.6;
-    padding: 10px;
-    float: left;
-    width: 60%;
-    margin: 0; }
+
+#spotlight h1 {
+  background-color: #ededed;
+  border-bottom: 1px solid #bbb;
+  margin: 0;
+  line-height: 1.2;
+  padding: 7px;
+  font-size: 13px; }
+
+#spotlight a {
+  color: inherit;
+  display: block; }
+  #spotlight a:hover {
+    color: #d8282d; }
+    #spotlight a:hover h2 {
+      text-decoration: underline; }
+
+#spotlight img {
+  width: 40%;
+  height: auto;
+  float: left; }
+
+#spotlight h2 {
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 10px;
+  float: left;
+  margin: 0; }
+  #spotlight h2.has_image {
+    width: 60%; }
 
 /* header row */
 .head a {
@@ -487,6 +492,12 @@ table.left {
     margin: 0;
     height: 40px;
     background-color: #eee; }
+  table.left.spotlight td.image {
+    width: 100px;
+    padding: 0; }
+    table.left.spotlight td.image img {
+      max-width: 100px;
+      height: auto; }
 
 tr.deleted {
   text-decoration: line-through; }

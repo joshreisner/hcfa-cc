@@ -82,7 +82,8 @@ if (!$r["isActive"]) {
 }
 ?>
 <table class="left" cellspacing="1">
-	<?php if ($isAdmin) {
+	<?php
+	if ($isAdmin) {
 		if ($r["isActive"]) {
 			echo drawHeaderRow("View Staff Info", 3, "edit", "add_edit.php?id=" . $_GET["id"], "deactivate", deleteLink("Deactivate this staff member?"));
 		} else {
@@ -92,7 +93,8 @@ if (!$r["isActive"]) {
 		echo drawHeaderRow("View Staff Info", 3, "edit your info", "add_edit.php?id=" . $_GET["id"]);
 	} else {
 		echo drawHeaderRow("View Staff Info", 3);
-	} ?>
+	}
+	?>
 	<tr>
 		<td class="left">Name</td>
 		<td width="99%" class="big"><?php echo $r["firstname"]?> <?php if ($r["nickname"]) {?>(<?php echo $r["nickname"]?>) <?php }?><?php echo $r["lastname"]?></td>
@@ -266,4 +268,5 @@ if (!$r["isActive"]) {
 	</tr>
 	<?php }?>
 </table>
-<?php drawBottom();?>
+<?php
+drawBottom();

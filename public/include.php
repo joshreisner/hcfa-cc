@@ -848,18 +848,24 @@ function drawBBPosts($count=15, $error='') {
 	}
 	
 	function drawSpotlight() {
-		$spotlight = db_grab('SELECT url, title FROM spotlight ORDER BY precedence');
+		if (!$s = db_grab('SELECT id, url, title FROM spotlight ORDER BY precedence')) return;
 		$return = '
+			<div class="inner">
 			<h1>Spotlight</h1>
-			<a href="' . $spotlight['url'] . '">
-				<img src="/assets/img/spotlight-sample.jpg" width="400" height="400">
-				<h2>' . $spotlight['title'] . '</h2>
-			</a>';
+			<a href="' . $s['url'] . '">';
+			
+		if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/uploads/spotlight/' . $s['id'] . '.jpg')) {
+			$return .= '<img src="/uploads/spotlight/' . $s['id'] . '.jpg" width="320" height="320"><h2 class="has_image">';
+		} else {
+			$return .= '<h2>';
+		}
+		
+		$return .= $s['title'] . '</h2></a></div>';
 		return $return;
 	}
 	
 	function drawTop() {
-		global $_GET, $user, $_josh, $page, $isAdmin, $printing, $locale;
+		global $user, $_josh, $page, $isAdmin, $printing, $locale;
 		error_debug("starting top");
 		$title = $page["module"] . " > " . $page["name"];
 	?><!DOCTYPE html>
