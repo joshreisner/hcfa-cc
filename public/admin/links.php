@@ -52,8 +52,8 @@ drawTop();
 <?php
 $form = new intranet_form;
 $form->addRow("hidden", "", "precedence", ($max + 1));
-$form->addRow("itext",  "Link" , "text", "", "", true);
-$form->addRow("itext",  "Address" , "url", "http://", "", true);
+$form->addRow("itext",  "Link" , "text", "", "", true, 255);
+$form->addRow("itext",  "Address" , "url", "http://", "", true, 255);
 $form->addRow("submit"  , "add new link");
 $form->draw("Add a New Link");
 
