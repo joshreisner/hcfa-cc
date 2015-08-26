@@ -1,7 +1,7 @@
 <?php
 include('include.php');
 
-if (!isset($_GET["id"])) $_GET["id"] = 1;
+if (empty($_GET['id'])) url_query_add(array('id'=> 1));
 
 drawTop();
 $locations = db_query("SELECT 
@@ -14,11 +14,6 @@ if (db_found($locations)) {
 	$pages = array();
 	while ($l = db_fetch($locations)) {
 		$pages["/staff/locations.php?id=" . $l["id"]] = $l["name"];
-	}
-	if (count($pages) > 5) {
-		array_splice($pages, 4);
-		$pages["/staff/locations.php?id=other"] = "Other";
-		
 	}
 	echo drawNavigationRow($pages, $location, true);
 }

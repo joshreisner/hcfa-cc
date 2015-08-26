@@ -4,26 +4,19 @@ error_debug("~ including draw.php");
 function draw_array($array, $nice=false) {
 	global $_josh;
 	if (!is_array($array)) return false;
-	$return = '<table width="100%" cellpadding="3" cellspacing="1" border="0" bgcolor="' . $_josh["colors"]["grey2"] . '">';
-	if (!$nice) ksort($array);
-	while(list($key, $value) = each($array)) {
-		if ($nice && (strToLower($key) == "j")) continue;
-		if (is_int($key)) continue;
-		$value = format_quotes($value);
-		if (strToLower($key) == "email") $value = "<a href='mailto:" . $value . "'>" . $value . "</a>";
-		if (is_array($value)) {
-			$return2 = "";
-			foreach ($value as $key2 => $value2) {
-				$return2 .= "&#183; " . $value2 . "<br>";
-			}
-			$value = $return2;
-		}
-		$return  .= '
-			<tr bgcolor="' . $_josh["colors"]["white"] . '" style="font-family: verdana; font-size:11px; padding:6px; line-height:16px; width:100%;" valign="top"';
-		if (strToLower($key) == "message") $return .= ' height="160"';
-		$return .= '><td bgcolor="' . $_josh["colors"]["grey1"] . '" width="21%"><nobr>';
+	$return = '<table cellspacing="1" style="background-color:#ccc;color:#333;border:0px;">';
+	//if (!$nice) ksort($array);
+	foreach ($array as $key=>$value) {
+		$key = urldecode($key);
+		if ($nice && (strToLower($key) == 'j')) continue;
+		//$value = format_quotes($value);
+		if (strToLower($key) == 'email') $value = '<a href="mailto:' . $value . '">' . $value . '</a>';
+		if (is_array($value)) $value = draw_array($value, $nice);
+		$return  .= '<tr><td style="background-color:#eee;"><b>';
 		$return .= ($nice) ? format_text_human($key)  : $key;
-		$return .= '&nbsp;</nobr></td><td width="79%">' . nl2br($value) . '</td></tr>';
+		$return .= '&nbsp;</b></td><td style="background-color:#fff;">';
+		$return .= is_object($value) ? 'object value' : $value;
+		$return .= '</td></tr>';
 	}
 	$return .= '</table>';
 	return $return;

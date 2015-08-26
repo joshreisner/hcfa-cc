@@ -36,7 +36,10 @@ $link: #0000ff;
 	h1				{ font-size:29px; line-height:38px; font-weight:normal; margin: 6px 0 12px; }
 	img				{ border-width:0px; }
 	span.light 		{ color:#aaa; }
-	span.clickme:hover	{ cursor:hand; cursor:pointer; background-color:#f0f0f0; }
+	span.clickme {
+		margin-left: 7px;
+		&:hover	{ cursor:hand; cursor:pointer; background-color:#f0f0f0; }
+	}
 	p { 
 		margin: 0 0 10px 0; 
 		&:last-child { margin-bottom: 0; }

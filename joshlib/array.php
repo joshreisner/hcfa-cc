@@ -29,6 +29,21 @@ function array_post_fields($fieldnames, $delimiter=",") {
 	return $return;
 }
 
+function array_key_promote($array, $key=false) {
+	//makes a multi-column resultset into an associative array
+	if (!is_array($array)) return false;
+	if (!$key) {
+		$keys = array_keys($a);
+		$key = $keys[0];
+	}
+	$return = array();
+	foreach ($array as $a) {
+		if (!isset($return[$a[$key]])) $return[$a[$key]] = array();
+		$return[$a[$key]][] = $a;
+	}
+	return $return;
+}
+
 function array_sort($array, $direction="asc", $key=false) {
 	global $_josh;
 	$_josh["sort_key"] = ($key) ? $key : array_shift(array_keys($array[0]));

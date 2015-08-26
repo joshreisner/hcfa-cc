@@ -132,15 +132,21 @@ if (!$r["isActive"]) {
 		<td class="left">Bio</td>
 		<td colspan="2" height="167" class="text"><?php echo nl2br($r["bio"])?></td>
 	</tr>
-	<?php if ($skills = db_table('SELECT s.id, s.title FROM users_to_skills u2s JOIN skills s ON u2s.skill_id = s.id WHERE u2s.user_id = ' . $_GET['id'] . ' ORDER BY s.title')) {?>
+	<?php 
+	if ($skills = db_table('SELECT s.group, s.title FROM users_to_skills u2s JOIN skills s ON u2s.skill_id = s.id WHERE u2s.user_id = ' . $_GET['id'] . ' ORDER BY s.group, s.title')) {
+		$groups = array_key_promote($skills, 'group');	
+		?>
 	<tr>
 		<td class="left">Skills</td>
 		<td colspan="2">
+			<?php foreach ($groups as $group=>$skills) {?>
+			<strong><?php echo $group?></strong>
 			<ul class="nospacing">
 			<?php foreach ($skills as $skill) {?>
 			<li><?php echo $skill['title']?></li>
 			<?php }?>
 			</ul>
+			<?php }?>
 		</td>
 	</tr>
 	<?php }
