@@ -1,8 +1,13 @@
 <?php
 include('include.php');
 
-if (url_action('delete')) {
-	die('delete');
+if (url_action('delete_skill')) {
+	db_query('UPDATE skills SET 
+				isActive = 0,
+				updatedOn = GETDATE(), 
+				updatedBy = ' . $user['id'] . '
+			WHERE id = ' . $_GET['id']);
+	url_query_drop('action,id');
 }
 
 echo drawTop();
@@ -42,7 +47,7 @@ foreach ($skills as $skill) {
 	echo '<tr>
 		<td><a href="skill.php?id=' . $skill['id'] . '">' . $skill['title'] . '</a></td>
 		<td class="r">' . number_format($skill['count']) . '</td>
-		' . deleteColumn('Are You Sure?', $skill['id']) . '
+		' . deleteColumn('Are You Sure?', $skill['id'], 'delete_skill', true) . '
 	</tr>';
 }
 

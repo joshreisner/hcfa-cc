@@ -133,7 +133,7 @@ if (!$r["isActive"]) {
 		<td colspan="2" height="167" class="text"><?php echo nl2br($r["bio"])?></td>
 	</tr>
 	<?php 
-	if ($skills = db_table('SELECT s.group, s.title FROM users_to_skills u2s JOIN skills s ON u2s.skill_id = s.id WHERE u2s.user_id = ' . $_GET['id'] . ' ORDER BY s.group, s.title')) {
+	if ($skills = db_table('SELECT s.group, s.title FROM users_to_skills u2s JOIN skills s ON u2s.skill_id = s.id WHERE u2s.user_id = ' . $_GET['id'] . ' AND s.isActive = 1 ORDER BY s.group, s.title')) {
 		$groups = array_key_promote($skills, 'group');	
 		?>
 	<tr>
