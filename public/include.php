@@ -971,13 +971,25 @@ function drawBBPosts($count=15, $error='') {
 				<tr>
 					<td colspan="2" class="head <?php echo str_replace("/", "", $module["url"])?>">
 						<div class="head-left"><a href="<?php echo $module["url"]?>"><?php echo $module["name"]?></a></div>
-						<a style="float:right; margin-top:1px;" href="<?php echo url_query_add(array("toggleMenuPref"=>$index), false)?>"><img src="<?php echo $module["url"]?>arrow-<?php if ($user["isOpenStaff"]) {?>down<?php } else {?>up<?php }?>.gif" width="26" height="14" border="0"></a>
 					</td>
 				</tr>
-				<?php if ($user[$index]) include($_josh["root"] . $module["pallet"]);?>
+				<?php include($_josh["root"] . $module["pallet"])?>
 			</table>
 			<?php }
 		}?>
+
+			<table class="right" cellspacing="1">
+				<tr>
+					<td colspan="2" class="head docs">
+						<div class="head-left"><a href="https://ccatalyst.sharepoint.com/HCFACCIT/Forms/AllItems.aspx" target="_blank">Documents</a></div>
+					</td>
+				</tr>
+				<tr>
+					<td style="background-color:#eee; text-align: center; padding: 40px 0;">
+						<a href="https://ccatalyst.sharepoint.com/HCFACCIT/Forms/AllItems.aspx" target="_blank" style="color: #333;font-size:15px;line-height: 1.3;">Documents have moved to<br>Microsoft SharePoint</a>
+					</td>
+				</tr>
+			</table>
 						<div id="footer">page rendered in <?php echo format_time_exec()?></div>
 					</div>
 				</div>
