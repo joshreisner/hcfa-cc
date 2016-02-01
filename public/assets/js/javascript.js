@@ -8,9 +8,12 @@ $(function(){
             for (var i = 0; i < rows.length; i++) {
 				if (rows[i].id) order[order.length] = rows[i].id;
             }
-            var selector = $(table).hasClass('links') ? 'ul.links' : 'div#spotlight';
 	        $.post(location.href, { order: order }, function(data) {
-		        $(selector).html(data);
+	            if ($(table).hasClass('links')) {
+			        $('ul.links').html(data);
+				} else if ($(table).hasClass('spotlight')) {
+			        $('div#spotlight').html(data);
+				}
 	        });
 	    }
 	});
@@ -19,7 +22,7 @@ $(function(){
 //init tinymce
 tinyMCE.init({
 	mode : "textareas",
-	extended_valid_elements : "a[href|target],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[align|style],p[align]",
+	extended_valid_elements : "a[href|target],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],hr[class|width|size|noshade],font[face|size|color|style],span[align|style],p[style|align]",
 	content_css : '/_hcfa-cc/style-textarea.css?' + new Date().getTime(),
 	editor_selector : "mceEditor",
 	editor_deselector : "mceNoEditor",

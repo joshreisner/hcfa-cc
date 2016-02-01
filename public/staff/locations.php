@@ -1,15 +1,15 @@
 <?php
 include('include.php');
 
-if (empty($_GET['id'])) url_query_add(array('id'=> 1));
+if (!url_id()) url_query_add(array('id'=> 1));
 
 drawTop();
 $locations = db_query("SELECT 
 		o.id, 
 		o.name
 	FROM intranet_offices o 
-	WHERE (SELECT COUNT(*) FROM intranet_users u WHERE u.officeID = o.id AND u.isActive = 1) > 0
 	ORDER BY (SELECT COUNT(*) FROM intranet_users u WHERE u.officeID = o.id) DESC");
+	
 if (db_found($locations)) {
 	$pages = array();
 	while ($l = db_fetch($locations)) {
@@ -21,7 +21,9 @@ if (db_found($locations)) {
 if ($_GET["id"] == "other") {
 	echo drawStaffList("u.isactive = 1 AND u.officeID <> 1 AND u.officeID <> 6 AND u.officeID <> 11 AND u.officeID <> 9");
 } else {
+	$l = db_grab('SELECT name, address FROM intranet_offices WHERE id = ' . $_GET['id']);
+	if (!empty($l['address'])) echo drawServerMessage('<center><strong>' . $l['name'] . ' Office</strong><br>' . nl2br($l['address']) . '</center>');
 	echo drawStaffList("u.isactive = 1 and u.officeID = " . $_GET["id"]);
 }
 
-drawBottom();?>
+drawBottom();

@@ -187,11 +187,11 @@ function format_html($text) {
 	$text = str_replace("font-family: Arial;",				"",	$text);
 	*/
 
-	$text = htmLawed($text, array('comment'=>1, 'cdata'=>1));
+	$text = htmLawed($text, array('comment'=>1, 'cdata'=>1, 'style_pass'=>1));
 	$text = str_replace("<p>&nbsp;</p>", "", $text);
 	$text = str_replace(">&nbsp;</", "></", $text);
+	
 	return $text;
-
 }
 
 function format_html_text($str) {

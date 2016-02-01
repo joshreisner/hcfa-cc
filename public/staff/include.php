@@ -62,7 +62,6 @@ function drawStaffList($where, $searchterms=false) {
 			c.description corporationName,
 			u.corporationID,
 			o.name office, 
-			o.isMain,
 			u.title, 
 			d.departmentName
 		FROM intranet_users u
@@ -98,7 +97,7 @@ function drawStaffRow($r, $searchterms=false) {
 	$return  = '<tr height="38">';
 		$return .= '<td class="image"><a href="/staff/view.php?id=' . $r["userID"] . '">' . drawImg($r["userID"]) . '</a></td>';
 	$return .= '<td><nobr><a href="view.php?id=' . $r["userID"] . '">' . $r["lastname"] . ', ' . $r["firstname"] . '</a>';
-	if (!$r["isMain"]) $return .= "<br>" . $r["office"];
+	//if (!$r["isMain"]) $return .= "<br>" . $r["office"];
 	$return .= '</nobr></td><td>';
 	if ($r["title"]) $return .= $r["title"] . '<br>';
 	if ($r["departmentName"]) $return .= '<i>' . $r["departmentName"] . '</i><br>';

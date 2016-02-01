@@ -85,7 +85,7 @@ $_josh["time_start"] = microtime(true);	//count processing time -- use format_ti
 	require("email.php");
 	require("file.php");
 	require("format.php");
-	require("htmlawed.php");
+	require("htmLawed.php");
 	require("url.php");
 
 
@@ -195,6 +195,12 @@ function daysInMonth($month, $year=false) {
 	global $_josh;
 	if (!$year) $year = $_josh["year"];
 	return date("d", mktime(0,0,0, $month + 1, 0, $year));
+}
+
+function dd($var) {
+	echo '<pre>';
+	print_r($var);
+	exit;
 }
 
 function debug() {
@@ -420,4 +426,3 @@ class form {
 	}
 }
 
-?>

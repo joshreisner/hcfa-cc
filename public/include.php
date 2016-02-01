@@ -954,19 +954,7 @@ function drawBBPosts($count=15, $error='') {
 		<?php 
 			            
 		foreach ($modules as $module) {
-			if ($module["pallet"]) {
-				if ($module["url"] == "/bb/") {
-					$index = "isOpenBulletinBoard";
-				} elseif ($module["url"] == "/cal/") {
-					$index = "isOpenCalendar";
-				} elseif ($module["url"] == "/docs/") {
-					$index = "isOpenDocuments";
-				} elseif ($module["url"] == "/areas/") {
-					$index = "isOpenAreas";
-				} elseif ($module["url"] == "/staff/") {
-					$index = "isOpenStaff";
-				}
-			?>
+			if ($module["pallet"]) {?>
 			<table class="right" cellspacing="1">
 				<tr>
 					<td colspan="2" class="head <?php echo str_replace("/", "", $module["url"])?>">
@@ -984,13 +972,15 @@ function drawBBPosts($count=15, $error='') {
 						<div class="head-left"><a href="https://ccatalyst.sharepoint.com/HCFACCIT/Forms/AllItems.aspx" target="_blank">Documents</a></div>
 					</td>
 				</tr>
+				<!--
 				<tr>
-					<td style="background-color:#eee; text-align: center; padding: 40px 0;">
-						<a href="https://ccatalyst.sharepoint.com/HCFACCIT/Forms/AllItems.aspx" target="_blank" style="color: #333;font-size:15px;line-height: 1.3;">Documents have moved to<br>Microsoft SharePoint</a>
+					<td style="padding:0;">
+						<a href="https://ccatalyst.sharepoint.com/HCFACCIT/Forms/AllItems.aspx" target="_blank" style="color: #333;font-size:15px;line-height: 1.3;background-color:#eee; text-align: center; padding: 40px 0; display: block">Click here</a>
 					</td>
 				</tr>
+				-->
 			</table>
-						<div id="footer">page rendered in <?php echo format_time_exec()?></div>
+						<!--<div id="footer">page rendered in <?php echo format_time_exec()?></div>-->
 					</div>
 				</div>
 			</div>
