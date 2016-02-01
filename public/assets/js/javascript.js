@@ -27,15 +27,15 @@ tinyMCE.init({
 	editor_selector : "mceEditor",
 	editor_deselector : "mceNoEditor",
 	statusbar: false,
-	menubar: false,
+	menubar: 'edit insert view format table tools',
 	browser_spellcheck : true,
 	plugins: [
 		"advlist autolink lists link image charmap print preview anchor",
 		"searchreplace visualblocks code fullscreen",
 		"insertdatetime media table paste jbimages"
 	],
-	//toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image jbimages",
-	toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link jbimages",
+	toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link jbimages",
+	//toolbar: "insertfile undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link jbimages",
 	relative_urls: false
 });
 
